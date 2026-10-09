@@ -1,9 +1,15 @@
 {
-  "name": "HCMUTE Hub",
-  "short_name": "HCMUTE Hub",
+  "name": "Quanli Pro",
+  "short_name": "Quanli",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f7f7f8",
-  "theme_color": "#f7f7f8",
-  "icons": []
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "icons": [
+    {
+      "src": "./icon.png",
+      "sizes": "3072x3072",
+      "type": "image/png"
+    }
+  ]
 }
