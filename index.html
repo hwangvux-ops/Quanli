@@ -96,28 +96,145 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
   <div class="toolbar"><input class="field" id="classDate" type="date"><button class="btn" onclick="addClass()">＋ Thêm lịch</button></div>
   <div id="classList"></div>
 </section>
+
 <section class="page" id="page-wallet">
-  <div class="pagehead"><div><div class="eyebrow">MY MONEY</div><h1>Quản lý chi tiêu</h1><div class="sub">Ghi lại từng khoản, nắm rõ tiền của mình.</div></div><button class="btn" onclick="openTransaction()">＋ Thêm</button></div>
-  <div class="grid2">
-    <div class="card"><div class="statlabel">Tổng thu</div><div class="statvalue income" id="walletIncome">0 ₫</div></div>
-    <div class="card"><div class="statlabel">Tổng chi</div><div class="statvalue expense" id="walletExpense">0 ₫</div></div>
-    <div class="card"><div class="statlabel">Chênh lệch</div><div class="statvalue" id="walletNet">0 ₫</div></div>
-    <div class="card"><div class="statlabel">Tiền trọ</div><div class="statvalue" id="walletRent">0 ₫</div></div>
+  <div class="pagehead">
+    <div>
+      <div class="eyebrow">MY MONEY</div>
+      <h1>Quản lý chi tiêu</h1>
+      <div class="sub">Theo dõi từng ngày, từng tháng và số dư chuyển tiếp.</div>
+    </div>
+    <button class="btn" onclick="openTransaction()">＋ Thêm khoản</button>
   </div>
-  <div class="sectiontitle"><h2>Tiền ở trọ</h2><span>Phòng · điện · nước · rác</span></div>
-  <div class="card">
+
+  <div class="toolbar">
+    <label class="sub" for="walletMonth">Tháng:</label>
+    <input class="field" type="month" id="walletMonth">
+    <button class="btn secondary small" onclick="goToCurrentWalletMonth()">Tháng hiện tại</button>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="sectiontitle" style="margin-top:0">
+      <h2>Số dư đầu kỳ</h2>
+    </div>
+    <p class="sub">
+      Nhập số tiền ban đầu tại tháng bắt đầu theo dõi.
+      Các tháng tiếp theo sẽ tự động cộng dồn thu, trừ chi và tiền trọ.
+    </p>
     <div class="formgrid">
-      <label>Tiền phòng (₫)<input class="field" type="number" id="rentRoom" placeholder="Ví dụ: 2500000"></label>
-      <label>Tiền điện (₫)<input class="field" type="number" id="rentElectric" placeholder="Ví dụ: 250000"></label>
-      <label>Tiền nước (₫)<input class="field" type="number" id="rentWater" placeholder="Ví dụ: 80000"></label>
-      <label>Tiền rác / phí khác (₫)<input class="field" type="number" id="rentOther" placeholder="Ví dụ: 30000"></label>
-      <button class="btn" onclick="saveRent()">Lưu tiền trọ tháng này</button>
+      <label>Tháng bắt đầu theo dõi
+        <input class="field" type="month" id="walletBaseMonth">
+      </label>
+      <label>Số dư ban đầu (₫)
+        <input class="field" type="number" id="walletInitialBalance"
+          min="0" step="1" placeholder="Ví dụ: 3000000">
+      </label>
+      <button class="btn" onclick="saveWalletSettings()">Lưu số dư ban đầu</button>
     </div>
   </div>
-  <div class="sectiontitle"><h2>Lịch sử thu chi</h2><span id="transactionCount">0 khoản</span></div>
-  <div class="toolbar"><input class="field" id="filterMonth" type="month"><select class="field" id="filterType"><option value="all">Tất cả khoản</option><option value="income">Khoản thu</option><option value="expense">Khoản chi</option></select><button class="btn secondary" onclick="exportCSV()">Xuất CSV</button><label class="btn secondary" for="importFile">Nhập file</label><input id="importFile" type="file" accept=".csv,.txt,.json" hidden onchange="importFile(event)"></div>
-  <div class="tablewrap"><table><thead><tr><th>Ngày</th><th>Khoản mục</th><th>Nhóm</th><th>Số tiền</th><th></th></tr></thead><tbody id="transactionRows"></tbody></table></div>
-  <p class="sub">Có thể nhập file CSV xuất từ Excel/Google Sheets. Dữ liệu được lưu trên thiết bị này.</p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="statlabel">Tổng thu tháng</div>
+      <div class="statvalue income" id="walletIncome">0 ₫</div>
+    </div>
+    <div class="card">
+      <div class="statlabel">Tổng chi gồm tiền trọ</div>
+      <div class="statvalue expense" id="walletExpense">0 ₫</div>
+    </div>
+    <div class="card">
+      <div class="statlabel">Chênh lệch thu − chi</div>
+      <div class="statvalue" id="walletNet">0 ₫</div>
+    </div>
+    <div class="card">
+      <div class="statlabel">Số dư cuối tháng</div>
+      <div class="statvalue" id="walletClosingBalance">0 ₫</div>
+    </div>
+  </div>
+
+  <div class="sectiontitle">
+    <h2>Chi phí ở trọ</h2>
+    <span>Được tính vào tổng chi tháng</span>
+  </div>
+
+  <div class="card">
+    <div class="formgrid">
+      <label>Tiền phòng (₫)
+        <input class="field" type="number" id="rentRoom" min="0" step="1">
+      </label>
+      <label>Tiền điện (₫)
+        <input class="field" type="number" id="rentElectric" min="0" step="1">
+      </label>
+      <label>Tiền nước (₫)
+        <input class="field" type="number" id="rentWater" min="0" step="1">
+      </label>
+      <label>Tiền rác / phí khác (₫)
+        <input class="field" type="number" id="rentOther" min="0" step="1">
+      </label>
+      <label>Ngày ghi nhận tiền trọ
+        <input class="field" type="date" id="rentDate">
+      </label>
+      <button class="btn" onclick="saveRent()">Lưu chi phí trọ</button>
+    </div>
+  </div>
+
+  <div class="sectiontitle">
+    <h2>Sổ thu chi theo ngày</h2>
+    <span>Kiểu bảng giống Excel</span>
+  </div>
+
+  <div class="tablewrap">
+    <table style="min-width:850px">
+      <thead>
+        <tr>
+          <th>Ngày</th>
+          <th>Nội dung thu chi</th>
+          <th>Tổng thu</th>
+          <th>Chi thường</th>
+          <th>Tiền trọ</th>
+          <th>Số dư cuối ngày</th>
+        </tr>
+      </thead>
+      <tbody id="dailyLedger"></tbody>
+    </table>
+  </div>
+
+  <div class="sectiontitle">
+    <h2>Lịch sử giao dịch</h2>
+    <span id="transactionCount">0 khoản</span>
+  </div>
+
+  <div class="toolbar">
+    <input class="field" id="filterMonth" type="month">
+    <select class="field" id="filterType">
+      <option value="all">Tất cả khoản</option>
+      <option value="income">Khoản thu</option>
+      <option value="expense">Khoản chi</option>
+    </select>
+    <button class="btn secondary" onclick="exportCSV()">Xuất CSV</button>
+    <label class="btn secondary" for="importFile">Nhập file</label>
+    <input id="importFile" type="file" accept=".csv,.txt,.json"
+      hidden onchange="importFile(event)">
+  </div>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Ngày</th>
+          <th>Khoản mục</th>
+          <th>Nhóm</th>
+          <th>Số tiền</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="transactionRows"></tbody>
+    </table>
+  </div>
+
+  <p class="sub">
+    Dữ liệu được lưu trên thiết bị này. Hãy sao lưu trước khi thay đổi lớn.
+  </p>
 </section>
 <section class="page" id="page-music">
   <div class="pagehead"><div><div class="eyebrow">LISTEN YOUR WAY</div><h1>Âm nhạc của tôi</h1><div class="sub">Một góc thư giãn mang cảm hứng Spotify.</div></div></div>
@@ -193,18 +310,213 @@ const defaultNotices=[
 {id:2,title:'Kiểm tra thời khóa biểu',body:'Nhớ cập nhật lịch học trong tuần để không bỏ lỡ buổi học nhé.',time:'Hôm nay',read:false,icon:'📚'},
 {id:3,title:'Ghi lại chi tiêu hằng ngày',body:'Nhập các khoản thu chi để theo dõi số dư chính xác hơn.',time:'Hôm nay',read:false,icon:'💸'}
 ];
-let state={transactions:[],rents:{},classes:[],notices:defaultNotices,theme:'auto',noticeEnabled:true,studentName:'Hoàng Anh Tấn Vũ'};
+let state={
+  transactions:[],
+  rents:{},
+  classes:[],
+  notices:defaultNotices,
+  theme:'auto',
+  noticeEnabled:true,
+  studentName:'Hoàng Anh Tấn Vũ',
+  walletInitialBalance:0,
+  walletBaseMonth:currentMonth()
+};
 function load(){try{const s=JSON.parse(localStorage.getItem('miSpaceV3')||'null');if(s)state={...state,...s}}catch(e){}}
 function save(){localStorage.setItem('miSpaceV3',JSON.stringify(state));renderAll()}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});if(page==='notifications')renderNotices()}
 function setTheme(theme){state.theme=theme;applyTheme();saveQuiet();['Light','Dark','Auto'].forEach(x=>$('theme'+x)?.classList.toggle('selected',theme===x.toLowerCase()));toast('Đã đổi giao diện')}
 function cycleTheme(){setTheme(state.theme==='light'?'dark':state.theme==='dark'?'auto':'light')}
 function applyTheme(){const dark=state.theme==='dark'||(state.theme==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]').content=dark?'#0e0f12':'#f7f7f8';['Light','Dark','Auto'].forEach(x=>{const el=$('theme'+x);if(el)el.classList.toggle('selected',state.theme===x.toLowerCase())})}
-function saveQuiet(){localStorage.setItem('miSpaceV3',JSON.stringify(state))}
+function saveQuiet(){localStorage.setItem('miSpaceV3',JSON.stringify(state))}function saveWalletSettings(){
+  const baseMonth = $('walletBaseMonth').value;
+  const balance = Number($('walletInitialBalance').value);
+
+  if (!baseMonth) {
+    alert('Bạn hãy chọn tháng bắt đầu theo dõi.');
+    return;
+  }
+
+  if (!Number.isFinite(balance) || balance < 0) {
+    alert('Số dư ban đầu không hợp lệ.');
+    return;
+  }
+
+  state.walletBaseMonth = baseMonth;
+  state.walletInitialBalance = balance;
+
+  save();
+  toast('Đã lưu số dư ban đầu');
+}
+ function goToCurrentWalletMonth(){
+  $('walletMonth').value = currentMonth();
+  $('filterMonth').value = currentMonth();
+  renderAll();
+}
 function unread(){return state.notices.filter(n=>!n.read).length}
 function renderBadges(){let n=unread();$('topBadge').textContent=n;$('topBadge').style.display=n?'grid':'none';$('sideBadge').textContent=n+' mới';$('sideBadge').style.display=n?'inline-flex':'none';$('bottomBadge').style.display=n?'block':'none';}
-function stats(){let ts=state.transactions.filter(t=>(t.date||'').startsWith(currentMonth()));let inc=ts.filter(t=>t.type==='income').reduce((a,t)=>a+Number(t.amount||0),0);let exp=ts.filter(t=>t.type==='expense').reduce((a,t)=>a+Number(t.amount||0),0);let rent=state.rents[currentMonth()]||{room:0,electric:0,water:0,other:0};let r=Number(rent.room)+Number(rent.electric)+Number(rent.water)+Number(rent.other);return {inc,exp,net:inc-exp,rent:r}}
-function renderStats(){let s=stats();[['homeIncome',s.inc],['homeExpense',s.exp],['homeBalance',s.net],['homeRent',s.rent],['walletIncome',s.inc],['walletExpense',s.exp],['walletNet',s.net],['walletRent',s.rent]].forEach(([id,v])=>$(id).textContent=money(v));$('transactionCount').textContent=state.transactions.length+' khoản';const r=state.rents[currentMonth()]||{};[['rentRoom','room'],['rentElectric','electric'],['rentWater','water'],['rentOther','other']].forEach(([id,k])=>{if($(id)&&document.activeElement!==$(id))$(id).value=r[k]||''})}
+function walletMonth(){
+  return $('walletMonth')?.value || currentMonth();
+}
+
+function rentTotal(month){
+  const r = state.rents[month] || {};
+  return ['room','electric','water','other'].reduce(
+    (sum, key) => sum + Number(r[key] || 0), 0
+  );
+}
+
+function monthTotals(month){
+  const ts = state.transactions.filter(
+    t => (t.date || '').startsWith(month)
+  );
+
+  const inc = ts
+    .filter(t => t.type === 'income')
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+  const exp = ts
+    .filter(t => t.type === 'expense')
+    .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+  const rent = rentTotal(month);
+
+  return {
+    inc,
+    exp,
+    rent,
+    totalExpense: exp + rent,
+    net: inc - exp - rent
+  };
+}
+
+function openingBalance(month){
+  const baseMonth = state.walletBaseMonth || currentMonth();
+  const baseBalance = Number(state.walletInitialBalance || 0);
+
+  if(month < baseMonth) return baseBalance;
+
+  const months = new Set([
+    baseMonth,
+    ...state.transactions.map(t => (t.date || '').slice(0, 7)),
+    ...Object.keys(state.rents)
+  ]);
+
+  let balance = baseBalance;
+
+  [...months]
+    .filter(m => m && m >= baseMonth && m < month)
+    .sort()
+    .forEach(m => {
+      balance += monthTotals(m).net;
+    });
+
+  return balance;
+}
+
+function closingBalance(month){
+  return openingBalance(month) + monthTotals(month).net;
+}
+
+function stats(month = currentMonth()){
+  return monthTotals(month);
+}
+function renderStats(){
+  const selectedMonth = walletMonth();
+  const walletStats = stats(selectedMonth);
+  const homeStats = stats(currentMonth());
+
+  $('homeIncome').textContent = money(homeStats.inc);
+  $('homeExpense').textContent = money(homeStats.totalExpense);
+  $('homeRent').textContent = money(homeStats.rent);
+  $('homeBalance').textContent = money(closingBalance(currentMonth()));
+
+  $('walletIncome').textContent = money(walletStats.inc);
+  $('walletExpense').textContent = money(walletStats.totalExpense);
+  $('walletNet').textContent = money(walletStats.net);
+  $('walletClosingBalance').textContent = money(
+    closingBalance(selectedMonth)
+  );
+
+  $('transactionCount').textContent =
+    state.transactions.filter(t =>
+      (t.date || '').startsWith(selectedMonth)
+    ).length + ' khoản';
+
+  const r = state.rents[selectedMonth] || {};
+
+  [
+    ['rentRoom', 'room'],
+    ['rentElectric', 'electric'],
+    ['rentWater', 'water'],
+    ['rentOther', 'other']
+  ].forEach(([id, key]) => {
+    if ($(id) && document.activeElement !== $(id)) {
+      $(id).value = r[key] || '';
+    }
+  });
+
+  if ($('rentDate') && document.activeElement !== $('rentDate')) {
+    $('rentDate').value = r.date || `${selectedMonth}-01`;
+  }
+
+  if ($('walletInitialBalance')) {
+    $('walletInitialBalance').value =
+      state.walletInitialBalance ?? 0;
+  }
+
+  if ($('walletBaseMonth')) {
+    $('walletBaseMonth').value =
+      state.walletBaseMonth || currentMonth();
+  }
+}
+ function renderDailyLedger(){
+  const month = walletMonth();
+  const [year, mon] = month.split('-').map(Number);
+  const daysInMonth = new Date(year, mon, 0).getDate();
+  const rent = state.rents[month] || {};
+  const rentDate = rent.date || `${month}-01`;
+
+  let balance = openingBalance(month);
+  let rows = '';
+
+  for (let day = 1; day <= daysInMonth; day++){
+    const date = `${month}-${String(day).padStart(2, '0')}`;
+
+    const transactions = state.transactions.filter(
+      t => t.date === date
+    );
+
+    const income = transactions
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+    const expense = transactions
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + Number(t.amount || 0), 0);
+
+    const rentExpense = date === rentDate ? rentTotal(month) : 0;
+
+    balance += income - expense - rentExpense;
+
+    const details = transactions.map(t =>
+      `${t.type === 'income' ? 'Thu' : 'Chi'}: ${t.title}`
+    );
+
+    if (rentExpense > 0) details.push('Chi: Tiền trọ');
+
+    rows += `
+      <tr>
+        <td>${date}</td>
+        <td>${details.length ? details.map(esc).join('<br>') : '—'}</td>
+        <td class="income">${income ? '+' + money(income) : '—'}</td>
+        <td class="expense">${expense ? '−' + money(expense) : '—'}</td>
+        <td class="expense">${rentExpense ? '−' + money(rentExpense) : '—'}</td>
+        <td><strong>${money(balance)}</strong></td>
+      </tr>`;
+  }
+
+  $('dailyLedger').innerHTML = rows;
+}
 function renderNotices(){renderBadges();let list=state.noticeEnabled?state.notices.filter(n=>noticeFilter==='all'||!n.read):[];$('noticeList').innerHTML=list.length?list.map(n=>`<article class="notice ${n.read?'read':'unread'}"><div class="dot"></div><div style="flex:1"><h3>${esc(n.icon||'🔔')} ${esc(n.title)}</h3><p>${esc(n.body)}</p><time>${esc(n.time||'')}</time></div>${n.read?'<span class="pill">Đã đọc</span>':`<button class="btn small" onclick="readNotice(${n.id})">Đã đọc</button>`}</article>`).join():'<div class="card sub">Không có thông báo nào ở đây.</div>';let recent=state.notices.slice().reverse().slice(0,2);$('homeNotices').innerHTML=recent.length?recent.map(n=>`<div class="feeditem"><div class="feedicon">${esc(n.icon||'🔔')}</div><div style="flex:1"><strong>${esc(n.title)}</strong><p>${esc(n.body)}</p></div>${!n.read?'<span class="pill">Mới</span>':''}</div>`).join():'<p class="sub">Chưa có thông báo.</p>'}
 function readNotice(id){state.notices=state.notices.map(n=>n.id===id?{...n,read:true}:n);save()}
 function markAllRead(){state.notices=state.notices.map(n=>({...n,read:true}));save();toast('Đã đọc tất cả thông báo')}
@@ -249,7 +561,20 @@ function openTransaction(){ $('modalTitle').textContent='Thêm khoản thu chi';
 function submitTransaction(e){e.preventDefault();state.transactions.push({id:Date.now().toString(),type:$('txType').value,title:$('txTitle').value.trim(),category:$('txCategory').value,amount:Number($('txAmount').value),date:$('txDate').value,note:$('txNote').value});closeModal();save();toast('Đã lưu khoản thu chi')}
 function closeModal(){$('modalback').classList.remove('show')}
 function deleteTransaction(id){if(confirm('Xoá khoản thu chi này?')){state.transactions=state.transactions.filter(t=>t.id!==id);save();toast('Đã xoá khoản')}}
-function saveRent(){state.rents[currentMonth()]={room:Number($('rentRoom').value)||0,electric:Number($('rentElectric').value)||0,water:Number($('rentWater').value)||0,other:Number($('rentOther').value)||0};save();toast('Đã lưu chi phí trọ')}
+function saveRent(){
+  const month = walletMonth();
+
+  state.rents[month] = {
+    room: Number($('rentRoom').value) || 0,
+    electric: Number($('rentElectric').value) || 0,
+    water: Number($('rentWater').value) || 0,
+    other: Number($('rentOther').value) || 0,
+    date: $('rentDate').value || `${month}-01`
+  };
+
+  save();
+  toast('Đã lưu chi phí trọ');
+}
 function addClass(){$('modalTitle').textContent='Thêm lịch học';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="submitClass(event)"><label>Tên môn học<input class="field" id="cSubject" required placeholder="Ví dụ: Đại số tuyến tính"></label><label>Ngày học<input class="field" type="date" id="cDate" value="${$('classDate').value||todayISO()}" required></label><label>Thời gian<input class="field" id="cTime" required placeholder="07:00 – 09:30"></label><label>Phòng học<input class="field" id="cRoom" placeholder="Ví dụ: A2-201"></label><label>Ghi chú<input class="field" id="cNote" placeholder="Giảng viên, nhóm lớp..."></label><button class="btn" type="submit">Lưu lịch học</button></form>`;$('modalback').classList.add('show')}
 function submitClass(e){e.preventDefault();state.classes.push({id:Date.now().toString(),subject:$('cSubject').value.trim(),date:$('cDate').value,time:$('cTime').value.trim(),room:$('cRoom').value.trim(),note:$('cNote').value.trim()});closeModal();save();toast('Đã thêm lịch học')}
 function deleteClass(id){if(confirm('Xoá lịch học này?')){state.classes=state.classes.filter(c=>c.id!==id);save()}}
