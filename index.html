@@ -263,6 +263,25 @@ function resetDemo(){if(confirm('Đặt lại dữ liệu về trạng thái ban
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 let toastTimer;function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display='none',2200)}
 $('filterMonth').value=currentMonth();$('classDate').value=todayISO();$('filterMonth').addEventListener('change',renderTransactions);$('filterType').addEventListener('change',renderTransactions);
-load();renderAll();if(state.theme==='auto')matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',applyTheme);
+load();
+renderAll();
+
+let lastDate = todayISO();
+
+setInterval(() => {
+  updateTodayLabels();
+
+  const currentDateValue = todayISO();
+
+  if (currentDateValue !== lastDate) {
+    lastDate = currentDateValue;
+    renderAll();
+  }
+}, 60000);
+
+if (state.theme === 'auto') {
+  matchMedia('(prefers-color-scheme: dark)')
+    .addEventListener?.('change', applyTheme);
+}
 </script>
 </body></html>
