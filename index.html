@@ -545,18 +545,20 @@ function updateTodayLabels() {
 }
 
 function renderAll() {
-  applyTheme();
-  renderBadges();
-  renderStats();
-  renderTransactions();
-  renderClasses();
-  renderNotices();
+applyTheme();
+renderBadges();
+renderStats();
+renderTransactions();
+renderDailyLedger();
+renderClasses();
+renderNotices();
 
-  $('profileName').textContent = state.studentName || 'Bạn';
-  $('noticeToggle').checked = state.noticeEnabled;
+$('profileName').textContent = state.studentName || 'Bạn';
+$('noticeToggle').checked = state.noticeEnabled;
 
-  updateTodayLabels();
+updateTodayLabels();
 }
+
 function openTransaction(){ $('modalTitle').textContent='Thêm khoản thu chi';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="submitTransaction(event)"><label>Loại khoản<select class="field" id="txType"><option value="expense">Khoản chi</option><option value="income">Khoản thu</option></select></label><label>Tên khoản mục<input class="field" id="txTitle" required placeholder="Ví dụ: Ăn sáng, tiền trợ cấp"></label><label>Nhóm<select class="field" id="txCategory"><option>Ăn uống</option><option>Đi lại</option><option>Học phí</option><option>Tiền trọ</option><option>Mua sắm</option><option>Trợ cấp</option><option>Lương / làm thêm</option><option>Khác</option></select></label><label>Số tiền (₫)<input class="field" id="txAmount" type="number" min="1" required placeholder="100000"></label><label>Ngày<input class="field" id="txDate" type="date" value="${todayISO()}" required></label><label>Ghi chú<input class="field" id="txNote" placeholder="Không bắt buộc"></label><button class="btn" type="submit">Lưu khoản này</button></form>`;$('modalback').classList.add('show')}
 function submitTransaction(e){e.preventDefault();state.transactions.push({id:Date.now().toString(),type:$('txType').value,title:$('txTitle').value.trim(),category:$('txCategory').value,amount:Number($('txAmount').value),date:$('txDate').value,note:$('txNote').value});closeModal();save();toast('Đã lưu khoản thu chi')}
 function closeModal(){$('modalback').classList.remove('show')}
@@ -587,9 +589,25 @@ function download(content,name,type){const blob=new Blob(['\ufeff',content],{typ
 function resetDemo(){if(confirm('Đặt lại dữ liệu về trạng thái ban đầu? Việc này sẽ xoá các khoản và lịch bạn đã nhập.')){state.transactions=[];state.rents={};state.classes=[];state.notices=defaultNotices.map(n=>({...n}));save();toast('Đã đặt lại dữ liệu')}}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 let toastTimer;function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display='none',2200)}
-$('filterMonth').value=currentMonth();$('classDate').value=todayISO();$('filterMonth').addEventListener('change',renderTransactions);$('filterType').addEventListener('change',renderTransactions);
-load();
+$('filterMonth').value = currentMonth();
+$('walletMonth').value = currentMonth();
+$('classDate').value = todayISO();
+
+$('filterMonth').addEventListener('change', renderTransactions);
+$('filterType').addEventListener('change', renderTransactions);
+
+$('walletMonth').addEventListener('change', () => {
+$('filterMonth').value = walletMonth();
 renderAll();
+});
+
+load();
+
+$('filterMonth').value = currentMonth();
+$('walletMonth').value = currentMonth();
+
+renderAll();
+
 
 let lastDate = todayISO();
 
