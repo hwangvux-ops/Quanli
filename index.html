@@ -172,7 +172,20 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
 <script>
 const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(Number(n)||0);
-const todayISO=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const todayISO = () => {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Ho_Chi_Minh',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date());
+
+  const p = Object.fromEntries(
+    parts.map(item => [item.type, item.value])
+  );
+
+  return `${p.year}-${p.month}-${p.day}`;
+};
 const currentMonth=()=>todayISO().slice(0,7);
 let noticeFilter='all';let playerPlaying=false;function selectMood(name,emoji){$('playerTitle').textContent=name;$('playerEmoji').textContent=emoji;$('playerSubtitle').textContent='Đã chọn mood · chưa kết nối nhạc';playerPlaying=false;$('playToggle').textContent='▶';toast('Đã chọn '+name)}function playMood(){selectMood('Mood hôm nay','🎧');togglePlayer()}function togglePlayer(){playerPlaying=!playerPlaying;$('playToggle').textContent=playerPlaying?'Ⅱ':'▶';$('playerSubtitle').textContent=playerPlaying?'Đang ở chế độ demo · chưa có nguồn phát':'Đã tạm dừng · chưa kết nối nhạc';toast(playerPlaying?'Đã bật giao diện trình phát':'Đã tạm dừng')}
 const defaultNotices=[
@@ -198,7 +211,40 @@ function markAllRead(){state.notices=state.notices.map(n=>({...n,read:true}));sa
 function toggleNotices(v){state.noticeEnabled=v;save();toast(v?'Đã bật thông báo trong app':'Đã tắt thông báo trong app')}
 function renderTransactions(){const month=$('filterMonth').value||currentMonth(),type=$('filterType').value;let rows=state.transactions.filter(t=>(t.date||'').startsWith(month)&&(type==='all'||t.type===type)).sort((a,b)=>b.date.localeCompare(a.date));$('transactionRows').innerHTML=rows.length?rows.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.title)}</td><td>${esc(t.category||'Khác')}</td><td class="${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</td><td><button class="btn danger small" onclick="deleteTransaction('${t.id}')">Xoá</button></td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:28px">Chưa có khoản nào trong tháng này.</td></tr>'}
 function renderClasses(){let cs=state.classes.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));$('classList').innerHTML=cs.length?cs.map(c=>`<div class="notice"><div class="feedicon">📘</div><div style="flex:1"><h3>${esc(c.subject)}</h3><p>${esc(c.date)} · ${esc(c.time)} · ${esc(c.room||'Chưa có phòng')}</p>${c.note?`<p>${esc(c.note)}</p>`:''}</div><button class="btn danger small" onclick="deleteClass('${c.id}')">Xoá</button></div>`).join(''):'<div class="card sub">Chưa có lịch học. Bấm “Thêm lịch” để nhập lịch của bạn.</div>';const todays=cs.filter(c=>c.date===todayISO());$('todayClasses').innerHTML=todays.length?todays.map(c=>`<div class="feeditem"><div class="feedicon">📚</div><div><strong>${esc(c.subject)}</strong><p>${esc(c.time)} · ${esc(c.room||'Chưa có phòng')}</p></div></div>`).join(''):'<div class="feeditem"><div class="feedicon">☕</div><div><strong>Chưa có lịch học được nhập cho hôm nay</strong><p>Thêm lịch học của bạn trong mục Thời khóa biểu.</p></div></div>'}
-function renderAll(){applyTheme();renderBadges();renderStats();renderTransactions();renderClasses();renderNotices();$('profileName').textContent=state.studentName||'Bạn';$('noticeToggle').checked=state.noticeEnabled;let d=new Date();$('todayLabel').textContent=d.toLocaleDateString('vi-VN',{weekday:'long',day:'numeric',month:'long'}).toUpperCase();$('datePretty').textContent=d.toLocaleDateString('vi-VN',{day:'numeric',month:'numeric',year:'numeric'})}
+
+function updateTodayLabels() {
+  const now = new Date();
+
+  $('todayLabel').textContent =
+    new Intl.DateTimeFormat('vi-VN', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long'
+    }).format(now).toUpperCase();
+
+  $('datePretty').textContent =
+    new Intl.DateTimeFormat('vi-VN', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    }).format(now);
+}
+
+function renderAll() {
+  applyTheme();
+  renderBadges();
+  renderStats();
+  renderTransactions();
+  renderClasses();
+  renderNotices();
+
+  $('profileName').textContent = state.studentName || 'Bạn';
+  $('noticeToggle').checked = state.noticeEnabled;
+
+  updateTodayLabels();
+}
 function openTransaction(){ $('modalTitle').textContent='Thêm khoản thu chi';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="submitTransaction(event)"><label>Loại khoản<select class="field" id="txType"><option value="expense">Khoản chi</option><option value="income">Khoản thu</option></select></label><label>Tên khoản mục<input class="field" id="txTitle" required placeholder="Ví dụ: Ăn sáng, tiền trợ cấp"></label><label>Nhóm<select class="field" id="txCategory"><option>Ăn uống</option><option>Đi lại</option><option>Học phí</option><option>Tiền trọ</option><option>Mua sắm</option><option>Trợ cấp</option><option>Lương / làm thêm</option><option>Khác</option></select></label><label>Số tiền (₫)<input class="field" id="txAmount" type="number" min="1" required placeholder="100000"></label><label>Ngày<input class="field" id="txDate" type="date" value="${todayISO()}" required></label><label>Ghi chú<input class="field" id="txNote" placeholder="Không bắt buộc"></label><button class="btn" type="submit">Lưu khoản này</button></form>`;$('modalback').classList.add('show')}
 function submitTransaction(e){e.preventDefault();state.transactions.push({id:Date.now().toString(),type:$('txType').value,title:$('txTitle').value.trim(),category:$('txCategory').value,amount:Number($('txAmount').value),date:$('txDate').value,note:$('txNote').value});closeModal();save();toast('Đã lưu khoản thu chi')}
 function closeModal(){$('modalback').classList.remove('show')}
