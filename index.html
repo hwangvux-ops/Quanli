@@ -211,7 +211,8 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
       <option value="income">Khoản thu</option>
       <option value="expense">Khoản chi</option>
     </select>
-    <button class="btn secondary" onclick="exportCSV()">Xuất CSV</button>
+<button class="btn secondary" onclick="exportCSV()">Xuất CSV</button>
+<button class="btn secondary" onclick="exportWalletXLSX()">Xuất Excel</button>
     <label class="btn secondary" for="importFile">Nhập file</label>
     <input id="importFile" type="file" accept=".csv,.txt,.json"
       hidden onchange="importFile(event)">
@@ -286,6 +287,7 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
 </div>
 <div class="modalback" id="modalback" onclick="if(event.target===this)closeModal()"><div class="modal"><div class="modalhead"><h2 id="modalTitle">Thêm khoản thu chi</h2><button class="close" onclick="closeModal()">×</button></div><div id="modalContent"></div></div></div>
 <div class="toast" id="toast"></div>
+ <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const money=n=>new Intl.NumberFormat('vi-VN',{style:'currency',currency:'VND',maximumFractionDigits:0}).format(Number(n)||0);
@@ -582,6 +584,233 @@ function submitClass(e){e.preventDefault();state.classes.push({id:Date.now().toS
 function deleteClass(id){if(confirm('Xoá lịch học này?')){state.classes=state.classes.filter(c=>c.id!==id);save()}}
 function editProfile(){$('modalTitle').textContent='Chỉnh sửa hồ sơ';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="event.preventDefault();state.studentName=$('editName').value.trim()||'Bạn';save();closeModal();toast('Đã cập nhật hồ sơ')"><label>Họ và tên<input class="field" id="editName" value="${esc(state.studentName)}" required></label><button class="btn" type="submit">Lưu thay đổi</button></form>`;$('modalback').classList.add('show')}
 function exportCSV(){const header=['date','type','title','category','amount','note'];const lines=[header.join(','),...state.transactions.map(t=>header.map(k=>csvCell(t[k]??'')).join(','))];download(lines.join('\n'),'mispace-thu-chi.csv','text/csv;charset=utf-8');toast('Đã xuất file CSV')}
+function exportWalletXLSX() {
+  if (!window.XLSX) {
+    alert('Không tải được thư viện Excel. Hãy kiểm tra kết nối mạng.');
+    return;
+  }
+
+  const m = walletMonth();
+  const [year, monthNum] = m.split('-').map(Number);
+  const days = new Date(year, monthNum, 0).getDate();
+  const rent = state.rents[m] || {};
+  const totals = monthTotals(m);
+  const opening = openingBalance(m);
+  const closing = opening + totals.net;
+  const num = v => Number(v) || 0;
+
+  const transactions = state.transactions
+    .filter(t => (t.date || '').startsWith(m))
+    .slice()
+    .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
+
+  function matches(t, pattern) {
+    return pattern.test(
+      `${t.category || ''} ${t.title || ''}`
+    );
+  }
+
+  function sumDay(day, type, filter = () => true) {
+    const date = `${m}-${String(day).padStart(2, '0')}`;
+
+    return transactions
+      .filter(t =>
+        t.date === date &&
+        t.type === type &&
+        filter(t)
+      )
+      .reduce((sum, t) => sum + num(t.amount), 0);
+  }
+
+  const rentDate = rent.date || `${m}-01`;
+
+  const dailyIncome = [];
+  const dailyExpense = [];
+  const dailyRent = [];
+  const dailyProfit = [];
+  const dailyBalance = [];
+
+  let balance = opening;
+
+  for (let day = 1; day <= days; day++) {
+    const date = `${m}-${String(day).padStart(2, '0')}`;
+    const income = sumDay(day, 'income');
+    const expense = sumDay(day, 'expense');
+    const rentAmount = date === rentDate ? num(totals.rent) : 0;
+
+    dailyIncome.push(income);
+    dailyExpense.push(expense);
+    dailyRent.push(rentAmount);
+
+    const profit = income - expense - rentAmount;
+    dailyProfit.push(profit);
+
+    balance += profit;
+    dailyBalance.push(balance);
+  }
+
+  const dayNumbers = Array.from(
+    { length: days },
+    (_, i) => i + 1
+  );
+
+  const rows = [
+    ['VSPACE - SỔ THU CHI', `Tháng ${monthNum}/${year}`],
+    ['Số dư đầu tháng', opening],
+    [],
+    ['Loại', 'Khoản mục', ...dayNumbers],
+
+    ['Thu', 'Tiền trợ cấp',
+      ...dayNumbers.map(d =>
+        sumDay(d, 'income', t =>
+          matches(t, /trợ cấp|allowance/i)
+        )
+      )
+    ],
+
+    ['', 'Các khoản thu khác',
+      ...dayNumbers.map(d =>
+        sumDay(d, 'income', t =>
+          !matches(t, /trợ cấp|allowance/i)
+        )
+      )
+    ],
+
+    ['', 'Tổng thu', ...dailyIncome],
+
+    ['Chi', 'Mua đồ',
+      ...dayNumbers.map(d =>
+        sumDay(d, 'expense', t =>
+          matches(t, /mua sắm|mua đồ|shopping/i)
+        )
+      )
+    ],
+
+    ['', 'Học phí',
+      ...dayNumbers.map(d =>
+        sumDay(d, 'expense', t =>
+          matches(t, /học phí|tuition/i)
+        )
+      )
+    ],
+
+    ['', 'Các khoản chi khác',
+      ...dayNumbers.map(d =>
+        sumDay(d, 'expense', t =>
+          !matches(t, /mua sắm|mua đồ|shopping|học phí|tuition/i)
+        )
+      )
+    ],
+
+    ['', 'Tổng chi giao dịch', ...dailyExpense],
+
+    ['', 'Chi phí ở trọ', ...dailyRent],
+
+    ['', 'Tổng chi gồm tiền trọ',
+      dailyExpense.map((v, i) => v + dailyRent[i])
+    ],
+
+    ['Lợi nhuận trong ngày', '', ...dailyProfit],
+
+    ['Số dư cuối ngày', '', ...dailyBalance],
+
+    [],
+    ['TỔNG KẾT THÁNG'],
+    ['Tổng thu', num(totals.inc)],
+    ['Tổng chi giao dịch', num(totals.exp)],
+    ['Tổng chi phí ở trọ', num(totals.rent)],
+    ['Tổng chi gồm tiền trọ', num(totals.totalExpense)],
+    ['Lợi nhuận tháng', num(totals.net)],
+    ['Số dư đầu tháng', opening],
+    ['Số dư cuối tháng', closing]
+  ];
+
+  const wb = XLSX.utils.book_new();
+
+  // Sheet 1: Bảng thu chi theo ngày
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  ws['!cols'] = [
+    { wch: 26 },
+    { wch: 30 },
+    ...dayNumbers.map(() => ({ wch: 13 }))
+  ];
+
+  const range = XLSX.utils.decode_range(ws['!ref']);
+
+  for (let R = range.s.r; R <= range.e.r; R++) {
+    for (let C = range.s.c; C <= range.e.c; C++) {
+      const address = XLSX.utils.encode_cell({ r: R, c: C });
+      const cell = ws[address];
+
+      if (
+        cell &&
+        typeof cell.v === 'number' &&
+        !(R === 3 && C >= 2)
+      ) {
+        cell.z = '#,##0 "₫"';
+      }
+    }
+  }
+
+  XLSX.utils.book_append_sheet(wb, ws, `Tháng ${monthNum}`);
+
+  // Sheet 2: Chi phí ở trọ
+  const rentRows = [
+    ['CHI PHÍ Ở TRỌ'],
+    ['Tháng', `${monthNum}/${year}`],
+    ['Ngày ghi nhận', rentDate],
+    [],
+    ['Khoản mục', 'Số tiền'],
+    ['Tiền phòng', num(rent.room)],
+    ['Tiền điện', num(rent.electric)],
+    ['Tiền nước', num(rent.water)],
+    ['Tiền rác / phí khác', num(rent.other)],
+    ['Tổng tiền trọ', num(totals.rent)]
+  ];
+
+  const rentWs = XLSX.utils.aoa_to_sheet(rentRows);
+  rentWs['!cols'] = [{ wch: 28 }, { wch: 22 }];
+
+  [6, 7, 8, 9, 10].forEach(row => {
+    const cell = rentWs[`B${row}`];
+    if (cell) cell.z = '#,##0 "₫"';
+  });
+
+  XLSX.utils.book_append_sheet(wb, rentWs, 'Chi phí ở trọ');
+
+  // Sheet 3: Lịch sử giao dịch
+  const historyRows = [
+    ['Ngày', 'Loại', 'Khoản mục', 'Nhóm', 'Số tiền', 'Ghi chú'],
+    ...transactions.map(t => [
+      t.date || '',
+      t.type === 'income' ? 'Thu' : 'Chi',
+      t.title || '',
+      t.category || 'Khác',
+      num(t.amount),
+      t.note || ''
+    ])
+  ];
+
+  const historyWs = XLSX.utils.aoa_to_sheet(historyRows);
+  historyWs['!cols'] = [
+    { wch: 14 },
+    { wch: 12 },
+    { wch: 28 },
+    { wch: 20 },
+    { wch: 18 },
+    { wch: 30 }
+  ];
+
+  for (let R = 1; R < historyRows.length; R++) {
+    const cell = historyWs[`E${R + 1}`];
+    if (cell) cell.z = '#,##0 "₫"';
+  }
+
+  XLSX.utils.book_append_sheet(wb, historyWs, 'Lịch sử giao dịch');
+
+  XLSX.writeFile(wb, `Vspace_Chi_tieu_${m}.xlsx`);
+  toast('Đã xuất Excel tháng ' + m);
+}
 function csvCell(v){return '"'+String(v).replaceAll('"','""')+'"'}
 function importFile(e){const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>{try{let txt=String(reader.result);if(f.name.toLowerCase().endsWith('.json')){const data=JSON.parse(txt);const arr=Array.isArray(data)?data:data.transactions;if(!Array.isArray(arr))throw Error('JSON không có danh sách transactions');state.transactions.push(...arr.map(t=>({...t,id:String(t.id||Date.now()+Math.random()),date:t.date||todayISO(),type:t.type==='income'?'income':'expense',amount:Number(t.amount)||0,title:t.title||t.category||'Khoản nhập'})))}else{const lines=txt.replace(/^\uFEFF/,'').split(/\r?\n/).filter(x=>x.trim());if(lines.length<2)throw Error('File không có dữ liệu');const parse=line=>{let out=[],cur='',q=false;for(let i=0;i<line.length;i++){let c=line[i];if(c==='"'&&line[i+1]==='"'){cur+='"';i++}else if(c==='"')q=!q;else if(c===','&&!q){out.push(cur);cur=''}else cur+=c}out.push(cur);return out};const heads=parse(lines[0]).map(x=>x.trim().toLowerCase());const ix=k=>heads.indexOf(k);let count=0;for(const line of lines.slice(1)){const a=parse(line);const date=a[ix('date')]||a[ix('ngày')]||todayISO();const title=a[ix('title')]||a[ix('khoản mục')]||a[ix('nội dung')]||a[ix('description')]||'Khoản nhập';const typ=(a[ix('type')]||a[ix('loại')]||'expense').toLowerCase();const raw=(a[ix('amount')]||a[ix('số tiền')]||'0').replace(/[₫đ,\s]/g,'');const amount=Number(raw);if(!amount)continue;state.transactions.push({id:(Date.now()+Math.random()).toString(),date,type:['income','thu','khoản thu'].includes(typ)?'income':'expense',title,category:a[ix('category')]||a[ix('nhóm')]||'Khác',amount,note:a[ix('note')]||a[ix('ghi chú')]||''});count++}if(!count)throw Error('Không tìm thấy dòng hợp lệ. CSV cần có cột date, type, title, amount hoặc cột tiếng Việt tương ứng.')}}catch(err){alert('Không nhập được file: '+err.message);return}save();toast('Đã nhập dữ liệu');e.target.value=''};reader.readAsText(f)}
 function backupData(){download(JSON.stringify(state,null,2),'mispace-backup.json','application/json');toast('Đã tạo bản sao lưu')}
