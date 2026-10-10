@@ -720,7 +720,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 </aside>
 <main>
 <section class="page active" id="page-home">
-  <div class="pagehead"><div><div class="eyebrow" id="todayLabel">HÔM NAY</div><h1>Chào bạn, Tấn Vũ 👋</h1><div class="sub">Sẵn sàng cho một ngày thật năng suất?</div></div><span class="pill">MY SPACE · 2026</span></div>
+  <div class="pagehead"><div><div class="eyebrow" id="todayLabel">HÔM NAY</div><h1 id="homeGreeting">Chào bạn 👋</h1><div class="sub">Sẵn sàng cho một ngày thật năng suất?</div></div><span class="pill">MY SPACE · 2026</span></div>
   <div class="stories">
     <button class="story" onclick="go('timetable')"><div class="storyring"><div class="inside">📚</div></div><small>Lịch học</small></button>
     <button class="story" onclick="go('wallet')"><div class="storyring"><div class="inside">💸</div></div><small>Ví tiền</small></button>
@@ -1194,7 +1194,7 @@ function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.togg
 function setTheme(theme){state.theme=theme;applyTheme();saveQuiet();toast(theme==='auto'?'Đã bật tự động theo thiết bị':'Đã đổi giao diện')}
 function cycleTheme(){const currentlyDark=document.documentElement.dataset.theme==='dark';setTheme(currentlyDark?'light':'dark')}
 function applyTheme(){const auto=state.theme==='auto';const dark=auto?window.matchMedia('(prefers-color-scheme: dark)').matches:state.theme==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=dark?'#0e0f12':'#f7f7f8';const topIcon=$('themeTopIcon');if(topIcon)topIcon.textContent=dark?'☾':'☀';const topButton=document.querySelector('.theme-top-button');if(topButton){topButton.title=dark?'Đang tối — bấm để chuyển sáng':'Đang sáng — bấm để chuyển tối';topButton.setAttribute('aria-label',dark?'Đang dùng giao diện tối, bấm để chuyển sáng':'Đang dùng giao diện sáng, bấm để chuyển tối')}const sw=$('themeSwitch');if(sw){sw.checked=dark;sw.disabled=auto}const hint=$('themeSwitchHint');if(hint)hint.textContent=auto?'Đang tự động theo thiết bị.':(dark?'Đang dùng giao diện tối.':'Đang dùng giao diện sáng.');const autoSwitch=$('themeAutoSwitch');if(autoSwitch)autoSwitch.checked=auto;const autoHint=$('themeAutoHint');if(autoHint)autoHint.textContent=auto?'Đang bật — giao diện sẽ đổi theo thiết bị.':'Tắt để tự chọn giao diện sáng hoặc tối.'}
-function saveQuiet(){localStorage.setItem('miSpaceV3',JSON.stringify(state))}function saveWalletSettings(){
+function saveQuiet(){try{localStorage.setItem('miSpaceV3',JSON.stringify(state));return true;}catch(err){console.error('Không lưu được dữ liệu Vspace:',err);return false;}}function saveWalletSettings(){
   const baseMonth = $('walletBaseMonth').value;
   const balance = Number($('walletInitialBalance').value);
 
@@ -1432,7 +1432,9 @@ renderDailyLedger();
 renderClasses();
 renderNotices();
 
-$('profileName').textContent = state.studentName || 'Bạn';
+$('profileName').textContent = state.studentName || 'Người dùng';
+const homeGreeting = $('homeGreeting');
+if (homeGreeting) homeGreeting.textContent = 'Chào ' + (String(state.studentName || '').trim() || 'bạn') + ' 👋';
 applyProfilePhoto();
 $('noticeToggle').checked = state.noticeEnabled;
 
@@ -1544,8 +1546,33 @@ function confirmProfileCrop(){
     cancelProfileCrop();toast('Đã cập nhật ảnh vuông cho hồ sơ và thẻ ví');
   }catch(err){console.error(err);alert('Không cắt được ảnh này. Bà thử chọn ảnh khác nhé.');}
 }
-function editProfile(){$('modalTitle').textContent='Đổi tên';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="saveProfileName(event)"><label>Tên hiển thị<input class="field" id="editName" maxlength="50" value="${esc(state.studentName)}" placeholder="Nhập tên bạn muốn dùng" required></label><p class="muted" style="margin:0">Tên mới sẽ cập nhật trên Hồ sơ và thẻ Ví.</p><button class="btn" type="submit">Lưu tên mới</button></form>`;$('modalback').classList.add('show');setTimeout(()=>$('editName')?.focus(),50)}
-function saveProfileName(e){e.preventDefault();const input=$('editName');const name=input?.value.trim();if(!name){input?.focus();return;}state.studentName=name;saveQuiet();renderAll();closeModal();toast('Đã đổi tên thành '+name)}
+function editProfile(){
+  const title=$('modalTitle'), content=$('modalContent'), back=$('modalback');
+  if(!title||!content||!back){alert('Không mở được khung đổi tên. Bà tải lại trang rồi thử lại nhé.');return;}
+  title.textContent='Đổi tên';
+  const currentName=String(state.studentName||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  content.innerHTML=`<form class="formgrid" id="editNameForm" onsubmit="saveProfileName(event)"><label for="editName">Tên hiển thị</label><input class="field" id="editName" maxlength="50" value="${currentName}" placeholder="Nhập tên bạn muốn dùng" autocomplete="name" required><p class="muted" style="margin:0">Tên mới sẽ cập nhật trên Hồ sơ và thẻ Ví.</p><button class="btn" id="saveProfileNameButton" type="submit">Lưu tên mới</button></form>`;
+  back.classList.add('show');
+  setTimeout(()=>{const input=$('editName');input?.focus();input?.select();},50);
+}
+function saveProfileName(e){
+  if(e){e.preventDefault();e.stopPropagation();}
+  const input=$('editName');
+  const name=String(input?.value||'').trim();
+  if(!name){input?.setCustomValidity('Bà nhập tên trước nha.');input?.reportValidity();input?.focus();return false;}
+  if(name.length>50){alert('Tên tối đa 50 ký tự nha.');input?.focus();return false;}
+  const oldName=state.studentName;
+  state.studentName=name;
+  if(!saveQuiet()){
+    state.studentName=oldName;
+    alert('Trình duyệt đang chặn lưu dữ liệu nên chưa đổi tên được. Bà thử mở web bằng trình duyệt bình thường, không ở chế độ riêng tư, rồi thử lại nhé.');
+    return false;
+  }
+  try{renderAll();}catch(err){console.error('Lỗi cập nhật tên trên giao diện:',err);const profileName=$('profileName');if(profileName)profileName.textContent=name;const walletUserName=$('walletUserName');if(walletUserName)walletUserName.textContent=name;const walletAvatar=$('walletAvatar');if(walletAvatar)walletAvatar.textContent=name.trim().slice(-1).toUpperCase();}
+  closeModal();
+  toast('Đã đổi tên thành '+name);
+  return false;
+}
 function exportCSV(){const header=['date','type','title','category','amount','note'];const lines=[header.join(','),...state.transactions.map(t=>header.map(k=>csvCell(t[k]??'')).join(','))];download(lines.join('\n'),'mispace-thu-chi.csv','text/csv;charset=utf-8');toast('Đã xuất file CSV')}
 function exportWalletXLSX() {
   if (!window.XLSX) {
