@@ -554,8 +554,6 @@ transition: none !important;
 /* ===== KẾT THÚC GIAO DIỆN WALLET ===== */
 
 
-/* Chỉ giữ nút Trang trí thẻ ở chân thẻ ví; ẩn mục lịch sử giao dịch khỏi giao diện. */
-#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{flex:1 1 100%!important;width:100%!important;border-right:0!important}
 </style>
 <style>
 
@@ -613,7 +611,7 @@ transition: none !important;
 #walletCustomizePanel .wallet-color-swatch.active,#walletCustomizePanel .wallet-skin-option.active{border-color:#d8ff9b;background:#ffffff18}
 #page-wallet .wallet-account.wallet-color-blue{background:radial-gradient(circle at 100% 0%,#3659a9 0,transparent 43%),linear-gradient(130deg,#101a38,#172b55 68%,#142445)!important}
 #page-wallet .wallet-account.wallet-color-green{background:linear-gradient(130deg,#064e3b,#159765)!important}#page-wallet .wallet-account.wallet-color-purple{background:linear-gradient(130deg,#35205f,#7851b8)!important}#page-wallet .wallet-account.wallet-color-rose{background:linear-gradient(130deg,#641d3c,#c04b72)!important}#page-wallet .wallet-account.wallet-color-graphite{background:linear-gradient(130deg,#20252d,#505966)!important}#page-wallet .wallet-account.wallet-color-gold{background:linear-gradient(130deg,#654313,#b98b3e)!important}
-#page-wallet .wallet-account.wallet-skin-sakura{background:radial-gradient(circle at 88% 12%,#f8d9e3 0 12%,transparent 13%),linear-gradient(135deg,#854967,#d998b3 60%,#5e385e)!important}#page-wallet .wallet-account.wallet-skin-beach{background:radial-gradient(ellipse at 90% 12%,#ffe5a6 0 10%,transparent 11%),linear-gradient(160deg,#54c8d2,#087a9b 56%,#f0bd78)!important}#page-wallet .wallet-account.wallet-skin-aurora{background:radial-gradient(ellipse at 80% 15%,#6ee7cf 0,transparent 34%),linear-gradient(135deg,#101b43,#276d83 58%,#684b99)!important}#page-wallet .wallet-account.wallet-skin-lavender{background:radial-gradient(ellipse at 90% 10%,#e7d5ff 0,transparent 28%),linear-gradient(135deg,#6b5b9e,#9a8ad2 58%,#4e426e)!important}#page-wallet .wallet-account.wallet-skin-sunset{background:radial-gradient(ellipse at 90% 10%,#ffdc9d 0,transparent 32%),linear-gradient(135deg,#583f75,#d55d65 58%,#f2a65a)!important}#page-wallet .wallet-account.wallet-skin-forest{background:radial-gradient(ellipse at 90% 10%,#b3d6a0 0,transparent 30%),linear-gradient(135deg,#163c3a,#2c795b 58%,#102f30)!important}
+#page-wallet .wallet-account.wallet-skin-sakura{background:linear-gradient(135deg,rgba(70,20,48,.28),rgba(70,20,48,.08)),url('./anhdao.png') center/cover no-repeat,#d998b3!important}#page-wallet .wallet-account.wallet-skin-beach{background:radial-gradient(ellipse at 90% 12%,#ffe5a6 0 10%,transparent 11%),linear-gradient(160deg,#54c8d2,#087a9b 56%,#f0bd78)!important}#page-wallet .wallet-account.wallet-skin-aurora{background:radial-gradient(ellipse at 80% 15%,#6ee7cf 0,transparent 34%),linear-gradient(135deg,#101b43,#276d83 58%,#684b99)!important}#page-wallet .wallet-account.wallet-skin-lavender{background:radial-gradient(ellipse at 90% 10%,#e7d5ff 0,transparent 28%),linear-gradient(135deg,#6b5b9e,#9a8ad2 58%,#4e426e)!important}#page-wallet .wallet-account.wallet-skin-sunset{background:radial-gradient(ellipse at 90% 10%,#ffdc9d 0,transparent 32%),linear-gradient(135deg,#583f75,#d55d65 58%,#f2a65a)!important}#page-wallet .wallet-account.wallet-skin-forest{background:radial-gradient(ellipse at 90% 10%,#b3d6a0 0,transparent 30%),linear-gradient(135deg,#163c3a,#2c795b 58%,#102f30)!important}
 @media(max-width:700px){#page-wallet .wallet-card-bottom-actions{width:calc(100% + 38px);margin:0 -19px -1px;padding-right:9px;border-radius:0 0 21px 21px}#page-wallet .wallet-card-bottom-actions .wallet-history-teaser{padding-left:19px}#page-wallet .wallet-customize-panel{border-radius:0 0 20px 20px}}
 </style>
 
@@ -788,6 +786,11 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 </div>
 
     <div class="wallet-card-bottom-actions">
+      <button class="wallet-history-teaser" type="button" onclick="go('history')" aria-label="Mở lịch sử giao dịch">
+        <span class="wallet-history-teaser-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.2 2"></path></svg></span>
+        <span class="wallet-history-teaser-copy"><strong>Lịch sử giao dịch</strong><small id="walletHistoryTeaserCount">Xem các khoản thu chi</small></span>
+        <span class="wallet-history-teaser-arrow">›</span>
+      </button>
       <button class="wallet-customize-trigger" type="button" onclick="toggleWalletCustomize()" aria-label="Đổi màu hoặc họa tiết thẻ" aria-expanded="false" aria-controls="walletCustomizePanel" title="Tùy chỉnh thẻ">
         <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2.2 2.2 0 0 0 1.5-3.8 1.7 1.7 0 0 1 1.2-2.9H18a3 3 0 0 0 3-3c0-4.6-4-8.3-9-8.3Z"/><circle cx="7.5" cy="10" r="1"/><circle cx="10" cy="6.8" r="1"/><circle cx="15" cy="7.5" r="1"/></svg><span class="wallet-customize-trigger-copy"><strong>Trang trí thẻ</strong><small>Chạm để thay đổi giao diện</small></span>
       </button>
@@ -1042,6 +1045,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     </table>
   </div>
 
+  <p class="sub">Lịch sử giao dịch và các tệp sao lưu nằm trong thẻ số dư phía trên. Chạm “Lịch sử giao dịch” để mở.</p>
 </section>
 <section class="page" id="page-history">
   <div class="pagehead"><div><div class="eyebrow">VSPACE WALLET</div><h1>Lịch sử giao dịch</h1><div class="sub">Các khoản thu chi của bạn, sắp xếp mới nhất trước.</div></div><button class="btn secondary small" type="button" onclick="go('wallet')">‹ Quay lại Ví tiền</button></div>
@@ -1106,7 +1110,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 <button data-page="timetable" onclick="go('timetable')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>Lịch học</button>
 <button data-page="music" onclick="go('music')"><span style="font-size:23px;line-height:22px">♫</span>Nhạc</button>
 <button data-page="wallet" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="15" rx="3"/><path d="M2 9h20M16 15h2"/></svg>Ví tiền</button>
-
+<button data-page="history" onclick="go('history')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v15H4zM8 9h8M8 13h8M8 17h5" stroke-linecap="round" stroke-linejoin="round"/></svg>Giao dịch</button>
 <button data-page="notifications" onclick="go('notifications')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>Thông báo<span id="bottomBadge" class="mini-badge"></span></button>
 <button data-page="profile" onclick="go('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Cá nhân</button>
 </nav>
