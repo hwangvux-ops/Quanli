@@ -3,12 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f7f7f8">
+<meta name="theme-color" content="#0e0f12">
+<script>/* Set the saved theme before CSS paints, avoiding a light-background flash. */
+try{const saved=JSON.parse(localStorage.getItem('miSpaceV3')||'null');const mode=saved&&saved.theme?saved.theme:'light';const dark=mode==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:mode==='dark';document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]').content=dark?'#0e0f12':'#f7f7f8'}catch(e){document.documentElement.dataset.theme='light'}
+</script>
 <title>MiSpace — Personal Hub</title>
 <link rel="manifest" href="manifest.json">
 <style>
 :root{--bg:#f7f7f8;--surface:#fff;--surface2:#f0f1f3;--text:#17181b;--muted:#747780;--line:#e4e5e9;--accent:#1ed760;--accent2:#e2f8e9;--danger:#ff3040;--green:#1d9e65;--shadow:0 8px 28px #1111110b}
 [data-theme="dark"]{--bg:#0e0f12;--surface:#17191e;--surface2:#22252c;--text:#f4f5f7;--muted:#a0a4ad;--line:#2c3038;--accent:#1ed760;--accent2:#183525;--danger:#ff6672;--green:#5ad59a;--shadow:0 8px 28px #0004}
+.theme-top-button{font-size:21px;display:grid;place-items:center}.theme-top-button #themeTopIcon{display:block;line-height:1;transition:transform .2s}.theme-top-button:active #themeTopIcon{transform:scale(.88)}
+.theme-setting-row{align-items:center}.theme-switch{display:inline-flex;position:relative;flex-shrink:0;cursor:pointer;-webkit-tap-highlight-color:transparent}.theme-switch input{position:absolute;opacity:0;width:1px;height:1px}.theme-switch-track{width:76px;height:40px;border-radius:999px;background:linear-gradient(135deg,#252a36,#11151e);border:1px solid #414858;display:flex;align-items:center;justify-content:space-between;padding:0 11px;position:relative;box-shadow:inset 0 2px 5px #0005;transition:background .25s,border-color .25s}.theme-switch-icon{font-size:17px;line-height:1;z-index:1;color:#aeb8cb}.theme-sun{color:#f9c95c}.theme-moon{color:#dce5ff}.theme-switch-thumb{position:absolute;left:3px;top:3px;width:32px;height:32px;border-radius:50%;background:linear-gradient(145deg,#e5e9f2,#aeb8ca);box-shadow:0 2px 7px #0005;transition:transform .25s,background .25s}.theme-switch input:checked+.theme-switch-track{background:linear-gradient(135deg,#252a36,#11151e);border-color:#414858}.theme-switch input:checked+.theme-switch-track .theme-switch-thumb{transform:translateX(36px);background:linear-gradient(145deg,#e5e9f2,#aeb8ca)}.theme-switch input:not(:checked)+.theme-switch-track{background:linear-gradient(135deg,#d8edff,#a7d4ff);border-color:#91c7f5}.theme-switch input:not(:checked)+.theme-switch-track .theme-switch-thumb{background:linear-gradient(145deg,#fff,#f4c95d)}.theme-switch input:disabled+.theme-switch-track{opacity:.55;cursor:not-allowed}.theme-auto-row input{width:22px;height:22px;accent-color:var(--accent);flex-shrink:0}.theme-switch input:focus-visible+.theme-switch-track{outline:3px solid var(--accent);outline-offset:3px}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;transition:background .2s,color .2s}button,input,select{font:inherit}button{cursor:pointer} .app{max-width:1100px;margin:auto;min-height:100dvh;padding-bottom:88px}
 .topbar{height:66px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:10}
 .brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:850;letter-spacing:-.8px}.brandmark{width:35px;height:35px;border-radius:12px;background:linear-gradient(145deg,#1ed760,#168b46 70%,#0c5b30);display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px}.brand span:last-child{background:linear-gradient(90deg,var(--text),var(--muted));background-clip:text;color:transparent}
@@ -88,7 +93,7 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:15px}.field{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--text);border-radius:12px;padding:12px 13px;outline:none}.field:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}.toolbar .field{width:auto;min-width:120px;flex:1}
 .notice{display:flex;gap:13px;padding:15px;border:1px solid var(--line);background:var(--surface);border-radius:16px;margin-bottom:10px;align-items:flex-start}.notice.unread{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));background:var(--accent2)}.notice .dot{width:8px;height:8px;background:var(--accent);border-radius:50%;margin-top:7px;flex-shrink:0}.notice.read .dot{background:transparent;border:1px solid var(--muted)}.notice h3{font-size:14px;margin:0 0 5px}.notice p{font-size:13px;line-height:1.45;color:var(--muted);margin:0}.notice time{font-size:11px;color:var(--muted);display:block;margin-top:8px}
 .tablewrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:var(--surface)}table{width:100%;border-collapse:collapse;min-width:570px}th,td{text-align:left;padding:13px 14px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.5px;background:var(--surface2)}tr:last-child td{border-bottom:0}.income{color:var(--green);font-weight:800}.expense{color:var(--danger);font-weight:800}
-.music-hero{background:linear-gradient(135deg,#143d27,#1ed760);color:#fff;border-radius:22px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px;overflow:hidden}.music-hero h2{font-size:26px;line-height:1.1;margin:8px 0}.music-hero p{margin:0;color:#e3ffeb;font-size:13px}.music-disc{width:94px;height:94px;border-radius:18px;background:linear-gradient(145deg,#d9ff8e,#1ed760 48%,#063d20);display:grid;place-items:center;font-size:38px;box-shadow:0 12px 30px #0003;flex-shrink:0}.music-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.album{background:var(--surface);border:1px solid var(--line);padding:12px;border-radius:16px;min-width:0}.albumart{aspect-ratio:1;border-radius:11px;display:grid;place-items:center;font-size:32px;margin-bottom:10px;background:linear-gradient(135deg,#e9f7b0,#36c96b)}.album:nth-child(2) .albumart{background:linear-gradient(135deg,#ffd0e2,#ab5de8)}.album:nth-child(3) .albumart{background:linear-gradient(135deg,#b7e7ff,#3165bd)}.album:nth-child(4) .albumart{background:linear-gradient(135deg,#ffe0a6,#ed7b32)}.album:nth-child(5) .albumart{background:linear-gradient(135deg,#e4d7ff,#7053cb)}.album:nth-child(6) .albumart{background:linear-gradient(135deg,#c8f5e4,#178c83)}.album strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.album small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.playerbar{display:flex;align-items:center;gap:12px;padding:13px;background:var(--surface2);border-radius:16px;margin-top:18px}.playercover{width:44px;height:44px;border-radius:9px;background:linear-gradient(135deg,#d9ff8e,#1ed760);display:grid;place-items:center;font-size:21px}.playerinfo{flex:1;min-width:0}.playerinfo strong{display:block;font-size:13px}.playerinfo small{color:var(--muted);font-size:11px}.playbtn{border:0;border-radius:50%;width:40px;height:40px;background:#1ed760;color:#06230f;font-weight:900;font-size:17px}.profiletop{display:flex;align-items:center;gap:16px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;margin-bottom:16px}.avatar{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#0b65ef,#9d4edd);color:white;font-size:24px;font-weight:850;flex-shrink:0}.profiletop h2{margin:0 0 5px;font-size:20px}.profiletop p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.music-hero{background:linear-gradient(135deg,#143d27,#1ed760);color:#fff;border-radius:22px;padding:22px;display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:18px;overflow:hidden}.music-hero h2{font-size:26px;line-height:1.1;margin:8px 0}.music-hero p{margin:0;color:#e3ffeb;font-size:13px}.music-disc{width:94px;height:94px;border-radius:18px;background:linear-gradient(145deg,#d9ff8e,#1ed760 48%,#063d20);display:grid;place-items:center;font-size:38px;box-shadow:0 12px 30px #0003;flex-shrink:0}.music-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.album{background:var(--surface);border:1px solid var(--line);padding:12px;border-radius:16px;min-width:0}.albumart{aspect-ratio:1;border-radius:11px;display:grid;place-items:center;font-size:32px;margin-bottom:10px;background:linear-gradient(135deg,#e9f7b0,#36c96b)}.album:nth-child(2) .albumart{background:linear-gradient(135deg,#ffd0e2,#ab5de8)}.album:nth-child(3) .albumart{background:linear-gradient(135deg,#b7e7ff,#3165bd)}.album:nth-child(4) .albumart{background:linear-gradient(135deg,#ffe0a6,#ed7b32)}.album:nth-child(5) .albumart{background:linear-gradient(135deg,#e4d7ff,#7053cb)}.album:nth-child(6) .albumart{background:linear-gradient(135deg,#c8f5e4,#178c83)}.album strong{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.album small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.playerbar{display:flex;align-items:center;gap:12px;padding:13px;background:var(--surface2);border-radius:16px;margin-top:18px}.playercover{width:44px;height:44px;border-radius:9px;background:linear-gradient(135deg,#d9ff8e,#1ed760);display:grid;place-items:center;font-size:21px}.playerinfo{flex:1;min-width:0}.playerinfo strong{display:block;font-size:13px}.playerinfo small{color:var(--muted);font-size:11px}.playbtn{border:0;border-radius:50%;width:40px;height:40px;background:#1ed760;color:#06230f;font-weight:900;font-size:17px}.profiletop{display:flex;align-items:center;gap:16px;padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:20px;margin-bottom:16px}.avatar{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:linear-gradient(135deg,#0b65ef,#9d4edd);color:white;font-size:24px;font-weight:850;flex-shrink:0}.avatar img,.wallet-avatar img,.profile-mini-photo{width:100%;height:100%;object-fit:cover;display:block}.wallet-avatar{overflow:hidden}.profile-photo-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.profile-mini-photo{width:100%;height:100%;border-radius:50%;object-fit:cover}.profiletop h2{margin:0 0 5px;font-size:20px}.profiletop p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
 .settingsrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}.settingsrow:last-child{border-bottom:0}.settingsrow strong{font-size:14px}.settingsrow p{font-size:12px;color:var(--muted);margin:5px 0 0}.segmented{display:flex;background:var(--surface2);padding:4px;border-radius:12px;gap:3px}.segmented button{border:0;background:transparent;color:var(--muted);border-radius:9px;padding:8px 10px;font-size:12px;font-weight:750}.segmented button.selected{background:var(--surface);color:var(--text);box-shadow:0 2px 8px #0001}
 .bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;padding:8px 9px calc(8px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);z-index:20;justify-content:space-around}.bottomnav button{position:relative;border:0;background:transparent;color:var(--muted);display:grid;justify-items:center;gap:4px;font-size:10px;font-weight:700;min-width:53px;padding:4px}.bottomnav button.active{color:var(--accent)}.bottomnav svg{width:22px;height:22px}.bottomnav .mini-badge{position:absolute;top:-1px;right:10px;background:var(--danger);width:8px;height:8px;border-radius:50%;border:1px solid var(--surface)}
 .modalback{position:fixed;inset:0;background:#0007;z-index:50;display:none;align-items:flex-end;justify-content:center;padding:12px}.modalback.show{display:flex}.modal{width:min(100%,500px);max-height:88dvh;overflow:auto;background:var(--surface);color:var(--text);border-radius:24px;padding:21px;box-shadow:0 20px 70px #0004}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modalhead h2{font-size:20px;margin:0}.close{border:0;background:var(--surface2);color:var(--text);border-radius:50%;width:34px;height:34px;font-size:21px}.formgrid{display:grid;gap:12px}.formgrid label{font-size:12px;color:var(--muted);font-weight:750;display:grid;gap:7px}.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);padding:11px 16px;background:var(--text);color:var(--bg);border-radius:99px;font-size:13px;z-index:80;display:none;white-space:nowrap}
@@ -242,6 +247,7 @@ margin: 17px 0 20px;
 }
 
 #page-wallet .wallet-avatar {
+overflow:hidden;
 display: grid;
 place-items: center;
 width: 47px;
@@ -607,11 +613,11 @@ transition: none !important;
 #walletCustomizePanel .wallet-color-swatch i{display:block;width:100%;height:34px;border-radius:7px}
 #walletCustomizePanel .wallet-skin-preview{position:relative;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;width:100%;height:54px;border-radius:7px;padding:5px;color:#fff;text-align:left;background:#23385d}
 #walletCustomizePanel .wallet-skin-preview i{position:absolute;right:4px;top:1px;font-style:normal;font-size:20px}#page-wallet .wallet-skin-preview b{font-size:9px;letter-spacing:1px}#page-wallet .wallet-skin-preview small{font-size:6px;letter-spacing:.7px}
-#walletCustomizePanel .skin-sakura{background:linear-gradient(135deg,#e7a7bd,#824968 60%,#f6d8df)}#walletCustomizePanel .skin-christmas{background:linear-gradient(135deg,rgba(8,35,42,.22),rgba(8,35,42,.05)),url('./giangsinh1.png') center/cover no-repeat,linear-gradient(135deg,#0b4737,#176b4d 48%,#8f1e2d 49%,#c13b42 72%,#153d32)}#walletCustomizePanel .skin-beach{background:linear-gradient(160deg,#7de1e7,#1886a3 55%,#f5d08c)}#walletCustomizePanel .skin-aurora{background:linear-gradient(135deg,#101b43,#237f86 48%,#8b60bb)}#walletCustomizePanel .skin-lavender{background:linear-gradient(135deg,#b9a2e9,#6b5b9e 65%,#e8d8f5)}#walletCustomizePanel .skin-sunset{background:linear-gradient(135deg,#f9bb74,#d55d65 55%,#583f75)}#walletCustomizePanel .skin-forest{background:linear-gradient(135deg,#b3d6a0,#2c795b 55%,#163c3a)}
+#walletCustomizePanel .skin-sakura{background:linear-gradient(135deg,#e7a7bd,#824968 60%,#f6d8df)}#walletCustomizePanel .skin-christmas{background:linear-gradient(135deg,rgba(8,35,42,.22),rgba(8,35,42,.05)),url('./giangsinh1.png') center/100% 100% no-repeat,linear-gradient(135deg,#0b4737,#176b4d 48%,#8f1e2d 49%,#c13b42 72%,#153d32)}#walletCustomizePanel .skin-beach{background:linear-gradient(160deg,#7de1e7,#1886a3 55%,#f5d08c)}#walletCustomizePanel .skin-aurora{background:linear-gradient(135deg,#101b43,#237f86 48%,#8b60bb)}#walletCustomizePanel .skin-lavender{background:linear-gradient(135deg,#b9a2e9,#6b5b9e 65%,#e8d8f5)}#walletCustomizePanel .skin-sunset{background:linear-gradient(135deg,#f9bb74,#d55d65 55%,#583f75)}#walletCustomizePanel .skin-forest{background:linear-gradient(135deg,#b3d6a0,#2c795b 55%,#163c3a)}
 #walletCustomizePanel .wallet-color-swatch.active,#walletCustomizePanel .wallet-skin-option.active{border-color:#d8ff9b;background:#ffffff18}
 #page-wallet .wallet-account.wallet-color-blue{background:radial-gradient(circle at 100% 0%,#3659a9 0,transparent 43%),linear-gradient(130deg,#101a38,#172b55 68%,#142445)!important}
 #page-wallet .wallet-account.wallet-color-green{background:linear-gradient(130deg,#064e3b,#159765)!important}#page-wallet .wallet-account.wallet-color-purple{background:linear-gradient(130deg,#35205f,#7851b8)!important}#page-wallet .wallet-account.wallet-color-rose{background:linear-gradient(130deg,#641d3c,#c04b72)!important}#page-wallet .wallet-account.wallet-color-graphite{background:linear-gradient(130deg,#20252d,#505966)!important}#page-wallet .wallet-account.wallet-color-gold{background:linear-gradient(130deg,#654313,#b98b3e)!important}
-#page-wallet .wallet-account.wallet-skin-christmas{background:linear-gradient(135deg,rgba(7,25,35,.30),rgba(7,25,35,.08)),url('./giangsinh1.png') center/cover no-repeat,linear-gradient(135deg,#0a3f31 0%,#17684b 45%,#8c1f2b 46%,#bd303b 70%,#123a2f 100%)!important}#page-wallet .wallet-account.wallet-skin-sakura{background:linear-gradient(135deg,rgba(70,20,48,.28),rgba(70,20,48,.08)),url('./anhdao.png') center/cover no-repeat,#d998b3!important}#page-wallet .wallet-account.wallet-skin-beach{background:radial-gradient(ellipse at 90% 12%,#ffe5a6 0 10%,transparent 11%),linear-gradient(160deg,#54c8d2,#087a9b 56%,#f0bd78)!important}#page-wallet .wallet-account.wallet-skin-aurora{background:radial-gradient(ellipse at 80% 15%,#6ee7cf 0,transparent 34%),linear-gradient(135deg,#101b43,#276d83 58%,#684b99)!important}#page-wallet .wallet-account.wallet-skin-lavender{background:radial-gradient(ellipse at 90% 10%,#e7d5ff 0,transparent 28%),linear-gradient(135deg,#6b5b9e,#9a8ad2 58%,#4e426e)!important}#page-wallet .wallet-account.wallet-skin-sunset{background:radial-gradient(ellipse at 90% 10%,#ffdc9d 0,transparent 32%),linear-gradient(135deg,#583f75,#d55d65 58%,#f2a65a)!important}#page-wallet .wallet-account.wallet-skin-forest{background:radial-gradient(ellipse at 90% 10%,#b3d6a0 0,transparent 30%),linear-gradient(135deg,#163c3a,#2c795b 58%,#102f30)!important}
+#page-wallet .wallet-account.wallet-skin-christmas{background:linear-gradient(135deg,rgba(7,25,35,.30),rgba(7,25,35,.08)),url('./giangsinh1.png') center/100% 100% no-repeat,linear-gradient(135deg,#0a3f31 0%,#17684b 45%,#8c1f2b 46%,#bd303b 70%,#123a2f 100%)!important}#page-wallet .wallet-account.wallet-skin-sakura{background:linear-gradient(135deg,rgba(70,20,48,.28),rgba(70,20,48,.08)),url('./anhdao.png') center/cover no-repeat,#d998b3!important}#page-wallet .wallet-account.wallet-skin-beach{background:radial-gradient(ellipse at 90% 12%,#ffe5a6 0 10%,transparent 11%),linear-gradient(160deg,#54c8d2,#087a9b 56%,#f0bd78)!important}#page-wallet .wallet-account.wallet-skin-aurora{background:radial-gradient(ellipse at 80% 15%,#6ee7cf 0,transparent 34%),linear-gradient(135deg,#101b43,#276d83 58%,#684b99)!important}#page-wallet .wallet-account.wallet-skin-lavender{background:radial-gradient(ellipse at 90% 10%,#e7d5ff 0,transparent 28%),linear-gradient(135deg,#6b5b9e,#9a8ad2 58%,#4e426e)!important}#page-wallet .wallet-account.wallet-skin-sunset{background:radial-gradient(ellipse at 90% 10%,#ffdc9d 0,transparent 32%),linear-gradient(135deg,#583f75,#d55d65 58%,#f2a65a)!important}#page-wallet .wallet-account.wallet-skin-forest{background:radial-gradient(ellipse at 90% 10%,#b3d6a0 0,transparent 30%),linear-gradient(135deg,#163c3a,#2c795b 58%,#102f30)!important}
 @media(max-width:700px){#page-wallet .wallet-card-bottom-actions{width:calc(100% + 38px);margin:0 -19px -1px;padding-right:9px;border-radius:0 0 21px 21px}#page-wallet .wallet-card-bottom-actions .wallet-history-teaser{padding-left:19px}#page-wallet .wallet-customize-panel{border-radius:0 0 20px 20px}}
 </style>
 
@@ -672,6 +678,21 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 </style>
 </head>
 <body>
+<div id="welcomeSetup" class="welcome-setup" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+  <form class="welcome-card" onsubmit="saveWelcomeName(event)">
+    <div class="welcome-mark">M</div>
+    <div class="eyebrow">CHÀO MỪNG ĐẾN VSPACE</div>
+    <h1 id="welcomeTitle">Bạn tên gì nhỉ?</h1>
+    <p>Nhập tên để cá nhân hoá hồ sơ và thẻ ví của bạn. Bạn có thể đổi lại sau trong Hồ sơ.</p>
+    <label for="welcomeName">Tên của bạn</label>
+    <input id="welcomeName" class="field" type="text" maxlength="50" autocomplete="given-name" placeholder="Ví dụ: Minh Anh" required>
+    <button class="btn" type="submit">Bắt đầu sử dụng →</button>
+  </form>
+</div>
+<style>
+.welcome-setup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:22px;background:color-mix(in srgb,var(--bg) 82%,#000 18%);backdrop-filter:blur(12px)}
+.welcome-setup[hidden]{display:none}.welcome-card{width:min(100%,420px);padding:30px 25px;border:1px solid var(--line);border-radius:26px;background:var(--surface);box-shadow:0 24px 90px #0003;display:grid;gap:13px}.welcome-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#1ed760,#168b46);display:grid;place-items:center;color:white;font-size:24px;font-weight:900;margin-bottom:4px}.welcome-card h1{font-size:29px;letter-spacing:-.8px;margin:0}.welcome-card p{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 5px}.welcome-card label{font-size:13px;font-weight:750}.welcome-card .field{width:100%;min-height:46px;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);color:var(--text);outline:none}.welcome-card .field:focus{border-color:var(--accent)}.welcome-card .btn{margin-top:5px;min-height:46px}
+</style>
 <div class="app">
 <header class="topbar">
  <div class="brand">
@@ -680,7 +701,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
   <span>Vspace</span>
 </div>
   <div class="top-actions">
-    <button class="iconbtn" aria-label="Chủ đề" onclick="cycleTheme()" title="Đổi giao diện"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z"/></svg></button>
+    <button class="iconbtn theme-top-button" aria-label="Đổi giao diện sáng/tối" onclick="cycleTheme()" title="Bấm để đổi giao diện"><span id="themeTopIcon" aria-hidden="true">☀</span></button>
     <button class="iconbtn" aria-label="Thông báo" onclick="go('notifications')" title="Thông báo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg><span id="topBadge" class="badge">3</span></button>
     <button class="iconbtn" aria-label="Hồ sơ" onclick="go('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button>
   </div>
@@ -767,7 +788,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 <div class="wallet-account-user">
   <div class="wallet-avatar" id="walletAvatar">VŨ</div>
   <div style="min-width:0;flex:1">
-    <strong id="walletUserName">Hoàng Anh Tấn Vũ</strong>
+    <strong id="walletUserName">Bạn</strong>
     <span class="wallet-member">✦ MEMBER</span>
   </div>
   <span style="font-size:24px">💳</span>
@@ -884,20 +905,20 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     </button>
     <button class="quick" type="button" onclick="openWalletSavings()">
       <div class="qicon">
-        <svg viewBox="0 0 48 48" width="31" height="31" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <!-- Coin floating above a rounded piggy bank, inspired by the soft Digibank shortcut style -->
-          <circle cx="35" cy="10" r="7" fill="#FFD45D" stroke="#D49A22" stroke-width="1.6"/>
-          <path d="M35 6.5v7m2-5.5c-1.8-1.5-4.5-.1-2.5 1.3 2.5 1.5 1 3.6-1.5 2.2" fill="none" stroke="#996719" stroke-width="1.4" stroke-linecap="round"/>
-          <path d="M11 20 9 12q-.3-2 2-1l7 5" fill="#F8B7C8" stroke="#D96C8A" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M13 26c0-7 6-11 14-11 7 0 12 4 12 10 0 2-.5 4-2 5l1 5q0 2-2 2h-5l-1-4h-7l-1 4h-5l-1-6c-2-1-3-3-3-5Z" fill="#F7B4C6" stroke="#D96C8A" stroke-width="2" stroke-linejoin="round"/>
-          <ellipse cx="35" cy="25" rx="6" ry="4.5" fill="#FFE0E8" stroke="#D96C8A" stroke-width="1.7"/>
-          <ellipse cx="33" cy="25" rx=".9" ry="1.2" fill="#B94F70"/>
-          <ellipse cx="37" cy="25" rx=".9" ry="1.2" fill="#B94F70"/>
-          <circle cx="28" cy="20" r="1.5" fill="#69394B"/>
-          <ellipse cx="25" cy="25" rx="2.5" ry="1.6" fill="#EE86A4" opacity=".85"/>
-          <path d="M23 15h7" stroke="#B94F70" stroke-width="2" stroke-linecap="round"/>
-          <path d="M5 28c-4-1-4-6 0-6 3 0 3 4 0 4" fill="none" stroke="#D96C8A" stroke-width="2" stroke-linecap="round"/>
-          <path d="m42 16 1.2 2.4 2.3 1.1-2.3 1.1-1.2 2.4-1.1-2.4-2.4-1.1 2.4-1.1z" fill="#F6C64E"/>
+        <svg viewBox="0 0 48 48" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs><linearGradient id="pigBody" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFD5E1"/><stop offset="1" stop-color="#F28EAF"/></linearGradient></defs>
+          <ellipse cx="24" cy="37" rx="15" ry="3" fill="#B4A6D8" opacity=".22"/>
+          <path d="M13 19 11 11q-.4-2 2-1l8 6" fill="#FFC3D5" stroke="#C95E83" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M25 16 29 10q1-1.6 2.5.1l3.2 7" fill="#FFC3D5" stroke="#C95E83" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M10 26c0-7 6-12 15-12 8 0 14 5 14 12 0 2-.8 4-2.4 5.6l.5 4.2q.2 1.8-1.8 1.8h-5l-1.4-4h-7l-1.2 4h-5.2l-.8-5.4C12 31 10 29 10 26Z" fill="url(#pigBody)" stroke="#C95E83" stroke-width="1.8" stroke-linejoin="round"/>
+          <ellipse cx="34" cy="25" rx="6.5" ry="4.8" fill="#FFEAF0" stroke="#C95E83" stroke-width="1.5"/>
+          <ellipse cx="32.2" cy="25" rx=".85" ry="1.25" fill="#A94368"/><ellipse cx="36" cy="25" rx=".85" ry="1.25" fill="#A94368"/>
+          <circle cx="26" cy="20" r="1.5" fill="#71354C"/><circle cx="26.5" cy="19.5" r=".45" fill="#FFF"/>
+          <ellipse cx="23" cy="25" rx="2.5" ry="1.6" fill="#EF729B" opacity=".8"/>
+          <path d="M20 14h8" stroke="#B64E75" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 28c-4-1-4-6 0-6 3 0 3 4 0 4" fill="none" stroke="#C95E83" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="38" cy="9" r="6.5" fill="#FFD76A" stroke="#D49B28" stroke-width="1.5"/><path d="M38 5.8v6.4m1.8-5c-1.6-1.1-3.5.1-2 1.1 1.8 1.2.7 2.8-1.1 1.8" fill="none" stroke="#966619" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="m44 17 1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#F6C64E"/>
         </svg>
       </div>
       <b>Tiết kiệm</b>
@@ -1101,10 +1122,11 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 </section>
 <section class="page" id="page-profile">
   <div class="pagehead"><div><div class="eyebrow">YOUR ACCOUNT</div><h1>Hồ sơ cá nhân</h1><div class="sub">Thông tin và tuỳ chỉnh không gian của bạn.</div></div></div>
-  <div class="profiletop"><div class="avatar">VŨ</div><div><h2 id="profileName">Hoàng Anh Tấn Vũ</h2><p>Không gian cá nhân<br>Lịch trình · Tài chính · Sở thích</p><button class="btn ghost small" onclick="editProfile()">Chỉnh sửa hồ sơ</button></div></div>
+  <div class="profiletop"><div class="avatar" id="profileAvatar">VŨ</div><div style="min-width:0"><h2 id="profileName">Bạn</h2><p>Không gian cá nhân<br>Lịch trình · Tài chính · Sở thích</p><div class="profile-photo-actions"><button class="btn ghost small" onclick="document.getElementById('profilePhotoInput').click()">Tải ảnh hồ sơ lên</button><button class="btn ghost small" onclick="editProfile()">Đổi tên</button><input id="profilePhotoInput" type="file" accept="image/*" hidden onchange="uploadProfilePhoto(this)"></div><p style="margin-top:7px;font-size:11px">Ảnh sẽ tự đồng bộ lên thẻ ngân hàng trong Ví.</p></div></div>
   <div class="card">
     <div class="sectiontitle" style="margin-top:0"><h2>Cài đặt giao diện</h2></div>
-    <div class="settingsrow"><div><strong>Chế độ sáng / tối</strong><p>Tuỳ chỉnh giao diện theo sở thích.</p></div><div class="segmented"><button id="themeLight" onclick="setTheme('light')">☀️ Sáng</button><button id="themeDark" onclick="setTheme('dark')">🌙 Tối</button><button id="themeAuto" onclick="setTheme('auto')">Auto</button></div></div>
+    <div class="settingsrow theme-setting-row"><div><strong>Giao diện sáng / tối</strong><p id="themeSwitchHint">Đang dùng giao diện tối.</p></div><label class="theme-switch" aria-label="Gạt trái để dùng giao diện sáng, gạt phải để dùng giao diện tối"><input id="themeSwitch" type="checkbox" checked onchange="setTheme(this.checked?'dark':'light')"><span class="theme-switch-track"><span class="theme-switch-icon theme-sun">☀</span><span class="theme-switch-icon theme-moon">☾</span><span class="theme-switch-thumb"></span></span></label></div>
+    <div class="settingsrow theme-auto-row"><div><strong>Tự động theo thiết bị</strong><p id="themeAutoHint">Dùng chế độ sáng/tối theo cài đặt thiết bị.</p></div><input id="themeAutoSwitch" type="checkbox" aria-label="Tự động đổi giao diện theo thiết bị" onchange="setTheme(this.checked?'auto':(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'))"></div>
     <div class="settingsrow"><div><strong>Thông báo trong app</strong><p>Bật hoặc tắt hộp thông báo nội bộ.</p></div><input type="checkbox" id="noticeToggle" checked onchange="toggleNotices(this.checked)" style="width:22px;height:22px;accent-color:var(--accent)"></div>
     <div class="settingsrow"><div><strong>Dữ liệu cá nhân</strong><p>Tải bản sao dữ liệu về máy.</p></div><button class="btn secondary small" onclick="backupData()">Sao lưu JSON</button></div>
     <div class="settingsrow"><div><strong>Xoá dữ liệu demo</strong><p>Xoá khoản mẫu và lịch mẫu đã thêm.</p></div><button class="btn danger small" onclick="resetDemo()">Đặt lại</button></div>
@@ -1159,18 +1181,19 @@ let state={
   rents:{},
   classes:[],
   notices:defaultNotices,
-  theme:'auto',
+  theme:'light',
   noticeEnabled:true,
-  studentName:'Hoàng Anh Tấn Vũ',
+  studentName:'',
+  profilePhoto:'',
   walletInitialBalance:0,
   walletBaseMonth:currentMonth()
 };
 function load(){try{const s=JSON.parse(localStorage.getItem('miSpaceV3')||'null');if(s)state={...state,...s}}catch(e){}}
 function save(){localStorage.setItem('miSpaceV3',JSON.stringify(state));renderAll()}
 function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});if(page==='notifications')renderNotices();if(page==='history')renderBankHistory()}
-function setTheme(theme){state.theme=theme;applyTheme();saveQuiet();['Light','Dark','Auto'].forEach(x=>$('theme'+x)?.classList.toggle('selected',theme===x.toLowerCase()));toast('Đã đổi giao diện')}
-function cycleTheme(){setTheme(state.theme==='light'?'dark':state.theme==='dark'?'auto':'light')}
-function applyTheme(){const dark=state.theme==='dark'||(state.theme==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]').content=dark?'#0e0f12':'#f7f7f8';['Light','Dark','Auto'].forEach(x=>{const el=$('theme'+x);if(el)el.classList.toggle('selected',state.theme===x.toLowerCase())})}
+function setTheme(theme){state.theme=theme;applyTheme();saveQuiet();toast(theme==='auto'?'Đã bật tự động theo thiết bị':'Đã đổi giao diện')}
+function cycleTheme(){const currentlyDark=document.documentElement.dataset.theme==='dark';setTheme(currentlyDark?'light':'dark')}
+function applyTheme(){const auto=state.theme==='auto';const dark=auto?window.matchMedia('(prefers-color-scheme: dark)').matches:state.theme==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=dark?'#0e0f12':'#f7f7f8';const topIcon=$('themeTopIcon');if(topIcon)topIcon.textContent=dark?'☾':'☀';const topButton=document.querySelector('.theme-top-button');if(topButton){topButton.title=dark?'Đang tối — bấm để chuyển sáng':'Đang sáng — bấm để chuyển tối';topButton.setAttribute('aria-label',dark?'Đang dùng giao diện tối, bấm để chuyển sáng':'Đang dùng giao diện sáng, bấm để chuyển tối')}const sw=$('themeSwitch');if(sw){sw.checked=dark;sw.disabled=auto}const hint=$('themeSwitchHint');if(hint)hint.textContent=auto?'Đang tự động theo thiết bị.':(dark?'Đang dùng giao diện tối.':'Đang dùng giao diện sáng.');const autoSwitch=$('themeAutoSwitch');if(autoSwitch)autoSwitch.checked=auto;const autoHint=$('themeAutoHint');if(autoHint)autoHint.textContent=auto?'Đang bật — giao diện sẽ đổi theo thiết bị.':'Tắt để tự chọn giao diện sáng hoặc tối.'}
 function saveQuiet(){localStorage.setItem('miSpaceV3',JSON.stringify(state))}function saveWalletSettings(){
   const baseMonth = $('walletBaseMonth').value;
   const balance = Number($('walletInitialBalance').value);
@@ -1397,6 +1420,9 @@ function updateTodayLabels() {
     }).format(now);
 }
 
+function saveWelcomeName(e){e.preventDefault();const name=$('welcomeName').value.trim();if(!name){$('welcomeName').focus();return;}state.studentName=name;saveQuiet();$('welcomeSetup').hidden=true;renderAll();toast('Chào mừng, '+name+'!');}
+function showWelcomeIfNeeded(){const setup=$('welcomeSetup');if(!setup)return;const name=String(state.studentName||'').trim();if(!name||name==='Bạn'){state.studentName='';setup.hidden=false;setTimeout(()=>$('welcomeName')?.focus(),60)}else setup.hidden=true;}
+
 function renderAll() {
 renderBadges();
 renderStats();
@@ -1407,6 +1433,7 @@ renderClasses();
 renderNotices();
 
 $('profileName').textContent = state.studentName || 'Bạn';
+applyProfilePhoto();
 $('noticeToggle').checked = state.noticeEnabled;
 
 updateTodayLabels();
@@ -1433,7 +1460,92 @@ function saveRent(){
 function addClass(){$('modalTitle').textContent='Thêm lịch học';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="submitClass(event)"><label>Tên môn học<input class="field" id="cSubject" required placeholder="Ví dụ: Đại số tuyến tính"></label><label>Ngày học<input class="field" type="date" id="cDate" value="${$('classDate').value||todayISO()}" required></label><label>Thời gian<input class="field" id="cTime" required placeholder="07:00 – 09:30"></label><label>Phòng học<input class="field" id="cRoom" placeholder="Ví dụ: A2-201"></label><label>Ghi chú<input class="field" id="cNote" placeholder="Giảng viên, nhóm lớp..."></label><button class="btn" type="submit">Lưu lịch học</button></form>`;$('modalback').classList.add('show')}
 function submitClass(e){e.preventDefault();state.classes.push({id:Date.now().toString(),subject:$('cSubject').value.trim(),date:$('cDate').value,time:$('cTime').value.trim(),room:$('cRoom').value.trim(),note:$('cNote').value.trim()});closeModal();save();toast('Đã thêm lịch học')}
 function deleteClass(id){if(confirm('Xoá lịch học này?')){state.classes=state.classes.filter(c=>c.id!==id);save()}}
-function editProfile(){$('modalTitle').textContent='Chỉnh sửa hồ sơ';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="event.preventDefault();state.studentName=$('editName').value.trim()||'Bạn';save();closeModal();toast('Đã cập nhật hồ sơ')"><label>Họ và tên<input class="field" id="editName" value="${esc(state.studentName)}" required></label><button class="btn" type="submit">Lưu thay đổi</button></form>`;$('modalback').classList.add('show')}
+function applyProfilePhoto(){
+  const photo=state.profilePhoto||'';
+  const profileAvatar=$('profileAvatar');
+  const walletAvatar=$('walletAvatar');
+  const initials=(state.studentName||'Bạn').trim().split(/\s+/).slice(-2).map(part=>part.charAt(0)).join('').toUpperCase();
+  if(profileAvatar)profileAvatar.innerHTML=photo?`<img src="${photo}" alt="Ảnh hồ sơ">`:esc(initials);
+  if(walletAvatar)walletAvatar.innerHTML=photo?`<img src="${photo}" alt="Ảnh hồ sơ trên thẻ ví">`:esc(initials);
+  const topButton=document.querySelector('button[aria-label="Hồ sơ"]');
+  if(topButton){
+    if(photo){topButton.innerHTML=`<img class="profile-mini-photo" src="${photo}" alt="Ảnh hồ sơ">`;topButton.style.overflow='hidden';topButton.style.padding='0';}
+    else {topButton.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>';topButton.style.padding='';}
+  }
+}
+let profileCropImage=null,profileCropScale=1,profileCropBaseScale=1,profileCropX=0,profileCropY=0,profileCropDrag=null;
+function uploadProfilePhoto(input){
+  const file=input && input.files && input.files[0];
+  if(!file)return;
+  if(!file.type || !file.type.startsWith('image/')){alert('Bà chọn file ảnh nha.');input.value='';return;}
+  const reader=new FileReader();
+  reader.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{profileCropImage=img;openProfileCrop();input.value='';};
+    img.onerror=()=>{alert('Không đọc được ảnh này, bà thử ảnh JPG/PNG khác nha.');input.value='';};
+    reader.onerror=()=>{alert('Không tải được ảnh. Bà thử lại nhé.');input.value='';};
+    img.src=reader.result;
+  };
+  reader.readAsDataURL(file);
+}
+function openProfileCrop(){
+  const modal=$('profileCropModal');if(!modal||!profileCropImage)return;
+  const view=$('profileCropView');
+  const size=view.clientWidth||300;
+  profileCropBaseScale=size/Math.min(profileCropImage.naturalWidth,profileCropImage.naturalHeight);
+  profileCropScale=1;
+  profileCropX=(size-profileCropImage.naturalWidth*profileCropBaseScale)/2;
+  profileCropY=(size-profileCropImage.naturalHeight*profileCropBaseScale)/2;
+  $('profileCropZoom').value='1';
+  $('profileCropPreview').dataset.src='';
+  modal.classList.add('show');
+  updateProfileCrop();
+}
+function updateProfileCrop(){
+  if(!profileCropImage)return;
+  const view=$('profileCropView'),img=$('profileCropPreview');
+  const size=view.clientWidth||300;
+  const scale=profileCropBaseScale*profileCropScale;
+  const w=profileCropImage.naturalWidth*scale,h=profileCropImage.naturalHeight*scale;
+  profileCropX=Math.min(0,Math.max(size-w,profileCropX));
+  profileCropY=Math.min(0,Math.max(size-h,profileCropY));
+  if(img.dataset.src!==profileCropImage.src){img.src=profileCropImage.src;img.dataset.src=profileCropImage.src;}
+  img.style.width=w+'px';img.style.height=h+'px';img.style.left=profileCropX+'px';img.style.top=profileCropY+'px';
+}
+function changeProfileCropZoom(value){
+  const view=$('profileCropView'),size=view.clientWidth||300,oldScale=profileCropBaseScale*profileCropScale;
+  const centerX=(size/2-profileCropX)/oldScale,centerY=(size/2-profileCropY)/oldScale;
+  profileCropScale=Number(value)||1;
+  const nextScale=profileCropBaseScale*profileCropScale;
+  profileCropX=size/2-centerX*nextScale;profileCropY=size/2-centerY*nextScale;updateProfileCrop();
+}
+function startProfileCropDrag(e){
+  if(e.type==='mousedown'&&e.button!==0)return;
+  e.preventDefault();profileCropDrag={x:e.clientX,y:e.clientY,left:profileCropX,top:profileCropY};
+  const move=ev=>{if(!profileCropDrag)return;profileCropX=profileCropDrag.left+(ev.clientX-profileCropDrag.x);profileCropY=profileCropDrag.top+(ev.clientY-profileCropDrag.y);updateProfileCrop();};
+  const stop=()=>{profileCropDrag=null;window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',stop);};
+  window.addEventListener('pointermove',move);window.addEventListener('pointerup',stop,{once:true});
+}
+function cancelProfileCrop(){ $('profileCropModal').classList.remove('show');profileCropImage=null; }
+function confirmProfileCrop(){
+  if(!profileCropImage)return;
+  try{
+    const size=360,view=$('profileCropView'),viewSize=view.clientWidth||300,scale=profileCropBaseScale*profileCropScale;
+    const sx=Math.max(0,Math.min(profileCropImage.naturalWidth-viewSize/scale,-profileCropX/scale));
+    const sy=Math.max(0,Math.min(profileCropImage.naturalHeight-viewSize/scale,-profileCropY/scale));
+    const sourceSize=Math.min(profileCropImage.naturalWidth,profileCropImage.naturalHeight,viewSize/scale);
+    const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;
+    const ctx=canvas.getContext('2d');if(!ctx)throw new Error('canvas');
+    ctx.drawImage(profileCropImage,sx,sy,sourceSize,sourceSize,0,0,size,size);
+    const photo=canvas.toDataURL('image/jpeg',.82);
+    state.profilePhoto=photo;applyProfilePhoto();
+    try{localStorage.setItem('miSpaceV3',JSON.stringify(state));}
+    catch(storageError){console.warn('Không lưu được ảnh vào bộ nhớ trình duyệt',storageError);alert('Ảnh đã được áp dụng trong phiên này nhưng bộ nhớ trình duyệt không đủ để lưu lâu dài. Bà thử ảnh nhỏ hơn nhé.');}
+    cancelProfileCrop();toast('Đã cập nhật ảnh vuông cho hồ sơ và thẻ ví');
+  }catch(err){console.error(err);alert('Không cắt được ảnh này. Bà thử chọn ảnh khác nhé.');}
+}
+function editProfile(){$('modalTitle').textContent='Đổi tên';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="saveProfileName(event)"><label>Tên hiển thị<input class="field" id="editName" maxlength="50" value="${esc(state.studentName)}" placeholder="Nhập tên bạn muốn dùng" required></label><p class="muted" style="margin:0">Tên mới sẽ cập nhật trên Hồ sơ và thẻ Ví.</p><button class="btn" type="submit">Lưu tên mới</button></form>`;$('modalback').classList.add('show');setTimeout(()=>$('editName')?.focus(),50)}
+function saveProfileName(e){e.preventDefault();const input=$('editName');const name=input?.value.trim();if(!name){input?.focus();return;}state.studentName=name;saveQuiet();renderAll();closeModal();toast('Đã đổi tên thành '+name)}
 function exportCSV(){const header=['date','type','title','category','amount','note'];const lines=[header.join(','),...state.transactions.map(t=>header.map(k=>csvCell(t[k]??'')).join(','))];download(lines.join('\n'),'mispace-thu-chi.csv','text/csv;charset=utf-8');toast('Đã xuất file CSV')}
 function exportWalletXLSX() {
   if (!window.XLSX) {
@@ -1915,12 +2027,17 @@ renderAll();
 });
 
 load();
+if(!state.theme)state.theme='light';
+/* 'auto' was the old default and could make a fresh install appear inconsistent; keep explicit light/dark choices. */
+if(state.theme==='auto')state.theme='light';
+if(state.studentName==='Hoàng Anh Tấn Vũ')state.studentName='';
 applyTheme();
 
 $('filterMonth').value = currentMonth();
 $('walletMonth').value = currentMonth();
 
 renderAll();
+showWelcomeIfNeeded();
 
 
 let lastDate = todayISO();
@@ -1936,10 +2053,9 @@ setInterval(() => {
   }
 }, 60000);
 
-if (state.theme === 'auto') {
-  matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener?.('change', applyTheme);
-}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', () => {
+  if(state.theme==='auto') applyTheme();
+});
 </script>
 
 <script id="wallet-card-customize-script">
@@ -2183,6 +2299,24 @@ body.wallet-customize-open::before{
  if(document.readyState==='complete')setTimeout(hide,900);
 })();
 </script>
+
+
+<div id="profileCropModal" class="profile-crop-modal" role="dialog" aria-modal="true" aria-labelledby="profileCropTitle">
+  <div class="profile-crop-panel">
+    <div class="profile-crop-head"><div><strong id="profileCropTitle">Cắt ảnh hồ sơ</strong><p>Kéo ảnh để căn chỉnh trong khung vuông.</p></div><button class="btn ghost small" onclick="cancelProfileCrop()" aria-label="Đóng">✕</button></div>
+    <div id="profileCropView" class="profile-crop-view" aria-label="Khung cắt ảnh vuông"><img id="profileCropPreview" alt="Xem trước ảnh đang cắt" draggable="false" onpointerdown="startProfileCropDrag(event)"></div>
+    <label class="profile-crop-zoom">Phóng to / thu nhỏ <input id="profileCropZoom" type="range" min="1" max="3" step="0.01" value="1" oninput="changeProfileCropZoom(this.value)"></label>
+    <div class="profile-crop-actions"><button class="btn secondary" onclick="cancelProfileCrop()">Huỷ</button><button class="btn" onclick="confirmProfileCrop()">Dùng ảnh này</button></div>
+  </div>
+</div>
+<style>
+.profile-crop-modal{display:none;position:fixed;inset:0;z-index:10050;background:rgba(0,0,0,.68);align-items:center;justify-content:center;padding:18px;box-sizing:border-box}
+.profile-crop-modal.show{display:flex}
+.profile-crop-panel{width:min(100%,390px);background:var(--surface,#fff);color:var(--text,#222);border:1px solid var(--line,#ddd);border-radius:22px;padding:18px;box-shadow:0 22px 70px #0005}
+.profile-crop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}.profile-crop-head strong{font-size:17px}.profile-crop-head p{margin:5px 0 0;color:var(--muted,#777);font-size:12px;line-height:1.4}
+.profile-crop-view{position:relative;width:min(100%,320px);aspect-ratio:1/1;margin:0 auto;overflow:hidden;border-radius:14px;background:#202020;touch-action:none;cursor:grab}.profile-crop-view:active{cursor:grabbing}.profile-crop-view img{position:absolute;max-width:none;max-height:none;user-select:none;-webkit-user-drag:none;touch-action:none;pointer-events:auto}
+.profile-crop-zoom{display:flex;flex-direction:column;gap:9px;font-size:13px;margin:16px 0}.profile-crop-zoom input{width:100%;accent-color:var(--accent,#21a366)}.profile-crop-actions{display:flex;justify-content:flex-end;gap:9px}.profile-crop-actions button{min-width:100px}
+</style>
 
 </body></html>
 
