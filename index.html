@@ -659,6 +659,17 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
  #page-wallet .wallet-customize-panel:not([hidden]){width:calc(100vw - 24px)!important;max-height:82vh!important;padding:16px!important;border-radius:20px!important}
 }
 </style>
+
+<style id="mobile-history-visibility-fix">
+@media(max-width:700px){
+ .bottomnav{display:flex!important;justify-content:space-between!important;gap:0!important;overflow-x:auto!important;overflow-y:hidden!important;flex-wrap:nowrap!important;-webkit-overflow-scrolling:touch!important;padding-left:3px!important;padding-right:3px!important}
+ .bottomnav button{display:grid!important;visibility:visible!important;opacity:1!important;flex:1 0 0!important;min-width:0!important;padding:4px 0!important;font-size:9px!important;white-space:nowrap!important}
+ /* Lịch sử vẫn mở từ nút trong Ví tiền, không chiếm một tab riêng ở thanh dưới trên điện thoại. */
+ .bottomnav button[data-page="history"]{display:none!important}
+ #page-wallet .wallet-card-bottom-actions{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+ #page-wallet .wallet-card-bottom-actions .wallet-history-teaser,#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{display:flex!important;visibility:visible!important;min-width:0!important;width:100%!important}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -1110,7 +1121,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 <button data-page="timetable" onclick="go('timetable')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>Lịch học</button>
 <button data-page="music" onclick="go('music')"><span style="font-size:23px;line-height:22px">♫</span>Nhạc</button>
 <button data-page="wallet" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="15" rx="3"/><path d="M2 9h20M16 15h2"/></svg>Ví tiền</button>
-<button data-page="history" onclick="go('history')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v15H4zM8 9h8M8 13h8M8 17h5" stroke-linecap="round" stroke-linejoin="round"/></svg>Giao dịch</button>
+<button data-page="history" onclick="go('history')" aria-label="Lịch sử giao dịch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v15H4zM8 9h8M8 13h8M8 17h5" stroke-linecap="round" stroke-linejoin="round"/></svg>Lịch sử</button>
 <button data-page="notifications" onclick="go('notifications')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>Thông báo<span id="bottomBadge" class="mini-badge"></span></button>
 <button data-page="profile" onclick="go('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Cá nhân</button>
 </nav>
