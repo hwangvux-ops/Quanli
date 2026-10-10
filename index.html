@@ -553,6 +553,9 @@ transition: none !important;
 }
 /* ===== KẾT THÚC GIAO DIỆN WALLET ===== */
 
+
+/* Chỉ giữ nút Trang trí thẻ ở chân thẻ ví; ẩn mục lịch sử giao dịch khỏi giao diện. */
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{flex:1 1 100%!important;width:100%!important;border-right:0!important}
 </style>
 <style>
 
@@ -785,11 +788,6 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 </div>
 
     <div class="wallet-card-bottom-actions">
-      <button class="wallet-history-teaser" type="button" onclick="go('history')" aria-label="Mở lịch sử giao dịch">
-        <span class="wallet-history-teaser-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.2 2"></path></svg></span>
-        <span class="wallet-history-teaser-copy"><strong>Lịch sử giao dịch</strong><small id="walletHistoryTeaserCount">Xem các khoản thu chi</small></span>
-        <span class="wallet-history-teaser-arrow">›</span>
-      </button>
       <button class="wallet-customize-trigger" type="button" onclick="toggleWalletCustomize()" aria-label="Đổi màu hoặc họa tiết thẻ" aria-expanded="false" aria-controls="walletCustomizePanel" title="Tùy chỉnh thẻ">
         <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2.2 2.2 0 0 0 1.5-3.8 1.7 1.7 0 0 1 1.2-2.9H18a3 3 0 0 0 3-3c0-4.6-4-8.3-9-8.3Z"/><circle cx="7.5" cy="10" r="1"/><circle cx="10" cy="6.8" r="1"/><circle cx="15" cy="7.5" r="1"/></svg><span class="wallet-customize-trigger-copy"><strong>Trang trí thẻ</strong><small>Chạm để thay đổi giao diện</small></span>
       </button>
@@ -1044,7 +1042,6 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     </table>
   </div>
 
-  <p class="sub">Lịch sử giao dịch và các tệp sao lưu nằm trong thẻ số dư phía trên. Chạm “Lịch sử giao dịch” để mở.</p>
 </section>
 <section class="page" id="page-history">
   <div class="pagehead"><div><div class="eyebrow">VSPACE WALLET</div><h1>Lịch sử giao dịch</h1><div class="sub">Các khoản thu chi của bạn, sắp xếp mới nhất trước.</div></div><button class="btn secondary small" type="button" onclick="go('wallet')">‹ Quay lại Ví tiền</button></div>
