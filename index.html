@@ -2131,6 +2131,43 @@ body.wallet-customize-open::before{
 #walletCustomizePanel .wallet-color-preview{border-radius:5px!important}
 @media(max-width:480px){#walletCustomizePanel:not([hidden]){padding:16px!important;border-radius:8px!important}}
 </style>
+
+<!-- VSPACE APP LOADER: màn hình tải ngắn khi mở app -->
+<style id="vspace-loader-styles">
+#vspaceAppLoader{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;padding:24px;background:var(--bg,#f7f8fa);color:var(--text,#172033);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;transition:opacity .32s ease,visibility .32s ease}
+#vspaceAppLoader.loader-hide{opacity:0;visibility:hidden;pointer-events:none}
+#vspaceAppLoader .loader-content{width:min(100%,320px);text-align:center}
+#vspaceAppLoader .loader-logo{width:84px;height:84px;margin:0 auto 18px;border-radius:24px;display:block;object-fit:cover;box-shadow:0 10px 28px #15944722}
+#vspaceAppLoader .loader-name{font-size:27px;font-weight:850;letter-spacing:-.8px;margin:0}
+#vspaceAppLoader .loader-subtitle{font-size:13px;color:var(--muted,#7a8494);margin:8px 0 25px}
+#vspaceAppLoader .loader-track{height:4px;width:160px;margin:0 auto;background:var(--line,#e4e8ee);border-radius:99px;overflow:hidden}
+#vspaceAppLoader .loader-bar{height:100%;width:40%;border-radius:99px;background:linear-gradient(90deg,#20c866,#8ce8ac);animation:vspace-loading 1.05s ease-in-out infinite}
+#vspaceAppLoader .loader-caption{font-size:11px;color:var(--muted,#8992a0);margin-top:13px;letter-spacing:.2px}
+@keyframes vspace-loading{0%{transform:translateX(-120%)}100%{transform:translateX(400%)}}
+@keyframes vspace-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+@media(prefers-reduced-motion:reduce){#vspaceAppLoader .loader-bar{animation:none}}
+</style>
+<div id="vspaceAppLoader" role="status" aria-live="polite" aria-label="Vspace đang tải">
+ <div class="loader-content">
+  <img class="loader-logo" src="https://raw.githubusercontent.com/hwangvux-ops/Quanli/main/icon.png" alt="Vspace" onerror="this.style.display='none'">
+  <h1 class="loader-name">Vspace</h1>
+  <p class="loader-subtitle">Không gian cá nhân của bạn</p>
+  <div class="loader-track"><div class="loader-bar"></div></div>
+  <div class="loader-caption">Đang chuẩn bị không gian của bạn…</div>
+ </div>
+</div>
+<script id="vspace-loader-script">
+(function(){
+ const loader=document.getElementById('vspaceAppLoader');
+ if(!loader)return;
+ const hide=()=>{loader.classList.add('loader-hide');setTimeout(()=>{loader.hidden=true},360)};
+ // Hiện màn hình tải ngắn mỗi lần mở/tải lại trang, sau đó tự vào app.
+ window.addEventListener('load',()=>setTimeout(hide,900),{once:true});
+ // Dự phòng nếu sự kiện load đã xảy ra trước khi script chạy.
+ if(document.readyState==='complete')setTimeout(hide,900);
+})();
+</script>
+
 </body></html>
 
 <style id="wallet-customize-group-title-fix">
