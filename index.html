@@ -92,10 +92,43 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
 .settingsrow{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 0;border-bottom:1px solid var(--line)}.settingsrow:last-child{border-bottom:0}.settingsrow strong{font-size:14px}.settingsrow p{font-size:12px;color:var(--muted);margin:5px 0 0}.segmented{display:flex;background:var(--surface2);padding:4px;border-radius:12px;gap:3px}.segmented button{border:0;background:transparent;color:var(--muted);border-radius:9px;padding:8px 10px;font-size:12px;font-weight:750}.segmented button.selected{background:var(--surface);color:var(--text);box-shadow:0 2px 8px #0001}
 .bottomnav{display:none;position:fixed;bottom:0;left:0;right:0;padding:8px 9px calc(8px + env(safe-area-inset-bottom));background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);z-index:20;justify-content:space-around}.bottomnav button{position:relative;border:0;background:transparent;color:var(--muted);display:grid;justify-items:center;gap:4px;font-size:10px;font-weight:700;min-width:53px;padding:4px}.bottomnav button.active{color:var(--accent)}.bottomnav svg{width:22px;height:22px}.bottomnav .mini-badge{position:absolute;top:-1px;right:10px;background:var(--danger);width:8px;height:8px;border-radius:50%;border:1px solid var(--surface)}
 .modalback{position:fixed;inset:0;background:#0007;z-index:50;display:none;align-items:flex-end;justify-content:center;padding:12px}.modalback.show{display:flex}.modal{width:min(100%,500px);max-height:88dvh;overflow:auto;background:var(--surface);color:var(--text);border-radius:24px;padding:21px;box-shadow:0 20px 70px #0004}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modalhead h2{font-size:20px;margin:0}.close{border:0;background:var(--surface2);color:var(--text);border-radius:50%;width:34px;height:34px;font-size:21px}.formgrid{display:grid;gap:12px}.formgrid label{font-size:12px;color:var(--muted);font-weight:750;display:grid;gap:7px}.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);padding:11px 16px;background:var(--text);color:var(--bg);border-radius:99px;font-size:13px;z-index:80;display:none;white-space:nowrap}
+
+/* Trang số dư & giao dịch, lấy cảm hứng từ bố cục app ngân hàng */
+#page-history .bank-hero{background:linear-gradient(135deg,#062d63,#087d63);color:#fff;border-radius:22px;padding:20px;position:relative;overflow:hidden;box-shadow:0 12px 28px #061d4626;margin-bottom:18px}
+#page-history .bank-hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff24;border-radius:50%;right:-70px;top:-80px;box-shadow:0 0 0 24px #ffffff0a,0 0 0 48px #ffffff08}
+#page-history .bank-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:14px;position:relative;z-index:1}
+#page-history .bank-mark{width:34px;height:34px;border-radius:10px;background:#fff;color:#07845c;display:grid;place-items:center;font-weight:950;font-size:19px}
+#page-history .bank-caption{font-size:12px;color:#d8f5e9;margin-top:22px;position:relative;z-index:1}
+#page-history .bank-balance-row{display:flex;align-items:center;gap:10px;margin-top:7px;position:relative;z-index:1}
+#page-history .bank-balance{font-size:clamp(25px,6vw,32px);font-weight:850;letter-spacing:-.6px;overflow-wrap:anywhere}
+#page-history .bank-eye{width:34px;height:34px;border:1px solid #ffffff48;border-radius:50%;background:#ffffff14;color:#fff;display:grid;place-items:center;flex-shrink:0}
+#page-history .bank-meta{display:flex;gap:12px;flex-wrap:wrap;color:#d9f4e9;font-size:11px;margin-top:12px;position:relative;z-index:1}
+#page-history .bank-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:20px}
+#page-history .bank-action{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 6px;text-align:center;color:var(--text);font-size:11px;font-weight:750}
+#page-history .bank-action-icon{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;margin:0 auto 8px;background:#e0f5e9;color:#087a4b;font-size:20px}
+#page-history .history-list{display:grid;gap:9px}
+#page-history .history-item{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--surface)}
+#page-history .history-symbol{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:#e2f5e9;color:#087a4b;font-size:19px;flex-shrink:0}
+#page-history .history-item.expense-row .history-symbol{background:#fff0e4;color:#c66a28}
+#page-history .history-info{flex:1;min-width:0}.history-info strong{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.history-info small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.history-amount{font-weight:850;font-size:13px;white-space:nowrap}.history-amount.income{color:#16844c}.history-amount.expense{color:#d65a54}
+@media(max-width:700px){.bottomnav button{min-width:0;flex:1;padding:4px 1px;font-size:9px}.bottomnav{gap:1px;padding-left:4px;padding-right:4px}#page-history .bank-hero{padding:18px}}
+
 @media(min-width:900px){.app{padding-bottom:20px}.topbar{padding:0 28px}.layout{padding:28px}.hero{padding:32px}.hero h2{font-size:31px}}
 @media(max-width:700px){.layout{display:block;padding:17px 14px}.sidebar{display:none}.bottomnav{display:flex}.topbar{height:59px;padding:0 14px}.brand{font-size:19px}.top-actions{gap:7px}.iconbtn{width:37px;height:37px}.page h1{font-size:25px}.hero{padding:21px;border-radius:20px}.hero h2{font-size:24px}.grid2{gap:9px}.card{padding:14px}.statvalue{font-size:19px}.quickgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.quick{padding:10px 4px}.quick .qicon{width:36px;height:36px;font-size:18px}.quick b{font-size:10px}.pagehead{margin-bottom:16px}.sectiontitle{margin-top:19px}.modalback{padding:0;align-items:flex-end}.modal{border-radius:24px 24px 0 0;padding-bottom:calc(20px + env(safe-area-inset-bottom))}}
 @media(max-width:360px){.quickgrid{grid-template-columns:repeat(2,minmax(0,1fr))}.statvalue{font-size:17px}.brand{font-size:17px}}
- /* ===== VSPACE WALLET — GIAO DIỆN NÂNG CẤP ===== */
+ /* Ẩn mã ví và tháng đang xem trong thẻ tài khoản theo yêu cầu */
+#page-wallet .wallet-account-bottom { display: none !important; }
+
+
+#page-wallet .wallet-history-teaser{width:100%;display:flex;align-items:center;gap:11px;margin-top:17px;padding:12px 13px;border:1px solid #ffffff38;border-radius:15px;background:#ffffff12;color:#fff;text-align:left;cursor:pointer}
+#page-wallet .wallet-history-teaser-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:11px;background:#ffffff20;color:#c9ff9a;font-size:22px;font-weight:800;flex-shrink:0}
+#page-wallet .wallet-history-teaser-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+#page-wallet .wallet-history-teaser-copy strong{font-size:13px;font-weight:800}
+#page-wallet .wallet-history-teaser-copy small{font-size:11px;color:#d2e6e0}
+#page-wallet .wallet-history-teaser-arrow{font-size:25px;color:#d5ff9f;line-height:1}
+#page-wallet .wallet-history-teaser:active{transform:scale(.99)}
+
+/* ===== VSPACE WALLET — GIAO DIỆN NÂNG CẤP ===== */
 #page-wallet {
 --wallet-navy: #101b3c;
 --wallet-blue: #263f77;
@@ -267,6 +300,10 @@ font-size: clamp(27px, 5vw, 36px);
 font-weight: 900;
 letter-spacing: -1px;
 overflow-wrap: anywhere;
+}
+#page-wallet .wallet-big-balance sup, #page-history .bank-balance sup {
+  display:inline-block; font-size:.34em; line-height:1; font-weight:800; letter-spacing:.02em;
+  vertical-align:super; margin-left:4px; opacity:.88;
 }
 
 #page-wallet .wallet-account-bottom {
@@ -517,6 +554,110 @@ transition: none !important;
 /* ===== KẾT THÚC GIAO DIỆN WALLET ===== */
 
 </style>
+<style>
+
+/* Dải lịch sử là phần đáy của chính thẻ số dư; không tạo viền/ô riêng */
+#page-wallet .wallet-account{padding-bottom:0 !important; overflow:hidden;}
+#page-wallet .wallet-account .wallet-history-teaser{
+  box-sizing:border-box; position:relative; z-index:2;
+  width:calc(100% + 46px); display:flex; align-items:center; gap:9px;
+  margin:0 -23px 0 !important; padding:12px 23px 13px;
+  border:0 !important; outline:0; border-radius:0 0 23px 23px;
+  background:rgba(225,235,242,.20); box-shadow:none !important;
+  color:#fff; text-align:left; cursor:pointer;
+}
+@media(max-width:700px){
+  #page-wallet .wallet-account{padding-bottom:0 !important; border-radius:21px}
+  #page-wallet .wallet-account .wallet-history-teaser{
+    width:calc(100% + 38px); margin:0 -19px 0 !important;
+    padding-left:19px; padding-right:19px; border-radius:0 0 21px 21px;
+  }
+}
+#page-wallet .wallet-account .wallet-history-teaser-icon{
+  width:auto; height:auto; display:inline-flex; place-items:center;
+  border:0; border-radius:0; background:transparent;
+  color:#d8ff9b; font-size:17px; font-weight:700; flex-shrink:0;
+}
+#page-wallet .wallet-account .wallet-history-teaser-copy{display:flex; flex:1; min-width:0; flex-direction:column; gap:3px}
+#page-wallet .wallet-account .wallet-history-teaser-copy strong{font-size:13px; font-weight:700}
+#page-wallet .wallet-account .wallet-history-teaser-copy small{font-size:11px; color:#d2e6e0}
+#page-wallet .wallet-account .wallet-history-teaser-arrow{font-size:23px; color:#d5ff9f; line-height:1}
+#page-wallet .wallet-account .wallet-history-teaser::before,#page-wallet .wallet-account .wallet-history-teaser::after{content:none !important; display:none !important}
+#page-wallet .wallet-account .wallet-history-teaser:active{transform:none; opacity:.8}
+</style>
+
+<style id="wallet-card-customize-styles">
+#page-wallet .wallet-account{padding-bottom:0!important;overflow:hidden!important}
+#page-wallet .wallet-account-bottom{display:none!important}
+#page-wallet .wallet-card-bottom-actions{display:flex;align-items:stretch;gap:0;width:calc(100% + 46px);margin:0 -23px -1px;padding:0;box-sizing:border-box;background:rgba(225,235,242,.20);border-radius:0 0 23px 23px;overflow:hidden}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser{flex:1 1 50%;min-width:0;width:50%;margin:0;padding:12px 14px 13px 23px;border:0;border-right:0;border-radius:0;background:transparent;box-shadow:none}
+#page-wallet .wallet-customize-trigger{flex:1 1 50%;width:50%;min-width:0;min-height:62px;display:flex;align-items:center;justify-content:center;gap:9px;padding:10px 14px;border:0;border-radius:0;background:transparent;color:#efffd8;cursor:pointer;font:inherit;font-size:13px;font-weight:800}
+#page-wallet .wallet-customize-trigger:hover,#page-wallet .wallet-history-teaser:hover{background:rgba(255,255,255,.09)}
+#page-wallet .wallet-customize-trigger span{white-space:nowrap}
+#page-wallet .wallet-card-bottom-actions button:focus-visible{outline:2px solid #d8ff9d;outline-offset:-3px}
+#page-wallet .wallet-customize-panel{margin:0;padding:14px;border:0;border-top:1px solid #ffffff28;border-radius:0 0 22px 22px;background:rgba(7,20,43,.28);color:#fff}
+#page-wallet .wallet-customize-panel[hidden],#page-wallet [hidden]{display:none!important}
+#walletCustomizePanel .wallet-skins-heading{display:flex;justify-content:space-between;gap:8px;align-items:baseline;margin-bottom:12px}#page-wallet .wallet-skins-heading strong{font-size:14px;color:#fff}#page-wallet .wallet-skins-heading span{font-size:11px;color:#d2e6e0}
+#page-wallet .wallet-customize-tabs{display:flex;gap:6px;padding:4px;border-radius:12px;background:#ffffff20;margin-bottom:12px}
+#page-wallet .wallet-customize-tab{flex:1;border:0;border-radius:9px;padding:9px 10px;background:transparent;color:#e0e8f7;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+#page-wallet .wallet-customize-tab.active{background:#ffffffea;color:#172033}
+#walletCustomizePanel .wallet-color-options,#walletCustomizePanel .wallet-skins-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}
+#walletCustomizePanel .wallet-color-swatch,#walletCustomizePanel .wallet-skin-option{min-width:0;border:1px solid #ffffff20;border-radius:11px;padding:7px 4px;background:#ffffff0b;color:#fff;font:inherit;font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+#walletCustomizePanel .wallet-color-swatch i{display:block;width:100%;height:34px;border-radius:7px}
+#walletCustomizePanel .wallet-skin-preview{position:relative;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;width:100%;height:54px;border-radius:7px;padding:5px;color:#fff;text-align:left;background:#23385d}
+#walletCustomizePanel .wallet-skin-preview i{position:absolute;right:4px;top:1px;font-style:normal;font-size:20px}#page-wallet .wallet-skin-preview b{font-size:9px;letter-spacing:1px}#page-wallet .wallet-skin-preview small{font-size:6px;letter-spacing:.7px}
+#walletCustomizePanel .skin-sakura{background:linear-gradient(135deg,#e7a7bd,#824968 60%,#f6d8df)}#walletCustomizePanel .skin-beach{background:linear-gradient(160deg,#7de1e7,#1886a3 55%,#f5d08c)}#walletCustomizePanel .skin-aurora{background:linear-gradient(135deg,#101b43,#237f86 48%,#8b60bb)}#walletCustomizePanel .skin-lavender{background:linear-gradient(135deg,#b9a2e9,#6b5b9e 65%,#e8d8f5)}#walletCustomizePanel .skin-sunset{background:linear-gradient(135deg,#f9bb74,#d55d65 55%,#583f75)}#walletCustomizePanel .skin-forest{background:linear-gradient(135deg,#b3d6a0,#2c795b 55%,#163c3a)}
+#walletCustomizePanel .wallet-color-swatch.active,#walletCustomizePanel .wallet-skin-option.active{border-color:#d8ff9b;background:#ffffff18}
+#page-wallet .wallet-account.wallet-color-blue{background:radial-gradient(circle at 100% 0%,#3659a9 0,transparent 43%),linear-gradient(130deg,#101a38,#172b55 68%,#142445)!important}
+#page-wallet .wallet-account.wallet-color-green{background:linear-gradient(130deg,#064e3b,#159765)!important}#page-wallet .wallet-account.wallet-color-purple{background:linear-gradient(130deg,#35205f,#7851b8)!important}#page-wallet .wallet-account.wallet-color-rose{background:linear-gradient(130deg,#641d3c,#c04b72)!important}#page-wallet .wallet-account.wallet-color-graphite{background:linear-gradient(130deg,#20252d,#505966)!important}#page-wallet .wallet-account.wallet-color-gold{background:linear-gradient(130deg,#654313,#b98b3e)!important}
+#page-wallet .wallet-account.wallet-skin-sakura{background:radial-gradient(circle at 88% 12%,#f8d9e3 0 12%,transparent 13%),linear-gradient(135deg,#854967,#d998b3 60%,#5e385e)!important}#page-wallet .wallet-account.wallet-skin-beach{background:radial-gradient(ellipse at 90% 12%,#ffe5a6 0 10%,transparent 11%),linear-gradient(160deg,#54c8d2,#087a9b 56%,#f0bd78)!important}#page-wallet .wallet-account.wallet-skin-aurora{background:radial-gradient(ellipse at 80% 15%,#6ee7cf 0,transparent 34%),linear-gradient(135deg,#101b43,#276d83 58%,#684b99)!important}#page-wallet .wallet-account.wallet-skin-lavender{background:radial-gradient(ellipse at 90% 10%,#e7d5ff 0,transparent 28%),linear-gradient(135deg,#6b5b9e,#9a8ad2 58%,#4e426e)!important}#page-wallet .wallet-account.wallet-skin-sunset{background:radial-gradient(ellipse at 90% 10%,#ffdc9d 0,transparent 32%),linear-gradient(135deg,#583f75,#d55d65 58%,#f2a65a)!important}#page-wallet .wallet-account.wallet-skin-forest{background:radial-gradient(ellipse at 90% 10%,#b3d6a0 0,transparent 30%),linear-gradient(135deg,#163c3a,#2c795b 58%,#102f30)!important}
+@media(max-width:700px){#page-wallet .wallet-card-bottom-actions{width:calc(100% + 38px);margin:0 -19px -1px;padding-right:9px;border-radius:0 0 21px 21px}#page-wallet .wallet-card-bottom-actions .wallet-history-teaser{padding-left:19px}#page-wallet .wallet-customize-panel{border-radius:0 0 20px 20px}}
+</style>
+
+<style id="wallet-layout-final-fix">
+/* Hai thao tác nằm cân nhau ở đáy thẻ; phần thông tin ví phía trên được giữ nguyên. */
+#page-wallet .wallet-card-bottom-actions{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ align-items:stretch!important;gap:0!important;width:calc(100% + 46px)!important;
+ margin:0 -23px -1px!important;padding:0!important;box-sizing:border-box!important;
+ border-radius:0 0 23px 23px!important;overflow:hidden!important;
+}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser,
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ gap:9px!important;min-width:0!important;width:100%!important;max-width:none!important;
+ min-height:60px!important;margin:0!important;padding:11px 12px!important;
+ box-sizing:border-box!important;border:0!important;border-radius:0!important;
+ background:transparent!important;color:#fff!important;text-align:center!important;
+}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser{border-right:1px solid rgba(255,255,255,.3)!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy{min-width:0!important;flex:0 1 auto!important;text-align:left!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy strong{font-size:12px!important;white-space:normal!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy small{font-size:10px!important;white-space:normal!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-arrow{display:none!important}
+#page-wallet .wallet-customize-panel[hidden]{display:none!important}
+#page-wallet .wallet-customize-panel:not([hidden]){
+ position:fixed!important;z-index:10020!important;left:50%!important;top:50%!important;
+ transform:translate(-50%,-50%)!important;width:min(520px,calc(100vw - 28px))!important;
+ max-width:520px!important;max-height:78vh!important;overflow:auto!important;
+ margin:0!important;padding:18px!important;box-sizing:border-box!important;
+ border:1px solid rgba(255,255,255,.18)!important;border-radius:22px!important;
+ background:linear-gradient(145deg,#132344,#09152d)!important;
+ box-shadow:0 24px 80px rgba(0,0,0,.48)!important;
+}
+body.wallet-customize-open{overflow:hidden!important}
+body>#walletCustomizePanel[hidden]{display:none!important}
+body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:10010;background:rgba(3,8,20,.62);backdrop-filter:blur(4px)}
+#walletCustomizePanel .wallet-skins-heading{align-items:center!important;margin-bottom:16px!important}
+#walletCustomizePanel .wallet-customize-close{width:36px!important;height:36px!important;flex:0 0 36px!important;border:0!important;border-radius:50%!important;background:#ffffff18!important;color:#fff!important;font-size:25px!important;line-height:1!important;cursor:pointer!important}
+@media(max-width:700px){
+ #page-wallet .wallet-card-bottom-actions{width:calc(100% + 38px)!important;margin:0 -19px -1px!important;border-radius:0 0 21px 21px!important}
+ #page-wallet .wallet-card-bottom-actions .wallet-history-teaser,
+ #page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{gap:6px!important;padding:10px 7px!important;font-size:12px!important}
+ #page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy strong{font-size:11px!important}
+ #page-wallet .wallet-customize-panel:not([hidden]){width:calc(100vw - 24px)!important;max-height:82vh!important;padding:16px!important;border-radius:20px!important}
+}
+</style>
 </head>
 <body>
 <div class="app">
@@ -611,7 +752,6 @@ transition: none !important;
       <span style="font-size:21px">◈</span>
     </div>
 
-```
 <div class="wallet-account-user">
   <div class="wallet-avatar" id="walletAvatar">VŨ</div>
   <div style="min-width:0;flex:1">
@@ -624,10 +764,15 @@ transition: none !important;
 <div class="wallet-balance-head">
   <span>Số dư hiện tại</span>
   <button class="wallet-eye" id="walletEye" type="button"
-    onclick="toggleWalletBalance()" aria-label="Ẩn hoặc hiện số dư">◉</button>
+    onclick="toggleWalletBalance()" aria-label="Hiện số dư" aria-pressed="false">
+    <svg viewBox="0 0 24 24" width="19" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M3 3L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M10.6 10.7A2 2 0 0 0 13.3 13.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.2.4-1.2 2-3.1 3.4M6.2 6.3C3.9 7.8 2.2 10.4 2 11c.5.9 3.8 6 10 6 1 0 1.9-.2 2.7-.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
 </div>
-<div class="wallet-big-balance" id="walletBalanceDisplay">0 ₫</div>
-
+<div class="wallet-big-balance" id="walletBalanceDisplay" aria-label="Số dư đang được ẩn">••••••••</div>
 <div class="wallet-account-bottom">
   <div>
     <span>MÃ VÍ</span>
@@ -638,7 +783,44 @@ transition: none !important;
     <strong id="walletAccountMonth">—</strong>
   </div>
 </div>
-```
+
+    <div class="wallet-card-bottom-actions">
+      <button class="wallet-history-teaser" type="button" onclick="go('history')" aria-label="Mở lịch sử giao dịch">
+        <span class="wallet-history-teaser-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3.2 2"></path></svg></span>
+        <span class="wallet-history-teaser-copy"><strong>Lịch sử giao dịch</strong><small id="walletHistoryTeaserCount">Xem các khoản thu chi</small></span>
+        <span class="wallet-history-teaser-arrow">›</span>
+      </button>
+      <button class="wallet-customize-trigger" type="button" onclick="toggleWalletCustomize()" aria-label="Đổi màu hoặc họa tiết thẻ" aria-expanded="false" aria-controls="walletCustomizePanel" title="Tùy chỉnh thẻ">
+        <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.2a2.2 2.2 0 0 0 1.5-3.8 1.7 1.7 0 0 1 1.2-2.9H18a3 3 0 0 0 3-3c0-4.6-4-8.3-9-8.3Z"/><circle cx="7.5" cy="10" r="1"/><circle cx="10" cy="6.8" r="1"/><circle cx="15" cy="7.5" r="1"/></svg><span class="wallet-customize-trigger-copy"><strong>Trang trí thẻ</strong><small>Chạm để thay đổi giao diện</small></span>
+      </button>
+    </div>
+    <div id="walletCustomizePanel" class="wallet-customize-panel" hidden>
+      <div class="wallet-skins-heading"><div><strong>Trang trí thẻ</strong><span>Chọn màu cơ bản hoặc họa tiết cho thẻ</span></div><button type="button" class="wallet-customize-close" onclick="toggleWalletCustomize()" aria-label="Đóng cửa sổ">×</button></div>
+      <div class="wallet-customize-tabs" role="tablist" aria-label="Loại giao diện thẻ">
+        <button type="button" class="wallet-customize-tab active" role="tab" aria-selected="true" aria-controls="walletBasicOptions walletPatternOptions" onclick="showWalletCustomize('all')">Tất cả</button>
+        <button type="button" class="wallet-customize-tab" role="tab" aria-selected="false" aria-controls="walletBasicOptions" onclick="showWalletCustomize('basic')">Cơ bản</button>
+        <button type="button" class="wallet-customize-tab" role="tab" aria-selected="false" aria-controls="walletPatternOptions" onclick="showWalletCustomize('patterns')">Họa tiết</button>
+      </div>
+      <div class="wallet-customize-group-title" id="walletBasicTitle">Màu cơ bản <span>Chọn một màu cho thẻ</span></div>
+      <div class="wallet-color-options" id="walletBasicOptions" role="tabpanel">
+        <button type="button" class="wallet-color-swatch" data-wallet-color="blue" onclick="setWalletCardColor('blue')"><i style="background:linear-gradient(135deg,#101a38,#1b3769)"></i><span>Xanh navy</span></button>
+        <button type="button" class="wallet-color-swatch" data-wallet-color="green" onclick="setWalletCardColor('green')"><i style="background:linear-gradient(135deg,#064e3b,#159765)"></i><span>Xanh lá</span></button>
+        <button type="button" class="wallet-color-swatch" data-wallet-color="purple" onclick="setWalletCardColor('purple')"><i style="background:linear-gradient(135deg,#35205f,#7851b8)"></i><span>Tím</span></button>
+        <button type="button" class="wallet-color-swatch" data-wallet-color="rose" onclick="setWalletCardColor('rose')"><i style="background:linear-gradient(135deg,#641d3c,#c04b72)"></i><span>Hồng đỏ</span></button>
+        <button type="button" class="wallet-color-swatch" data-wallet-color="graphite" onclick="setWalletCardColor('graphite')"><i style="background:linear-gradient(135deg,#20252d,#505966)"></i><span>Than chì</span></button>
+        <button type="button" class="wallet-color-swatch" data-wallet-color="gold" onclick="setWalletCardColor('gold')"><i style="background:linear-gradient(135deg,#654313,#b98b3e)"></i><span>Vàng đồng</span></button>
+      </div>
+      <div class="wallet-customize-group-title" id="walletPatternTitle" hidden>Họa tiết <span>Chọn phong cách bạn thích</span></div>
+      <div class="wallet-skins-grid" id="walletPatternOptions" role="tabpanel" hidden>
+        <button type="button" class="wallet-skin-option" data-skin="sakura" onclick="setWalletSkin('sakura')"><span class="wallet-skin-preview skin-sakura"><i>🌸</i><b>VSPACE</b><small>SPRING BLOOM</small></span><span>Hoa anh đào</span></button>
+        <button type="button" class="wallet-skin-option" data-skin="beach" onclick="setWalletSkin('beach')"><span class="wallet-skin-preview skin-beach"><i>🌴</i><b>VSPACE</b><small>OCEAN ESCAPE</small></span><span>Bãi biển</span></button>
+        <button type="button" class="wallet-skin-option" data-skin="aurora" onclick="setWalletSkin('aurora')"><span class="wallet-skin-preview skin-aurora"><i>✨</i><b>VSPACE</b><small>AURORA NIGHT</small></span><span>Cực quang</span></button>
+        <button type="button" class="wallet-skin-option" data-skin="lavender" onclick="setWalletSkin('lavender')"><span class="wallet-skin-preview skin-lavender"><i>🪻</i><b>VSPACE</b><small>LAVENDER DREAM</small></span><span>Oải hương</span></button>
+        <button type="button" class="wallet-skin-option" data-skin="sunset" onclick="setWalletSkin('sunset')"><span class="wallet-skin-preview skin-sunset"><i>🌅</i><b>VSPACE</b><small>GOLDEN HOUR</small></span><span>Hoàng hôn</span></button>
+        <button type="button" class="wallet-skin-option" data-skin="forest" onclick="setWalletSkin('forest')"><span class="wallet-skin-preview skin-forest"><i>🍃</i><b>VSPACE</b><small>FOREST CALM</small></span><span>Rừng xanh</span></button>
+      </div>
+    </div>
+
 
   </div>
 
@@ -650,97 +832,61 @@ transition: none !important;
   </div>
   <div class="quickgrid wallet-quick">
     <button class="quick" type="button" onclick="openWalletTransaction('income')">
-     <div class="qicon">
-  <svg viewBox="0 0 24 24" fill="none"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M7 4H4v3M4 4l8 8"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    <path d="M12 12H7a3 3 0 0 0-3 3v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    <path d="M15 4h5v5"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-  </svg>
-</div>
+      <div class="qicon">
+        <svg viewBox="0 0 48 48" width="29" height="29" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="7" y="13" width="34" height="26" rx="7" fill="#70C9A0"/>
+          <path d="M7 20h34" stroke="#25885D" stroke-width="2.5"/>
+          <rect x="28" y="25" width="8" height="6" rx="2" fill="#E7FFF2"/>
+          <circle cx="32" cy="28" r="1.4" fill="#25885D"/>
+          <circle cx="16" cy="11" r="9" fill="#D9F7E8" stroke="#2B9D6C" stroke-width="2"/>
+          <path d="M16 16V6m-4 4 4-4 4 4" stroke="#25885D" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <b>Thêm khoản thu</b>
     </button>
     <button class="quick" type="button" onclick="openWalletTransaction('expense')">
-   
-<div class="qicon">
-  <svg viewBox="0 0 24 24" fill="none"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M7 20H4v-3M4 20l8-8"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    <path d="M12 12h5a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3H7"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    <path d="M15 20h5v-5"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-  </svg>
-</div>
-
+      <div class="qicon">
+        <svg viewBox="0 0 48 48" width="29" height="29" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="7" y="13" width="34" height="26" rx="7" fill="#F4A8B7"/>
+          <path d="M7 20h34" stroke="#C94D68" stroke-width="2.5"/>
+          <rect x="28" y="25" width="8" height="6" rx="2" fill="#FFF0F3"/>
+          <circle cx="32" cy="28" r="1.4" fill="#C94D68"/>
+          <circle cx="16" cy="11" r="9" fill="#FFE5EA" stroke="#D65E79" stroke-width="2"/>
+          <path d="M16 6v10m-4-4 4 4 4-4" stroke="#C94D68" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <b>Thêm khoản chi</b>
     </button>
     <button class="quick" type="button" onclick="openWalletTransfer()">
- 
-<div class="qicon">
-  <svg viewBox="0 0 24 24" fill="none"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M4 8h15l-3-3"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    <path d="M20 16H5l3 3"
-          stroke="currentColor"
-          stroke-width="1.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-  </svg>
-</div>
-
+      <div class="qicon">
+        <svg viewBox="0 0 48 48" width="29" height="29" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="6" y="11" width="26" height="27" rx="6" fill="#B8ACF5"/>
+          <rect x="12" y="7" width="26" height="27" rx="6" fill="#E1DAFF" stroke="#8875DB" stroke-width="2"/>
+          <path d="M17 16h15l-4-4m4 4-4 4M33 25H18l4 4m-4-4 4-4" fill="none" stroke="#6653BE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="37" cy="35" r="7" fill="#F8D56B" stroke="#D7A62C" stroke-width="1.5"/>
+          <path d="M34 35h6m-3-3v6" stroke="#9A7018" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+      </div>
       <b>Chuyển nội bộ</b>
     </button>
     <button class="quick" type="button" onclick="openWalletSavings()">
-
-<div class="qicon">
-  <svg viewBox="0 0 24 24" fill="none"
-       xmlns="http://www.w3.org/2000/svg"
-       aria-hidden="true">
-    <path d="M5 10a7 7 0 0 1 12-2h2a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2l-2 3h-3v-2H9v2H6v-3a7 7 0 0 1-1-6Z"
-          stroke="currentColor"
-          stroke-width="1.7"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-    <circle cx="15" cy="11" r="1"
-            fill="currentColor"/>
-    <path d="M3 12H2v3h3"
-          stroke="currentColor"
-          stroke-width="1.7"
-          stroke-linecap="round"
-          stroke-linejoin="round"/>
-  </svg>
-</div>
-
+      <div class="qicon">
+        <svg viewBox="0 0 48 48" width="31" height="31" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <!-- Coin floating above a rounded piggy bank, inspired by the soft Digibank shortcut style -->
+          <circle cx="35" cy="10" r="7" fill="#FFD45D" stroke="#D49A22" stroke-width="1.6"/>
+          <path d="M35 6.5v7m2-5.5c-1.8-1.5-4.5-.1-2.5 1.3 2.5 1.5 1 3.6-1.5 2.2" fill="none" stroke="#996719" stroke-width="1.4" stroke-linecap="round"/>
+          <path d="M11 20 9 12q-.3-2 2-1l7 5" fill="#F8B7C8" stroke="#D96C8A" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M13 26c0-7 6-11 14-11 7 0 12 4 12 10 0 2-.5 4-2 5l1 5q0 2-2 2h-5l-1-4h-7l-1 4h-5l-1-6c-2-1-3-3-3-5Z" fill="#F7B4C6" stroke="#D96C8A" stroke-width="2" stroke-linejoin="round"/>
+          <ellipse cx="35" cy="25" rx="6" ry="4.5" fill="#FFE0E8" stroke="#D96C8A" stroke-width="1.7"/>
+          <ellipse cx="33" cy="25" rx=".9" ry="1.2" fill="#B94F70"/>
+          <ellipse cx="37" cy="25" rx=".9" ry="1.2" fill="#B94F70"/>
+          <circle cx="28" cy="20" r="1.5" fill="#69394B"/>
+          <ellipse cx="25" cy="25" rx="2.5" ry="1.6" fill="#EE86A4" opacity=".85"/>
+          <path d="M23 15h7" stroke="#B94F70" stroke-width="2" stroke-linecap="round"/>
+          <path d="M5 28c-4-1-4-6 0-6 3 0 3 4 0 4" fill="none" stroke="#D96C8A" stroke-width="2" stroke-linecap="round"/>
+          <path d="m42 16 1.2 2.4 2.3 1.1-2.3 1.1-1.2 2.4-1.1-2.4-2.4-1.1 2.4-1.1z" fill="#F6C64E"/>
+        </svg>
+      </div>
       <b>Tiết kiệm</b>
     </button>
   </div>
@@ -898,43 +1044,26 @@ transition: none !important;
     </table>
   </div>
 
-  <div class="sectiontitle">
-    <h2>Lịch sử giao dịch</h2>
-    <span id="transactionCount">0 khoản</span>
+  <p class="sub">Lịch sử giao dịch và các tệp sao lưu nằm trong thẻ số dư phía trên. Chạm “Lịch sử giao dịch” để mở.</p>
+</section>
+<section class="page" id="page-history">
+  <div class="pagehead"><div><div class="eyebrow">VSPACE WALLET</div><h1>Lịch sử giao dịch</h1><div class="sub">Các khoản thu chi của bạn, sắp xếp mới nhất trước.</div></div><button class="btn secondary small" type="button" onclick="go('wallet')">‹ Quay lại Ví tiền</button></div>
+  <div class="bank-hero">
+    <div class="bank-brand"><span class="bank-mark">V</span><span>Vspace Wallet</span><span style="margin-left:auto;font-size:10px;letter-spacing:.5px;color:#d8f5e9">TÀI KHOẢN CỦA BẠN</span></div>
+    <div class="bank-caption">SỐ DƯ HIỆN TẠI</div>
+    <div class="bank-balance-row"><div class="bank-balance" id="historyBalance">••••••••</div><button class="bank-eye" type="button" onclick="toggleWalletBalance()" id="historyEye" aria-label="Hiện số dư"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3 21 21" stroke-linecap="round"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.5.9-3.8 6-9 6-1 0-1.9-.2-2.7-.5M6.2 6.3C3.9 7.8 2.2 10.4 2 11" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
+    <div class="bank-meta"><span id="historyMonth">Tháng hiện tại</span><span>•</span><span id="historyHeroCount">0 giao dịch</span></div>
   </div>
-
-  <div class="toolbar">
-    <input class="field" id="filterMonth" type="month">
-    <select class="field" id="filterType">
-      <option value="all">Tất cả khoản</option>
-      <option value="income">Khoản thu</option>
-      <option value="expense">Khoản chi</option>
-    </select>
-<button class="btn secondary" onclick="exportCSV()">Xuất CSV</button>
-<button class="btn secondary" onclick="exportWalletXLSX()">Xuất Excel</button>
-    <label class="btn secondary" for="importFile">Nhập file</label>
-    <input id="importFile" type="file" accept=".csv,.txt,.json"
-      hidden onchange="importFile(event)">
+  <div class="bank-actions">
+    <button class="bank-action" onclick="openWalletTransaction('income')"><span class="bank-action-icon">↙</span>Thêm khoản thu</button>
+    <button class="bank-action" onclick="openWalletTransaction('expense')"><span class="bank-action-icon" style="background:#fff0e4;color:#c66a28">↗</span>Thêm khoản chi</button>
+    <button class="bank-action" onclick="openWalletTransfer()"><span class="bank-action-icon" style="background:#e9e4ff;color:#6550c8">⇄</span>Chuyển nội bộ</button>
   </div>
-
-  <div class="tablewrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Ngày</th>
-          <th>Khoản mục</th>
-          <th>Nhóm</th>
-          <th>Số tiền</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="transactionRows"></tbody>
-    </table>
-  </div>
-
-  <p class="sub">
-    Dữ liệu được lưu trên thiết bị này. Hãy sao lưu trước khi thay đổi lớn.
-  </p>
+  <div class="sectiontitle"><h2>Giao dịch của bạn</h2><span id="historyCount">0 giao dịch</span></div>
+  <div class="toolbar"><input class="field" id="historyFilterMonth" type="month" aria-label="Lọc tháng"><select class="field" id="historyFilterType" aria-label="Lọc loại giao dịch"><option value="all">Tất cả khoản</option><option value="income">Khoản thu</option><option value="expense">Khoản chi</option></select></div>
+  <div class="toolbar" style="margin-top:8px"><button class="btn secondary" type="button" onclick="exportCSV()">Xuất CSV</button><button class="btn secondary" type="button" onclick="exportWalletXLSX()">Xuất Excel</button><label class="btn secondary" for="historyImportFile">Nhập file</label><input id="historyImportFile" type="file" accept=".csv,.txt,.json" hidden onchange="importFile(event)"></div>
+  <div id="bankHistoryList" class="history-list"></div>
+  <button class="btn secondary" style="width:100%;margin-top:12px" onclick="go('wallet')">Mở sổ thu chi đầy đủ</button>
 </section>
 <section class="page" id="page-music">
   <div class="pagehead"><div><div class="eyebrow">LISTEN YOUR WAY</div><h1>Âm nhạc của tôi</h1><div class="sub">Một góc thư giãn mang cảm hứng Spotify.</div></div></div>
@@ -980,6 +1109,7 @@ transition: none !important;
 <button data-page="timetable" onclick="go('timetable')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>Lịch học</button>
 <button data-page="music" onclick="go('music')"><span style="font-size:23px;line-height:22px">♫</span>Nhạc</button>
 <button data-page="wallet" onclick="go('wallet')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="15" rx="3"/><path d="M2 9h20M16 15h2"/></svg>Ví tiền</button>
+<button data-page="history" onclick="go('history')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v15H4zM8 9h8M8 13h8M8 17h5" stroke-linecap="round" stroke-linejoin="round"/></svg>Giao dịch</button>
 <button data-page="notifications" onclick="go('notifications')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/></svg>Thông báo<span id="bottomBadge" class="mini-badge"></span></button>
 <button data-page="profile" onclick="go('profile')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Cá nhân</button>
 </nav>
@@ -1024,7 +1154,7 @@ let state={
 };
 function load(){try{const s=JSON.parse(localStorage.getItem('miSpaceV3')||'null');if(s)state={...state,...s}}catch(e){}}
 function save(){localStorage.setItem('miSpaceV3',JSON.stringify(state));renderAll()}
-function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});if(page==='notifications')renderNotices()}
+function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});if(page==='notifications')renderNotices();if(page==='history')renderBankHistory()}
 function setTheme(theme){state.theme=theme;applyTheme();saveQuiet();['Light','Dark','Auto'].forEach(x=>$('theme'+x)?.classList.toggle('selected',theme===x.toLowerCase()));toast('Đã đổi giao diện')}
 function cycleTheme(){setTheme(state.theme==='light'?'dark':state.theme==='dark'?'auto':'light')}
 function applyTheme(){const dark=state.theme==='dark'||(state.theme==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]').content=dark?'#0e0f12':'#f7f7f8';['Light','Dark','Auto'].forEach(x=>{const el=$('theme'+x);if(el)el.classList.toggle('selected',state.theme===x.toLowerCase())})}
@@ -1051,6 +1181,7 @@ function saveQuiet(){localStorage.setItem('miSpaceV3',JSON.stringify(state))}fun
  function goToCurrentWalletMonth(){
   $('walletMonth').value = currentMonth();
   $('filterMonth').value = currentMonth();
+if ($('historyFilterMonth')) $('historyFilterMonth').value = currentMonth();
   renderAll();
 }
 function unread(){return state.notices.filter(n=>!n.read).length}
@@ -1222,6 +1353,14 @@ function renderNotices(){renderBadges();let list=state.noticeEnabled?state.notic
 function readNotice(id){state.notices=state.notices.map(n=>n.id===id?{...n,read:true}:n);save()}
 function markAllRead(){state.notices=state.notices.map(n=>({...n,read:true}));save();toast('Đã đọc tất cả thông báo')}
 function toggleNotices(v){state.noticeEnabled=v;save();toast(v?'Đã bật thông báo trong app':'Đã tắt thông báo trong app')}
+function renderBankHistory(){
+  const list=$('bankHistoryList'); if(!list) return;
+  const month=$('historyFilterMonth')?.value||currentMonth();
+  const type=$('historyFilterType')?.value||'all';
+  const rows=(state.transactions||[]).filter(t=>(t.date||'').startsWith(month)&&(type==='all'||t.type===type)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+  const count=$('historyHeroCount'); if(count) count.textContent=rows.length+' giao dịch'; const titleCount=$('historyCount'); if(titleCount) titleCount.textContent=rows.length+' giao dịch'; const teaser=$('walletHistoryTeaserCount'); if(teaser) teaser.textContent=rows.length?`${rows.length} giao dịch trong tháng · Chạm để xem tất cả`:'Chạm để xem và quản lý giao dịch'; const hm=$('historyMonth'); if(hm) hm.textContent=month;
+  list.innerHTML=rows.length?rows.map(t=>`<article class="history-item ${t.type==='expense'?'expense-row':''}"><div class="history-symbol">${t.type==='income'?'↙':'↗'}</div><div class="history-info"><strong>${esc(t.title||'Giao dịch')}</strong><small>${esc(t.date||'')} · ${esc(t.category||'Khác')}${t.note?' · '+esc(t.note):''}</small></div><div class="history-amount ${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</div></article>`).join(''):'<div class="card sub" style="text-align:center;padding:25px">Chưa có giao dịch trong tháng này.</div>';
+}
 function renderTransactions(){const month=$('filterMonth').value||currentMonth(),type=$('filterType').value;let rows=state.transactions.filter(t=>(t.date||'').startsWith(month)&&(type==='all'||t.type===type)).sort((a,b)=>b.date.localeCompare(a.date));$('transactionRows').innerHTML=rows.length?rows.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.title)}</td><td>${esc(t.category||'Khác')}</td><td class="${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</td><td><button class="btn danger small" onclick="deleteTransaction('${t.id}')">Xoá</button></td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:28px">Chưa có khoản nào trong tháng này.</td></tr>'}
 function renderClasses(){let cs=state.classes.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));$('classList').innerHTML=cs.length?cs.map(c=>`<div class="notice"><div class="feedicon">📘</div><div style="flex:1"><h3>${esc(c.subject)}</h3><p>${esc(c.date)} · ${esc(c.time)} · ${esc(c.room||'Chưa có phòng')}</p>${c.note?`<p>${esc(c.note)}</p>`:''}</div><button class="btn danger small" onclick="deleteClass('${c.id}')">Xoá</button></div>`).join(''):'<div class="card sub">Chưa có lịch học. Bấm “Thêm lịch” để nhập lịch của bạn.</div>';const todays=cs.filter(c=>c.date===todayISO());$('todayClasses').innerHTML=todays.length?todays.map(c=>`<div class="feeditem"><div class="feedicon">📚</div><div><strong>${esc(c.subject)}</strong><p>${esc(c.time)} · ${esc(c.room||'Chưa có phòng')}</p></div></div>`).join(''):'<div class="feeditem"><div class="feedicon">☕</div><div><strong>Chưa có lịch học được nhập cho hôm nay</strong><p>Thêm lịch học của bạn trong mục Thời khóa biểu.</p></div></div>'}
 
@@ -1246,7 +1385,6 @@ function updateTodayLabels() {
 }
 
 function renderAll() {
-applyTheme();
 renderBadges();
 renderStats();
 renderWalletInsights();
@@ -1512,11 +1650,38 @@ function exportWalletXLSX() {
   toast('Đã xuất Excel tháng ' + m);
 }
  // ===== VSPACE WALLET UI =====
-let walletBalanceHidden = false;
+let walletBalanceHidden = true; // Mặc định luôn ẩn số dư khi mở ứng dụng
 
 function toggleWalletBalance() {
+  // Chỉ đổi trạng thái hiển thị số dư; không render lại biểu đồ/lịch sử hay các phần khác.
   walletBalanceHidden = !walletBalanceHidden;
-  renderWalletInsights();
+  const month = walletMonth();
+  const balance = closingBalance(month);
+  const balanceNumber = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(Number(balance) || 0);
+  const balanceMarkup = walletBalanceHidden ? '••••••••' : `${balanceNumber}<sup>VND</sup>`;
+
+  const walletDisplay = $('walletBalanceDisplay');
+  if (walletDisplay) {
+    walletDisplay.innerHTML = balanceMarkup;
+    walletDisplay.setAttribute('aria-label', walletBalanceHidden ? 'Số dư đang được ẩn' : `Số dư ${balanceNumber} VND`);
+  }
+  const historyBalance = $('historyBalance');
+  if (historyBalance) historyBalance.innerHTML = balanceMarkup;
+
+  const eyeOpen = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>';
+  const eyeClosed = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.5.9-3.8 6-9 6-1 0-1.9-.2-2.7-.5M6.2 6.3C3.9 7.8 2.2 10.4 2 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const iconMarkup = walletBalanceHidden ? eyeClosed : eyeOpen;
+  const walletEye = $('walletEye');
+  if (walletEye) {
+    walletEye.innerHTML = iconMarkup;
+    walletEye.setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư');
+    walletEye.setAttribute('aria-pressed', String(!walletBalanceHidden));
+  }
+  const historyEye = $('historyEye');
+  if (historyEye) {
+    historyEye.innerHTML = iconMarkup;
+    historyEye.setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư');
+  }
 }
 
 function openWalletTransaction(type) {
@@ -1595,15 +1760,22 @@ function renderWalletInsights() {
     (state.studentName || 'V').trim().slice(-1).toUpperCase();
   $('walletAccountMonth').textContent = monthLabel;
 
-  $('walletBalanceDisplay').textContent = walletBalanceHidden
+  const balanceNumber = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(Number(balance) || 0);
+  $('walletBalanceDisplay').innerHTML = walletBalanceHidden
     ? '••••••••'
-    : money(balance);
+    : `${balanceNumber}<sup>VND</sup>`;
+  const historyBalance = $('historyBalance');
+  if (historyBalance) historyBalance.innerHTML = walletBalanceHidden ? '••••••••' : `${balanceNumber}<sup>VND</sup>`;
+  const historyEye = $('historyEye');
+  if (historyEye) { historyEye.setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư'); historyEye.innerHTML = walletBalanceHidden ? '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3 21 21" stroke-linecap="round"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.5.9-3.8 6-9 6-1 0-1.9-.2-2.7-.5M6.2 6.3C3.9 7.8 2.2 10.4 2 11" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>'; }
+  const historyMonth = $('historyMonth'); if (historyMonth) historyMonth.textContent = 'Tháng ' + monthLabel;
+  renderBankHistory();
 
-  $('walletEye').textContent = walletBalanceHidden ? '◎' : '◉';
-  $('walletEye').setAttribute(
-    'aria-label',
-    walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư'
-  );
+  $('walletEye').innerHTML = walletBalanceHidden
+    ? `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10.6 10.7A2 2 0 0 0 13.3 13.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.2.4-1.2 2-3.1 3.4M6.2 6.3C3.9 7.8 2.2 10.4 2 11c.5.9 3.8 6 10 6 1 0 1.9-.2 2.7-.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+    : `<svg viewBox="0 0 24 24" width="19" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>`;
+  $('walletEye').setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư');
+  $('walletEye').setAttribute('aria-pressed', String(!walletBalanceHidden));
 
   // Biểu đồ thu, chi và tiền trọ trong tháng
   const maxValue = Math.max(
@@ -1720,6 +1892,8 @@ $('walletMonth').value = currentMonth();
 $('classDate').value = todayISO();
 
 $('filterMonth').addEventListener('change', renderTransactions);
+if ($('historyFilterMonth')) $('historyFilterMonth').addEventListener('change', renderBankHistory);
+if ($('historyFilterType')) $('historyFilterType').addEventListener('change', renderBankHistory);
 $('filterType').addEventListener('change', renderTransactions);
 
 $('walletMonth').addEventListener('change', () => {
@@ -1728,6 +1902,7 @@ renderAll();
 });
 
 load();
+applyTheme();
 
 $('filterMonth').value = currentMonth();
 $('walletMonth').value = currentMonth();
@@ -1753,4 +1928,331 @@ if (state.theme === 'auto') {
     .addEventListener?.('change', applyTheme);
 }
 </script>
+
+<script id="wallet-card-customize-script">
+(function(){
+ const card=document.querySelector('#page-wallet .wallet-account');
+ const panel=document.getElementById('walletCustomizePanel');
+ const basic=document.getElementById('walletBasicOptions');
+ const patterns=document.getElementById('walletPatternOptions');
+ if(!card||!panel||!basic||!patterns)return;
+ /* Đưa bảng tùy chỉnh ra khỏi thẻ ví để không bị overflow/transform của thẻ cắt hoặc làm lệch modal. */
+ document.body.appendChild(panel);
+ window.toggleWalletCustomize=function(){const trigger=document.querySelector('#page-wallet .wallet-customize-trigger');const opening=panel.hidden;panel.hidden=!opening;document.body.classList.toggle('wallet-customize-open',opening);if(trigger)trigger.setAttribute('aria-expanded',String(opening));if(opening){showWalletCustomize('all');const first=panel.querySelector('.wallet-customize-tab');if(first)setTimeout(()=>first.focus(),0);}};
+ window.showWalletCustomize=function(which){const showAll=which==='all';const isBasic=which==='basic';const basicTitle=document.getElementById('walletBasicTitle');const patternTitle=document.getElementById('walletPatternTitle');basic.hidden=!(showAll||isBasic);patterns.hidden=!(showAll||!isBasic);if(basicTitle)basicTitle.hidden=!(showAll||isBasic);if(patternTitle)patternTitle.hidden=!(showAll||!isBasic);panel.querySelectorAll('.wallet-customize-tab').forEach((b)=>{const active=(which==='all'&&b.textContent.trim()==='Tất cả')||(which==='basic'&&b.textContent.trim()==='Cơ bản')||(which==='patterns'&&b.textContent.trim()==='Họa tiết');b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});};
+ function clearThemes(){card.classList.remove('wallet-color-blue','wallet-color-green','wallet-color-purple','wallet-color-rose','wallet-color-graphite','wallet-color-gold','wallet-skin-sakura','wallet-skin-beach','wallet-skin-aurora','wallet-skin-lavender','wallet-skin-sunset','wallet-skin-forest');}
+ window.setWalletCardColor=function(color){clearThemes();card.classList.add('wallet-color-'+color);panel.querySelectorAll('.wallet-color-swatch').forEach(b=>b.classList.toggle('active',b.dataset.walletColor===color));panel.querySelectorAll('.wallet-skin-option').forEach(b=>b.classList.remove('active'));try{localStorage.setItem('vspaceWalletCardColor',color);localStorage.removeItem('vspace-wallet-skin')}catch(e){}};
+ window.setWalletSkin=function(skin){clearThemes();card.classList.add('wallet-skin-'+skin);panel.querySelectorAll('.wallet-skin-option').forEach(b=>b.classList.toggle('active',b.dataset.skin===skin));panel.querySelectorAll('.wallet-color-swatch').forEach(b=>b.classList.remove('active'));try{localStorage.setItem('vspace-wallet-skin',skin);localStorage.removeItem('vspaceWalletCardColor')}catch(e){}};
+ panel.addEventListener('click',function(e){if(e.target===panel)window.toggleWalletCustomize();});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)window.toggleWalletCustomize();});
+ try{const skin=localStorage.getItem('vspace-wallet-skin');const color=localStorage.getItem('vspaceWalletCardColor');if(skin&&['sakura','beach','aurora','lavender','sunset','forest'].includes(skin))setWalletSkin(skin);else setWalletCardColor(color&&['blue','green','purple','rose','graphite','gold'].includes(color)?color:'blue')}catch(e){setWalletCardColor('blue')}
+})();
+</script>
+
+
+<style id="wallet-card-actions-final">
+#page-wallet .wallet-card-bottom-actions{
+ display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ align-items:stretch!important;gap:0!important;
+ width:calc(100% + 46px)!important;margin:0 -23px -1px!important;
+ padding:0!important;box-sizing:border-box!important;
+ background:rgba(225,235,242,.20)!important;
+ border-radius:0 0 23px 23px!important;overflow:hidden!important;
+}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser,
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{
+ box-sizing:border-box!important;width:100%!important;min-width:0!important;
+ min-height:62px!important;margin:0!important;padding:12px 12px!important;
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ gap:8px!important;border:0!important;border-radius:0!important;
+ background:transparent!important;box-shadow:none!important;
+ color:#f5ffe9!important;font:inherit!important;font-size:13px!important;font-weight:750!important;
+ text-align:center!important;cursor:pointer!important;
+}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser{
+ border-right:1px solid rgba(255,255,255,.38)!important;
+}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy{flex:0 1 auto!important;text-align:left!important;min-width:0!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy strong{font-size:12px!important;white-space:nowrap!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy small{font-size:10px!important;white-space:normal!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-arrow{display:none!important}
+#page-wallet .wallet-card-bottom-actions .wallet-history-teaser-icon{width:30px!important;height:30px!important;flex:0 0 30px!important}
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger svg{flex:0 0 auto!important}
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger-copy{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:3px!important;min-width:0!important;text-align:left!important;line-height:1.2!important}
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger-copy strong{font-size:12px!important;font-weight:800!important;white-space:nowrap!important}
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger-copy small{font-size:10px!important;font-weight:500!important;opacity:.78!important;white-space:normal!important}
+#page-wallet .wallet-card-bottom-actions button:hover{background:rgba(255,255,255,.10)!important}
+#page-wallet .wallet-card-bottom-actions button:focus-visible{outline:2px solid #d8ff9d!important;outline-offset:-3px!important}
+
+/* Trang trí mở thành cửa sổ nổi, không làm cao/rộng thẻ ví */
+body.wallet-customize-open{overflow:hidden!important}
+body>#walletCustomizePanel[hidden]{display:none!important}
+#walletCustomizePanel:not([hidden]){
+ position:fixed!important;left:50%!important;top:50%!important;
+ transform:translate(-50%,-50%)!important;
+ width:min(420px,calc(100vw - 32px))!important;max-width:420px!important;
+ max-height:min(78vh,680px)!important;overflow:auto!important;
+ margin:0!important;padding:18px!important;box-sizing:border-box!important;
+ z-index:10020!important;border:1px solid rgba(255,255,255,.25)!important;
+ border-radius:20px!important;background:#13294a!important;
+ box-shadow:0 18px 60px rgba(0,0,0,.42),0 0 0 100vmax rgba(0,0,0,.56)!important;
+}
+#walletCustomizePanel .wallet-skins-heading{align-items:center!important}
+#walletCustomizePanel .wallet-skins-heading>div{display:flex!important;flex-direction:column!important;gap:4px!important}
+#walletCustomizePanel .wallet-customize-close{width:32px!important;height:32px!important;flex:0 0 32px!important;border-radius:50%!important;border:1px solid #ffffff40!important;background:#ffffff18!important;color:#fff!important;font-size:24px!important;line-height:1!important;cursor:pointer!important}
+@media(max-width:380px){
+ #page-wallet .wallet-card-bottom-actions{width:calc(100% + 38px)!important;margin-left:-19px!important;margin-right:-19px!important}
+ #page-wallet .wallet-card-bottom-actions .wallet-history-teaser,
+ #page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{gap:6px!important;padding:10px 6px!important;font-size:12px!important}
+ #page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy strong{font-size:11px!important}
+}
+</style>
+
+
+
+
+<style id="wallet-customize-visual-polish">
+/* Đồng bộ màu chữ của nút Trang trí thẻ với nút Lịch sử giao dịch */
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger,
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger-copy strong{
+  color:#f5ffe9!important;
+}
+#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger-copy small{
+  color:rgba(245,255,233,.78)!important;opacity:1!important;
+}
+/* Làm nền xám phía sau cửa sổ trang trí tối/mờ rõ hơn */
+body.wallet-customize-open::before{
+  background:rgba(3,8,20,.78)!important;
+  backdrop-filter:blur(6px)!important;
+  -webkit-backdrop-filter:blur(6px)!important;
+}
+#walletCustomizePanel:not([hidden]){
+  box-shadow:0 18px 60px rgba(0,0,0,.52),0 0 0 100vmax rgba(0,0,0,.72)!important;
+}
+</style>
+
+
+<style id="wallet-customize-redesign">
+/* Thiết kế lại riêng cửa sổ Trang trí thẻ */
+#walletCustomizePanel:not([hidden]){
+  width:min(448px,calc(100vw - 28px))!important;
+  max-width:448px!important; max-height:min(82vh,720px)!important;
+  overflow:auto!important; padding:22px!important;
+  border:1px solid rgba(255,255,255,.9)!important;
+  border-radius:26px!important;
+  background:linear-gradient(180deg,#ffffff 0%,#f5f7fb 100%)!important;
+  color:#17243a!important;
+  box-shadow:0 28px 90px rgba(4,14,35,.32)!important;
+  scrollbar-width:thin!important; scrollbar-color:#cbd5e1 transparent!important;
+}
+#walletCustomizePanel .wallet-skins-heading{
+  display:flex!important;justify-content:space-between!important;align-items:center!important;
+  gap:14px!important;margin:0 0 18px!important;padding:0 0 17px!important;
+  border-bottom:1px solid #e5eaf2!important;
+}
+#walletCustomizePanel .wallet-skins-heading>div{gap:6px!important}
+#walletCustomizePanel .wallet-skins-heading strong{
+  color:#17243a!important;font-size:20px!important;font-weight:850!important;letter-spacing:-.45px!important;
+}
+#walletCustomizePanel .wallet-skins-heading span{
+  color:#738096!important;font-size:12px!important;line-height:1.45!important;
+}
+#walletCustomizePanel .wallet-customize-close{
+  width:36px!important;height:36px!important;flex:0 0 36px!important;
+  display:grid!important;place-items:center!important;border:1px solid #e3e8f0!important;
+  border-radius:12px!important;background:#f1f4f8!important;color:#536176!important;
+  font-size:25px!important;transition:background .18s,transform .18s!important;
+}
+#walletCustomizePanel .wallet-customize-close:hover{background:#e7edf5!important;transform:rotate(90deg)!important}
+#walletCustomizePanel .wallet-customize-tabs{
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important;
+  padding:5px!important;margin:0 0 20px!important;border-radius:15px!important;
+  background:#eaf0f7!important;border:1px solid #e3e9f1!important;
+}
+#walletCustomizePanel .wallet-customize-tab{
+  min-height:42px!important;border:0!important;border-radius:11px!important;
+  background:transparent!important;color:#69778c!important;font-size:13px!important;font-weight:750!important;
+  box-shadow:none!important;transition:all .18s ease!important;cursor:pointer!important;
+}
+#walletCustomizePanel .wallet-customize-tab.active,
+#walletCustomizePanel .wallet-customize-tab[aria-selected="true"]{
+  color:#17345c!important;background:#fff!important;
+  box-shadow:0 2px 8px rgba(26,48,78,.10)!important;
+}
+#walletCustomizePanel #walletBasicOptions:not([hidden]){
+  display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:11px!important;
+}
+#walletCustomizePanel .wallet-color-swatch{
+  min-width:0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:8px!important;
+  padding:8px!important;border:1px solid #e4e9f1!important;border-radius:15px!important;
+  background:#fff!important;color:#35435a!important;font-size:11px!important;font-weight:700!important;
+  box-shadow:0 2px 5px rgba(21,39,66,.025)!important;cursor:pointer!important;
+  transition:transform .18s,border-color .18s,box-shadow .18s!important;
+}
+#walletCustomizePanel .wallet-color-swatch:hover,
+#walletCustomizePanel .wallet-skin-option:hover{transform:translateY(-2px)!important;border-color:#a8bad4!important;box-shadow:0 8px 18px rgba(25,48,81,.10)!important}
+#walletCustomizePanel .wallet-color-swatch i{
+  display:block!important;width:100%!important;height:66px!important;border-radius:10px!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)!important;
+}
+#walletCustomizePanel .wallet-color-swatch span{display:block!important;white-space:normal!important;text-align:center!important;line-height:1.25!important;min-height:14px!important}
+#walletCustomizePanel .wallet-skins-grid:not([hidden]){
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;
+}
+#walletCustomizePanel .wallet-skin-option{
+  display:flex!important;flex-direction:column!important;gap:8px!important;min-width:0!important;
+  padding:8px!important;border:1px solid #e4e9f1!important;border-radius:16px!important;
+  background:#fff!important;color:#35435a!important;font-size:12px!important;font-weight:750!important;
+  text-align:left!important;cursor:pointer!important;transition:transform .18s,border-color .18s,box-shadow .18s!important;
+}
+#walletCustomizePanel .wallet-skin-preview{
+  width:100%!important;min-height:92px!important;border-radius:11px!important;overflow:hidden!important;
+}
+#walletCustomizePanel .wallet-skin-option>span:last-child{padding:0 3px 3px!important}
+#walletCustomizePanel .wallet-color-swatch:focus-visible,
+#walletCustomizePanel .wallet-skin-option:focus-visible,
+#walletCustomizePanel .wallet-customize-tab:focus-visible,
+#walletCustomizePanel .wallet-customize-close:focus-visible{outline:3px solid #8eb7f3!important;outline-offset:2px!important}
+@media(max-width:380px){
+ #walletCustomizePanel:not([hidden]){padding:16px!important;border-radius:21px!important}
+ #walletCustomizePanel .wallet-color-swatch{padding:6px!important}
+ #walletCustomizePanel .wallet-color-swatch i{height:54px!important}
+ #walletCustomizePanel .wallet-skin-preview{min-height:78px!important}
+}
+</style>
+
+
+<style id="wallet-customize-less-rounded">
+/* Cửa sổ Trang trí thẻ: giảm bo góc, giữ nguyên bố cục và chức năng */
+#walletCustomizePanel:not([hidden]){border-radius:10px!important;padding:20px!important}
+#walletCustomizePanel .wallet-customize-close{border-radius:6px!important}
+#walletCustomizePanel .wallet-customize-tabs{border-radius:7px!important}
+#walletCustomizePanel .wallet-customize-tabs button{border-radius:5px!important}
+#walletCustomizePanel .wallet-color-swatch,
+#walletCustomizePanel .wallet-skin-option{border-radius:8px!important}
+#walletCustomizePanel .wallet-skin-preview,
+#walletCustomizePanel .wallet-color-preview{border-radius:5px!important}
+@media(max-width:480px){#walletCustomizePanel:not([hidden]){padding:16px!important;border-radius:8px!important}}
+</style>
 </body></html>
+
+<style id="wallet-customize-group-title-fix">
+#walletCustomizePanel .wallet-customize-group-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:12px 0 9px;color:#26364d;font-size:13px;font-weight:800;letter-spacing:.01em}
+#walletCustomizePanel .wallet-customize-group-title span{color:#8290a3;font-size:10px;font-weight:600}
+#walletCustomizePanel .wallet-customize-group-title[hidden]{display:none!important}
+#walletCustomizePanel #walletBasicOptions[hidden],#walletCustomizePanel #walletPatternOptions[hidden]{display:none!important}
+</style>
+
+<style id="wallet-customize-follow-app-theme">
+/* Cửa sổ Trang trí thẻ tự đổi màu theo giao diện Sáng/Tối của toàn app */
+:root[data-theme="light"] #walletCustomizePanel:not([hidden]){
+  background:linear-gradient(180deg,#ffffff 0%,#f5f7fb 100%)!important;
+  color:#17243a!important;border-color:#dfe6ef!important;
+  scrollbar-color:#cbd5e1 transparent!important;
+}
+:root[data-theme="light"] #walletCustomizePanel .wallet-skins-heading{border-bottom-color:#e5eaf2!important}
+:root[data-theme="light"] #walletCustomizePanel .wallet-skins-heading strong{color:#17243a!important}
+:root[data-theme="light"] #walletCustomizePanel .wallet-skins-heading span{color:#738096!important}
+:root[data-theme="light"] #walletCustomizePanel .wallet-customize-close{border-color:#e3e8f0!important;background:#f1f4f8!important;color:#536176!important}
+:root[data-theme="light"] #walletCustomizePanel .wallet-customize-tabs{background:#eaf0f7!important;border-color:#e3e9f1!important}
+:root[data-theme="light"] #walletCustomizePanel .wallet-customize-tab{color:#69778c!important}
+:root[data-theme="light"] #walletCustomizePanel .wallet-customize-tab.active,:root[data-theme="light"] #walletCustomizePanel .wallet-customize-tab[aria-selected="true"]{color:#17345c!important;background:#fff!important}
+:root[data-theme="light"] #walletCustomizePanel .wallet-color-swatch,:root[data-theme="light"] #walletCustomizePanel .wallet-skin-option{background:#fff!important;color:#35435a!important;border-color:#e4e9f1!important}
+:root[data-theme="dark"] #walletCustomizePanel:not([hidden]){
+  background:linear-gradient(180deg,#1b1e25 0%,#14161b 100%)!important;
+  color:var(--text,#f4f5f7)!important;border-color:#343944!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.68)!important;scrollbar-color:#454b57 transparent!important;
+}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-skins-heading{border-bottom-color:#30343d!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-skins-heading strong{color:#f4f5f7!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-skins-heading span{color:#a0a4ad!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-close{border-color:#383e49!important;background:#262a32!important;color:#e2e5eb!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-close:hover{background:#343a45!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tabs{background:#111318!important;border-color:#30343d!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tab{color:#a0a7b4!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tab.active,:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tab[aria-selected="true"]{background:#303640!important;color:#f5f7fa!important;box-shadow:0 2px 8px #0005!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-color-swatch,:root[data-theme="dark"] #walletCustomizePanel .wallet-skin-option{background:#20242b!important;color:#e8ebf1!important;border-color:#363c47!important;box-shadow:0 2px 5px #0002!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-group-title{color:#e2e6ed!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-group-title span{color:#929baa!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-color-swatch:hover,:root[data-theme="dark"] #walletCustomizePanel .wallet-skin-option:hover{border-color:#65748b!important;box-shadow:0 8px 18px #0005!important}
+:root[data-theme="dark"] body.wallet-customize-open::before{background:rgba(0,0,0,.68)!important}
+</style>
+
+
+<style id="wallet-customize-close-refined">
+/* Nút đóng tối giản: nhẹ mắt, không còn dấu X to và thô */
+#walletCustomizePanel .wallet-customize-close{
+  width:34px!important;height:34px!important;flex:0 0 34px!important;
+  display:grid!important;place-items:center!important;
+  padding:0!important;border:1px solid transparent!important;border-radius:8px!important;
+  background:transparent!important;color:#7a8494!important;
+  font-size:0!important;font-weight:400!important;line-height:1!important;
+  box-shadow:none!important;cursor:pointer!important;
+  transition:background .16s ease,color .16s ease,border-color .16s ease!important;
+}
+#walletCustomizePanel .wallet-customize-close::before{
+  content:"×";font-family:Arial,sans-serif;font-size:25px!important;font-weight:300!important;
+  line-height:1!important;transform:translateY(-1px);
+}
+#walletCustomizePanel .wallet-customize-close:hover{
+  background:#e9edf3!important;border-color:#dce3ed!important;color:#25334a!important;transform:none!important;
+}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-close{
+  background:transparent!important;border-color:transparent!important;color:#a0a7b4!important;
+}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-close:hover{
+  background:#2b3039!important;border-color:#3b424e!important;color:#f4f5f7!important;
+}
+#walletCustomizePanel .wallet-customize-close:focus-visible{outline:2px solid #7aa7e8!important;outline-offset:2px!important}
+</style>
+
+
+
+<style id="wallet-sakura-css-art-redesign">
+/* CSS-only Japanese sakura artwork: no inserted photo/image; live wallet values stay untouched */
+#page-wallet .wallet-account.wallet-skin-sakura{
+  overflow:hidden!important; isolation:isolate; position:relative;
+  color:#fff!important; border:1px solid rgba(255,235,247,.72)!important;
+  box-shadow:0 12px 28px rgba(93,47,82,.22),inset 0 0 0 1px rgba(255,255,255,.13)!important;
+  background-color:#725879!important;
+  background-image:
+    /* blossoms */
+    radial-gradient(ellipse at 8% 8%,#ffe2ee 0 2px,transparent 3px),radial-gradient(ellipse at 12% 15%,#f6b9d1 0 4px,transparent 5px),radial-gradient(ellipse at 18% 7%,#ffd5e5 0 3px,transparent 4px),radial-gradient(ellipse at 24% 17%,#f9c6dc 0 3px,transparent 4px),radial-gradient(ellipse at 78% 12%,#f8c5dc 0 3px,transparent 4px),radial-gradient(ellipse at 88% 20%,#ffe3ef 0 4px,transparent 5px),radial-gradient(ellipse at 95% 13%,#f7bfd6 0 3px,transparent 4px),
+    /* Mount Fuji silhouette and snow cap */
+    conic-gradient(from 135deg at 66% 67%,transparent 0 25%,rgba(71,64,100,.95) 0 50%,transparent 0) 42% 22%/52% 78% no-repeat,
+    conic-gradient(from 135deg at 66% 67%,transparent 0 25%,#f4e9f3 0 35%,#b8b0d1 0 50%,transparent 0) 48% 26%/43% 68% no-repeat,
+    /* distant hills and lake */
+    linear-gradient(180deg,transparent 0 57%,rgba(61,68,111,.5) 57% 62%,#6c7aab 62%,#ba9fbd 100%),
+    radial-gradient(ellipse at 78% 51%,#ffe4cb 0 5%,transparent 5.5%),
+    linear-gradient(110deg,#5b3d66 0%,#8d6289 35%,#d89bb8 69%,#efc3d3 100%)!important;
+  background-repeat:no-repeat!important;
+}
+/* Decorative torii gate and branch drawn with CSS, behind all interactive content */
+#page-wallet .wallet-account.wallet-skin-sakura::before{
+ content:"";position:absolute;z-index:0;pointer-events:none;inset:0;border-radius:inherit;
+ background-image:
+   /* torii lintel, top beam, posts */
+   linear-gradient(#8d344e,#8d344e),linear-gradient(#b94e64,#b94e64),linear-gradient(#8d344e,#8d344e),linear-gradient(#8d344e,#8d344e),
+   /* lake shimmer */
+   linear-gradient(180deg,transparent 0 70%,rgba(255,225,239,.32) 70.5%,transparent 71.5%,transparent 78%,rgba(255,222,238,.22) 79%,transparent 80%),
+   /* soft shade */
+   linear-gradient(180deg,rgba(39,28,58,.08),transparent 38%,rgba(45,35,72,.12));
+ background-size:22% 5px,25% 4px,4px 27%,4px 27%,100% 100%,100% 100%;
+ background-position:82% 59%,82% 57%,75% 61%,89% 61%,center,center;
+ background-repeat:no-repeat;
+}
+#page-wallet .wallet-account.wallet-skin-sakura::after{
+ content:"✿  ❀";position:absolute;z-index:0;pointer-events:none;right:12px;top:7px;
+ color:rgba(255,222,238,.88);font-size:19px;letter-spacing:9px;text-shadow:0 0 10px rgba(255,223,239,.45);
+}
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-account-top,
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-account-main,
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-account-bottom,
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-card-bottom-actions,
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-history-teaser{position:relative;z-index:1;text-shadow:0 1px 5px rgba(43,28,57,.42);}
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-account-top,
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-account-main{color:#fff!important;}
+#page-wallet .wallet-account.wallet-skin-sakura .wallet-account-main *{color:inherit;}
+#walletCustomizePanel .skin-sakura{background-color:#8d6689!important;background-image:radial-gradient(circle at 15% 20%,#ffd9e8 0 4px,transparent 5px),conic-gradient(from 135deg at 62% 70%,transparent 0 25%,#d5c8e2 0 34%,#6d668f 0 50%,transparent 0) 35% 10%/60% 95% no-repeat,linear-gradient(180deg,#c68eae 0 54%,#7680ad 55%,#d9b3ce 100%)!important;background-size:auto,60% 95%,auto!important;}
+#walletCustomizePanel .skin-sakura i{background:rgba(82,44,82,.28);border-radius:50%;padding:3px;}
+</style>
