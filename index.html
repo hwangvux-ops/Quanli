@@ -99,24 +99,25 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
 .modalback{position:fixed;inset:0;background:#0007;z-index:50;display:none;align-items:flex-end;justify-content:center;padding:12px}.modalback.show{display:flex}.modal{width:min(100%,500px);max-height:88dvh;overflow:auto;background:var(--surface);color:var(--text);border-radius:24px;padding:21px;box-shadow:0 20px 70px #0004}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:17px}.modalhead h2{font-size:20px;margin:0}.close{border:0;background:var(--surface2);color:var(--text);border-radius:50%;width:34px;height:34px;font-size:21px}.formgrid{display:grid;gap:12px}.formgrid label{font-size:12px;color:var(--muted);font-weight:750;display:grid;gap:7px}.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);padding:11px 16px;background:var(--text);color:var(--bg);border-radius:99px;font-size:13px;z-index:80;display:none;white-space:nowrap}
 
 /* Trang số dư & giao dịch, lấy cảm hứng từ bố cục app ngân hàng */
-#page-history .bank-hero{background:linear-gradient(135deg,#062d63,#087d63);color:#fff;border-radius:22px;padding:20px;position:relative;overflow:hidden;box-shadow:0 12px 28px #061d4626;margin-bottom:18px}
+#page-history .bank-hero{background:linear-gradient(135deg,#062d63,#087d63);color:#fff;border-radius:22px;padding:16px;position:relative;overflow:hidden;box-shadow:0 12px 28px #061d4626;margin-bottom:18px}
 #page-history .bank-hero:after{content:"";position:absolute;width:190px;height:190px;border:1px solid #ffffff24;border-radius:50%;right:-70px;top:-80px;box-shadow:0 0 0 24px #ffffff0a,0 0 0 48px #ffffff08}
 #page-history .bank-brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:14px;position:relative;z-index:1}
+#page-history .bank-brand>span:last-child{margin-left:auto!important;max-width:38%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:clamp(8px,2.2vw,10px)!important;letter-spacing:.3px!important}
 #page-history .bank-mark{width:34px;height:34px;border-radius:10px;background:#fff;color:#07845c;display:grid;place-items:center;font-weight:950;font-size:19px}
-#page-history .bank-caption{font-size:12px;color:#d8f5e9;margin-top:22px;position:relative;z-index:1}
+#page-history .bank-caption{font-size:12px;color:#d8f5e9;margin-top:0;position:relative;z-index:1}
 #page-history .bank-balance-row{display:flex;align-items:center;gap:10px;margin-top:7px;position:relative;z-index:1}
 #page-history .bank-balance{font-size:clamp(25px,6vw,32px);font-weight:850;letter-spacing:-.6px;overflow-wrap:anywhere}
 #page-history .bank-eye{width:34px;height:34px;border:1px solid #ffffff48;border-radius:50%;background:#ffffff14;color:#fff;display:grid;place-items:center;flex-shrink:0}
-#page-history .bank-meta{display:flex;gap:12px;flex-wrap:wrap;color:#d9f4e9;font-size:11px;margin-top:12px;position:relative;z-index:1}
-#page-history .bank-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:20px}
+#page-history .bank-meta{display:flex;gap:12px;flex-wrap:wrap;color:#d9f4e9;font-size:11px;margin-top:10px;position:relative;z-index:1}
+#page-history .bank-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(100%,360px);margin:0 auto 20px}
 #page-history .bank-action{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:13px 6px;text-align:center;color:var(--text);font-size:11px;font-weight:750}
 #page-history .bank-action-icon{width:39px;height:39px;border-radius:13px;display:grid;place-items:center;margin:0 auto 8px;background:#e0f5e9;color:#087a4b;font-size:20px}
 #page-history .history-list{display:grid;gap:9px}
-#page-history .history-item{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--surface)}
+#page-history .history-item{display:flex;align-items:center;gap:11px;padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--surface)}#page-history .history-receipt{display:block;padding:0;overflow:hidden}#page-history .history-receipt-head{display:flex;align-items:center;gap:11px;padding:13px}#page-history .receipt-lines{padding:3px 13px 8px 64px}#page-history .receipt-line{display:grid;grid-template-columns:25px minmax(0,1fr) auto;align-items:center;gap:8px;padding:7px 0;color:var(--muted);font-size:12px}#page-history .receipt-line-icon{width:23px;height:23px;display:grid;place-items:center;border-radius:7px}#page-history .receipt-line-icon svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}#page-history .receipt-line strong{color:var(--text);font-size:12px}#page-history .receipt-total{display:flex;justify-content:space-between;align-items:center;padding:10px 14px 12px 64px;border-top:1px dashed var(--line);font-size:12px;color:var(--muted)}#page-history .receipt-total strong{font-size:14px;color:var(--text)}
 #page-history .history-symbol{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:#e2f5e9;color:#087a4b;font-size:19px;flex-shrink:0}
 #page-history .history-item.expense-row .history-symbol{background:#fff0e4;color:#c66a28}
 #page-history .history-info{flex:1;min-width:0}.history-info strong{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.history-info small{display:block;color:var(--muted);font-size:11px;margin-top:4px}.history-amount{font-weight:850;font-size:13px;white-space:nowrap}.history-amount.income{color:#16844c}.history-amount.expense{color:#d65a54}
-@media(max-width:700px){.bottomnav button{min-width:0;flex:1;padding:4px 1px;font-size:9px}.bottomnav{gap:1px;padding-left:4px;padding-right:4px}#page-history .bank-hero{padding:18px}}
+@media(max-width:700px){.bottomnav button{min-width:0;flex:1;padding:4px 1px;font-size:9px}.bottomnav{gap:1px;padding-left:4px;padding-right:4px}#page-history .bank-hero{padding:14px}}
 
 @media(min-width:900px){.app{padding-bottom:20px}.topbar{padding:0 28px}.layout{padding:28px}.hero{padding:32px}.hero h2{font-size:31px}}
 @media(max-width:700px){.layout{display:block;padding:17px 14px}.sidebar{display:none}.bottomnav{display:flex}.topbar{height:59px;padding:0 14px}.brand{font-size:19px}.top-actions{gap:7px}.iconbtn{width:37px;height:37px}.page h1{font-size:25px}.hero{padding:21px;border-radius:20px}.hero h2{font-size:24px}.grid2{gap:9px}.card{padding:14px}.statvalue{font-size:19px}.quickgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.quick{padding:10px 4px}.quick .qicon{width:36px;height:36px;font-size:18px}.quick b{font-size:10px}.pagehead{margin-bottom:16px}.sectiontitle{margin-top:19px}.modalback{padding:0;align-items:flex-end}.modal{border-radius:24px 24px 0 0;padding-bottom:calc(20px + env(safe-area-inset-bottom))}}
@@ -141,6 +142,21 @@ main{min-width:0}.page{display:none}.page.active{display:block}.pagehead{display
 --wallet-lime: #b7ff79;
 --wallet-purple: #eee5ff;
 }
+
+#page-wallet .wallet-banner-carousel{position:relative;margin-bottom:18px;overflow:hidden;border-radius:25px}
+#page-wallet .wallet-banner-track{display:flex;transition:transform .55s cubic-bezier(.22,.75,.25,1);will-change:transform}
+#page-wallet .wallet-banner-track .wallet-banner{flex:0 0 100%;min-width:100%;margin:0;border-radius:25px}
+#page-wallet .wallet-banner-track .wallet-banner:nth-child(2){background:radial-gradient(ellipse at 85% 12%,#ffe0b8 0,transparent 38%),radial-gradient(ellipse at 10% 100%,#d9e9ff 0,transparent 46%),linear-gradient(125deg,#fff,#f4f8ff 55%,#fff6ed)}
+#page-wallet .wallet-banner-track .wallet-banner:nth-child(3){background:radial-gradient(ellipse at 85% 12%,#c9f4e5 0,transparent 38%),radial-gradient(ellipse at 10% 100%,#e4d5ff 0,transparent 46%),linear-gradient(125deg,#fff,#f5f0ff 55%,#edfff8)}
+#page-wallet .wallet-banner-arrow{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid #ffffffb8;border-radius:50%;background:#ffffffd9;color:#20304f;font-size:24px;line-height:1;box-shadow:0 4px 14px #18234420;transform:translateY(-50%);cursor:pointer;transition:background .18s,transform .18s}
+#page-wallet .wallet-banner-arrow:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+#page-wallet .wallet-banner-arrow:focus-visible{outline:3px solid #25885d;outline-offset:2px}
+#page-wallet .wallet-banner-arrow.prev{left:10px}
+#page-wallet .wallet-banner-arrow.next{right:10px}
+#page-wallet .wallet-banner-dots{position:absolute;left:50%;bottom:10px;z-index:2;display:flex;gap:6px;transform:translateX(-50%)}
+#page-wallet .wallet-banner-dot{width:7px;height:7px;padding:0;border:0;border-radius:99px;background:#15234455;cursor:pointer;transition:width .2s,background .2s}
+#page-wallet .wallet-banner-dot.active{width:20px;background:#168a55}
+@media(max-width:700px){#page-wallet .wallet-banner-carousel,#page-wallet .wallet-banner-track .wallet-banner{border-radius:22px}.wallet-banner-arrow{width:34px;height:34px}#page-wallet .wallet-banner-track .wallet-banner{padding:20px 48px 28px}}
 
 #page-wallet .wallet-banner {
 position: relative;
@@ -209,7 +225,7 @@ box-shadow: 0 5px 13px #1bba7040;
 #page-wallet .wallet-account {
 position: relative;
 overflow: hidden;
-padding: 23px;
+padding: 19px 23px 0;
 margin-bottom: 17px;
 border: 1px solid #55ffa4a8;
 border-radius: 24px;
@@ -243,23 +259,32 @@ gap: 12px;
 
 #page-wallet .wallet-account-user {
 justify-content: flex-start;
-margin: 17px 0 20px;
+margin: 15px 0 18px;
 }
 
 #page-wallet .wallet-avatar {
 overflow:hidden;
+position:relative;
+z-index:1;
 display: grid;
 place-items: center;
 width: 47px;
 height: 47px;
 flex-shrink: 0;
 border: 1px solid #a5ffcf99;
-border-radius: 16px;
+border-radius: 50%;
 background: linear-gradient(145deg, #c1ffdc, #47d994);
 color: #123c2a;
 font-size: 17px;
 font-weight: 900;
 }
+#page-wallet .wallet-avatar:not(.has-photo),.avatar:not(.has-photo){background:linear-gradient(145deg,#f1f2f4,#c9cdd2);border-color:#aab0b7;color:#858b93}
+.default-avatar-icon{width:100%;height:100%;display:block;fill:currentColor}
+
+#page-wallet .wallet-name-frame{position:relative;isolation:isolate;overflow:hidden;z-index:0;display:inline-flex;align-items:center;max-width:100%;min-width:0;min-height:31px;margin-left:-24px;padding:4px 10px 4px 16px;border:0;border-radius:999px;background:radial-gradient(ellipse at 52% 48%,rgba(34,148,78,.96) 0%,rgba(91,195,126,.94) 48%,rgba(220,255,231,.98) 100%);box-shadow:0 4px 11px rgba(16,104,55,.22),inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 7px rgba(28,132,68,.26),inset 2px 0 5px rgba(255,255,255,.32);transform:rotate(-2deg)}
+#page-wallet .wallet-name-frame strong{position:relative;z-index:2;font-size:14px;line-height:1.25}
+#page-wallet .wallet-name-frame::after{content:"";position:absolute;inset:-35% auto -35% 112%;z-index:1;width:68%;pointer-events:none;background:linear-gradient(105deg,transparent 0%,rgba(199,255,218,.2) 20%,rgba(255,255,255,.92) 46%,rgba(131,246,174,.78) 54%,rgba(225,255,236,.42) 68%,transparent 84%);filter:blur(.2px);animation:walletNameHolo 3.4s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes walletNameHolo{0%,12%{transform:translateX(0) skewX(-18deg);opacity:0}20%{opacity:.9}88%,100%{transform:translateX(-255%) skewX(-18deg);opacity:0}}
 
 #page-wallet .wallet-account small {
 display: block;
@@ -272,12 +297,13 @@ overflow-wrap: anywhere;
 }
 
 #page-wallet .wallet-member {
-display: inline-flex;
-padding: 4px 8px;
-margin-top: 5px;
-border: 1px solid #a4ffc244;
-border-radius: 99px;
-background: #a4ffc21a;
+display: flex;
+width: max-content;
+padding: 0;
+margin: 5px 0 0 -6px;
+border: 0;
+border-radius: 0;
+background: transparent;
 color: #b5ffd2;
 font-size: 10px;
 font-weight: 750;
@@ -301,7 +327,7 @@ color: white;
 }
 
 #page-wallet .wallet-big-balance {
-margin: 8px 0 14px;
+margin: 7px 0 12px;
 font-size: clamp(27px, 5vw, 36px);
 font-weight: 900;
 letter-spacing: -1px;
@@ -360,12 +386,10 @@ background: #ffe3e6;
 }
 
 #page-wallet .wallet-quick .quick:nth-child(3) .qicon {
-background: #e7e1ff;
-}
-
-#page-wallet .wallet-quick .quick:nth-child(4) .qicon {
 background: #fff0c9;
 }
+#page-wallet .wallet-quick{grid-template-columns:repeat(3,minmax(0,1fr))}
+#page-wallet .wallet-quick .quick:nth-child(4) .qicon{background:#e5efff;color:#2863c5}
 
 #page-wallet .wallet-panel {
 margin-bottom: 16px;
@@ -395,6 +419,29 @@ transition: width .35s ease;
 display: grid;
 gap: 13px;
 }
+#page-wallet .wallet-chart-switch{display:flex;gap:4px;padding:4px;margin:-5px 0 14px;border-radius:12px;background:var(--surface2)}
+#page-wallet .wallet-chart-switch button{flex:1;min-width:0;padding:8px 7px;border:0;border-radius:9px;background:transparent;color:var(--muted);font-size:12px;font-weight:750;cursor:pointer}
+#page-wallet .wallet-chart-switch button.active{background:var(--surface);color:var(--text);box-shadow:0 2px 7px #00000012}
+#page-wallet .wallet-chart-switch button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#page-wallet .wallet-pie-layout{display:flex;align-items:center;gap:20px;min-height:190px}
+#page-wallet .wallet-pie{width:156px;height:156px;flex:0 0 156px;border-radius:50%;background:conic-gradient(#1d9e65 0 33.33%,#ff7182 33.33% 66.66%,#8a74db 66.66% 100%);box-shadow:inset 0 0 0 1px #00000008}
+#page-wallet .wallet-pie-legend{display:grid;gap:12px;min-width:0}
+#page-wallet .wallet-pie-item{display:grid;grid-template-columns:10px minmax(0,1fr);column-gap:8px;align-items:center;font-size:12px}
+#page-wallet .wallet-pie-item i{grid-row:span 2;width:9px;height:9px;border-radius:50%;background:var(--pie-color)}
+#page-wallet .wallet-pie-item small{color:var(--muted);font-size:11px;margin-top:2px}
+#page-wallet .wallet-line-wrap{width:100%;overflow:hidden}
+#page-wallet .wallet-line-chart{display:block;width:100%;height:auto;min-height:185px;overflow:visible}
+#page-wallet .wallet-line-grid{stroke:var(--line);stroke-width:1;stroke-dasharray:3 4}
+#page-wallet .wallet-line-label{fill:var(--muted);font:10px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+#page-wallet .wallet-line-income{fill:none;stroke:#1d9e65;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#page-wallet .wallet-line-expense{fill:none;stroke:#ff7182;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+#page-wallet .wallet-line-dot-income{fill:#1d9e65;stroke:var(--surface);stroke-width:2}
+#page-wallet .wallet-line-dot-expense{fill:#ff7182;stroke:var(--surface);stroke-width:2}
+#page-wallet .wallet-line-legend{display:flex;justify-content:center;gap:18px;margin-top:8px;color:var(--muted);font-size:11px}
+#page-wallet .wallet-line-legend span{display:flex;align-items:center;gap:6px}
+#page-wallet .wallet-line-legend i{width:9px;height:9px;border-radius:50%;background:#1d9e65}
+#page-wallet .wallet-line-legend span:last-child i{background:#ff7182}
+@media(max-width:420px){#page-wallet .wallet-pie-layout{gap:13px}#page-wallet .wallet-pie{width:128px;height:128px;flex-basis:128px}#page-wallet .wallet-pie-legend{gap:9px}}
 
 #page-wallet .wallet-chart-row {
 display: grid;
@@ -467,6 +514,56 @@ font-weight: 800;
 text-align: right;
 }
 
+/* Biểu đồ thu chi: bố cục rõ ràng, màu đồng bộ và tương phản tốt */
+#page-wallet .wallet-chart-switch{gap:5px;padding:5px;margin:0 0 16px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}
+#page-wallet .wallet-chart-switch button{padding:9px 7px;border-radius:10px;transition:background .18s,color .18s,box-shadow .18s,transform .18s}
+#page-wallet .wallet-chart-switch button:hover{color:var(--text)}
+#page-wallet .wallet-chart-switch button.active{background:var(--surface);color:var(--green);box-shadow:0 2px 8px #14251a12}
+#page-wallet .wallet-chart-bars{gap:16px}
+#page-wallet .wallet-chart-total{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 14px;margin-bottom:2px;border:1px solid color-mix(in srgb,var(--green) 18%,var(--line));border-radius:15px;background:linear-gradient(120deg,color-mix(in srgb,var(--green) 9%,var(--surface)),var(--surface))}
+#page-wallet .wallet-chart-total span{display:block;color:var(--muted);font-size:11px;font-weight:700}
+#page-wallet .wallet-chart-total strong{display:block;margin-top:4px;color:var(--text);font-size:17px;font-weight:850;letter-spacing:-.3px}
+#page-wallet .wallet-chart-total small{display:block;margin-top:3px;color:var(--muted);font-size:10px}
+#page-wallet .wallet-chart-row{display:grid;grid-template-columns:minmax(0,1fr);gap:7px;padding:0 1px;font-size:12px}
+#page-wallet .wallet-chart-row-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+#page-wallet .wallet-chart-label{display:flex;align-items:center;gap:7px;font-weight:750}
+#page-wallet .wallet-chart-label i{display:block;width:9px;height:9px;border-radius:50%;background:var(--chart-color);box-shadow:0 0 0 3px color-mix(in srgb,var(--chart-color) 14%,transparent)}
+#page-wallet .wallet-chart-value{text-align:right;font-weight:800;white-space:nowrap}
+#page-wallet .wallet-chart-value small{margin-left:5px;color:var(--muted);font-size:10px;font-weight:600}
+#page-wallet .wallet-chart-track{height:11px;border:1px solid color-mix(in srgb,var(--line) 70%,transparent);background:var(--surface2)}
+#page-wallet .wallet-chart-fill{background:linear-gradient(90deg,#168a55,#56d48b);box-shadow:0 1px 4px #168a5540;transition:width .35s ease}
+#page-wallet .wallet-chart-fill.expense-fill{background:linear-gradient(90deg,#ee6577,#ffa1a9);box-shadow:0 1px 4px #ee657740}
+#page-wallet .wallet-pie-layout{gap:18px;min-height:205px;padding:4px 0}
+#page-wallet .wallet-pie{position:relative;width:166px;height:166px;flex-basis:166px;border:5px solid var(--surface);box-shadow:0 6px 22px #10203b18,0 0 0 1px var(--line);transition:transform .25s}
+#page-wallet .wallet-pie:hover{transform:scale(1.025)}
+#page-wallet .wallet-pie-hole{position:absolute;inset:50% auto auto 50%;display:flex;flex-direction:column;align-items:center;justify-content:center;width:76px;height:76px;padding:5px;border:1px solid var(--line);border-radius:50%;background:var(--surface);box-shadow:0 2px 8px #14251a12;transform:translate(-50%,-50%);text-align:center}
+#page-wallet .wallet-pie-hole small{color:var(--muted);font-size:9px;font-weight:750;text-transform:uppercase;letter-spacing:.4px}
+#page-wallet .wallet-pie-hole strong{max-width:100%;margin-top:3px;overflow:hidden;color:var(--text);font-size:11px;font-weight:850;text-overflow:ellipsis;white-space:nowrap}
+#page-wallet .wallet-pie-legend{gap:13px}
+#page-wallet .wallet-pie-item{grid-template-columns:11px minmax(0,1fr);column-gap:9px;font-weight:750}
+#page-wallet .wallet-pie-item i{width:10px;height:10px;box-shadow:0 0 0 3px color-mix(in srgb,var(--pie-color) 14%,transparent)}
+#page-wallet .wallet-pie-item small{font-weight:550}
+#page-wallet .wallet-line-wrap{padding:10px 8px 12px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,color-mix(in srgb,var(--surface2) 48%,var(--surface)),var(--surface))}
+#page-wallet .wallet-line-chart{min-height:200px}
+#page-wallet .wallet-line-area-income{fill:#1d9e65;fill-opacity:.10}
+#page-wallet .wallet-line-area-expense{fill:#ff7182;fill-opacity:.10}
+#page-wallet .wallet-line-grid{stroke-dasharray:2 5}
+#page-wallet .wallet-line-income,#page-wallet .wallet-line-expense{stroke-width:3.5}
+#page-wallet .wallet-line-legend{margin-top:9px;font-weight:700}
+#page-wallet .wallet-category-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 14px;margin-bottom:8px;border:1px solid var(--line);border-radius:15px;background:linear-gradient(120deg,var(--surface2),var(--surface))}
+#page-wallet .wallet-category-summary span{display:block;color:var(--muted);font-size:11px;font-weight:700}
+#page-wallet .wallet-category-summary strong{display:block;margin-top:4px;font-size:16px;font-weight:850}
+#page-wallet .wallet-category-summary small{color:var(--muted);font-size:10px}
+#page-wallet .wallet-category-row{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;padding:12px 0;border-bottom:1px solid color-mix(in srgb,var(--line) 72%,transparent)}
+#page-wallet .wallet-category-row:last-child{border-bottom:0}
+#page-wallet .wallet-category-icon{width:40px;height:40px;border:1px solid color-mix(in srgb,var(--category-color) 16%,var(--line));border-radius:13px;background:color-mix(in srgb,var(--category-color) 10%,var(--surface));color:var(--category-color);box-shadow:0 3px 9px color-mix(in srgb,var(--category-color) 8%,transparent)}
+#page-wallet .wallet-category-info{align-self:center}
+#page-wallet .wallet-category-info strong{font-size:12px;font-weight:750}
+#page-wallet .wallet-category-info small{margin-top:5px;font-size:10px}
+#page-wallet .wallet-category-track{height:5px;margin-top:7px;overflow:hidden;border-radius:99px;background:var(--surface2)}
+#page-wallet .wallet-category-track i{display:block;height:100%;min-width:3px;border-radius:inherit;background:linear-gradient(90deg,var(--category-color),color-mix(in srgb,var(--category-color) 55%,white))}
+#page-wallet .wallet-category-amount{align-self:center;font-size:11px;font-weight:800;white-space:nowrap}
+@media(max-width:420px){#page-wallet .wallet-pie-layout{gap:12px;min-height:175px}#page-wallet .wallet-pie{width:132px;height:132px;flex-basis:132px}#page-wallet .wallet-pie-hole{width:65px;height:65px}#page-wallet .wallet-category-row{grid-template-columns:36px minmax(0,1fr) auto;gap:8px}#page-wallet .wallet-category-icon{width:36px;height:36px}#page-wallet .wallet-category-amount{font-size:10px}}
 #page-wallet .wallet-tools {
 display: flex;
 align-items: center;
@@ -525,13 +622,28 @@ background: var(--line);
 }
 
 @media (max-width: 700px) {
+#page-wallet .wallet-banner-carousel{position:relative;margin-bottom:18px;overflow:hidden;border-radius:25px}
+#page-wallet .wallet-banner-track{display:flex;transition:transform .55s cubic-bezier(.22,.75,.25,1);will-change:transform}
+#page-wallet .wallet-banner-track .wallet-banner{flex:0 0 100%;min-width:100%;margin:0;border-radius:25px}
+#page-wallet .wallet-banner-track .wallet-banner:nth-child(2){background:radial-gradient(ellipse at 85% 12%,#ffe0b8 0,transparent 38%),radial-gradient(ellipse at 10% 100%,#d9e9ff 0,transparent 46%),linear-gradient(125deg,#fff,#f4f8ff 55%,#fff6ed)}
+#page-wallet .wallet-banner-track .wallet-banner:nth-child(3){background:radial-gradient(ellipse at 85% 12%,#c9f4e5 0,transparent 38%),radial-gradient(ellipse at 10% 100%,#e4d5ff 0,transparent 46%),linear-gradient(125deg,#fff,#f5f0ff 55%,#edfff8)}
+#page-wallet .wallet-banner-arrow{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:38px;height:38px;padding:0;border:1px solid #ffffffb8;border-radius:50%;background:#ffffffd9;color:#20304f;font-size:24px;line-height:1;box-shadow:0 4px 14px #18234420;transform:translateY(-50%);cursor:pointer;transition:background .18s,transform .18s}
+#page-wallet .wallet-banner-arrow:hover{background:#fff;transform:translateY(-50%) scale(1.06)}
+#page-wallet .wallet-banner-arrow:focus-visible{outline:3px solid #25885d;outline-offset:2px}
+#page-wallet .wallet-banner-arrow.prev{left:10px}
+#page-wallet .wallet-banner-arrow.next{right:10px}
+#page-wallet .wallet-banner-dots{position:absolute;left:50%;bottom:10px;z-index:2;display:flex;gap:6px;transform:translateX(-50%)}
+#page-wallet .wallet-banner-dot{width:7px;height:7px;padding:0;border:0;border-radius:99px;background:#15234455;cursor:pointer;transition:width .2s,background .2s}
+#page-wallet .wallet-banner-dot.active{width:20px;background:#168a55}
+@media(max-width:700px){#page-wallet .wallet-banner-carousel,#page-wallet .wallet-banner-track .wallet-banner{border-radius:22px}.wallet-banner-arrow{width:34px;height:34px}#page-wallet .wallet-banner-track .wallet-banner{padding:20px 48px 28px}}
+
 #page-wallet .wallet-banner {
 padding: 20px;
 border-radius: 22px;
 }
 
 #page-wallet .wallet-account {
-padding: 19px;
+padding: 15px 19px 0;
 border-radius: 21px;
 }
 
@@ -558,6 +670,7 @@ transition: none !important;
 }
 }
 /* ===== KẾT THÚC GIAO DIỆN WALLET ===== */
+
 
 
 </style>
@@ -591,6 +704,7 @@ transition: none !important;
 #page-wallet .wallet-account .wallet-history-teaser-arrow{font-size:23px; color:#d5ff9f; line-height:1}
 #page-wallet .wallet-account .wallet-history-teaser::before,#page-wallet .wallet-account .wallet-history-teaser::after{content:none !important; display:none !important}
 #page-wallet .wallet-account .wallet-history-teaser:active{transform:none; opacity:.8}
+
 </style>
 
 <style id="wallet-card-customize-styles">
@@ -619,6 +733,7 @@ transition: none !important;
 #page-wallet .wallet-account.wallet-color-green{background:linear-gradient(130deg,#064e3b,#159765)!important}#page-wallet .wallet-account.wallet-color-purple{background:linear-gradient(130deg,#35205f,#7851b8)!important}#page-wallet .wallet-account.wallet-color-rose{background:linear-gradient(130deg,#641d3c,#c04b72)!important}#page-wallet .wallet-account.wallet-color-graphite{background:linear-gradient(130deg,#20252d,#505966)!important}#page-wallet .wallet-account.wallet-color-gold{background:linear-gradient(130deg,#654313,#b98b3e)!important}
 #page-wallet .wallet-account.wallet-skin-christmas{background:linear-gradient(135deg,rgba(7,25,35,.30),rgba(7,25,35,.08)),url('./giangsinh1.png') center/100% 100% no-repeat,linear-gradient(135deg,#0a3f31 0%,#17684b 45%,#8c1f2b 46%,#bd303b 70%,#123a2f 100%)!important}#page-wallet .wallet-account.wallet-skin-sakura{background:linear-gradient(135deg,rgba(70,20,48,.28),rgba(70,20,48,.08)),url('./anhdao.png') center/cover no-repeat,#d998b3!important}#page-wallet .wallet-account.wallet-skin-beach{background:radial-gradient(ellipse at 90% 12%,#ffe5a6 0 10%,transparent 11%),linear-gradient(160deg,#54c8d2,#087a9b 56%,#f0bd78)!important}#page-wallet .wallet-account.wallet-skin-aurora{background:radial-gradient(ellipse at 80% 15%,#6ee7cf 0,transparent 34%),linear-gradient(135deg,#101b43,#276d83 58%,#684b99)!important}#page-wallet .wallet-account.wallet-skin-lavender{background:radial-gradient(ellipse at 90% 10%,#e7d5ff 0,transparent 28%),linear-gradient(135deg,#6b5b9e,#9a8ad2 58%,#4e426e)!important}#page-wallet .wallet-account.wallet-skin-sunset{background:radial-gradient(ellipse at 90% 10%,#ffdc9d 0,transparent 32%),linear-gradient(135deg,#583f75,#d55d65 58%,#f2a65a)!important}#page-wallet .wallet-account.wallet-skin-forest{background:radial-gradient(ellipse at 90% 10%,#b3d6a0 0,transparent 30%),linear-gradient(135deg,#163c3a,#2c795b 58%,#102f30)!important}
 @media(max-width:700px){#page-wallet .wallet-card-bottom-actions{width:calc(100% + 38px);margin:0 -19px -1px;padding-right:9px;border-radius:0 0 21px 21px}#page-wallet .wallet-card-bottom-actions .wallet-history-teaser{padding-left:19px}#page-wallet .wallet-customize-panel{border-radius:0 0 20px 20px}}
+
 </style>
 
 <style id="wallet-layout-final-fix">
@@ -664,6 +779,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
  #page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy strong{font-size:11px!important}
  #page-wallet .wallet-customize-panel:not([hidden]){width:calc(100vw - 24px)!important;max-height:82vh!important;padding:16px!important;border-radius:20px!important}
 }
+
 </style>
 
 <style id="mobile-history-visibility-fix">
@@ -675,8 +791,153 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
  #page-wallet .wallet-card-bottom-actions{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
  #page-wallet .wallet-card-bottom-actions .wallet-history-teaser,#page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{display:flex!important;visibility:visible!important;min-width:0!important;width:100%!important}
 }
+
 </style>
-</head>
+<style id="wallet-chart-redesign-responsive">
+@media(max-width:700px){#page-wallet .wallet-chart-row{grid-template-columns:minmax(0,1fr)}#page-wallet .wallet-chart-row>:last-child{grid-column:auto}}
+@media(max-width:360px){#page-wallet .wallet-pie-layout{flex-direction:column;justify-content:center}#page-wallet .wallet-pie-legend{width:100%;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}#page-wallet .wallet-pie-item{grid-template-columns:9px minmax(0,1fr);column-gap:5px;font-size:10px}#page-wallet .wallet-pie-item small{grid-column:2;font-size:9px}}
+
+</style>
+<style id="wallet-quick-add-responsive">
+.transaction-kind-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.transaction-kind-option{position:relative;min-width:0;min-height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;padding:18px 12px;border:1px solid var(--line,#e5e7eb);border-radius:18px;background:var(--surface,#fff);color:var(--text,#172033);cursor:pointer;text-align:center;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+.transaction-kind-option:hover,.transaction-kind-option:focus-visible{transform:translateY(-2px);border-color:var(--accent,#20b875);box-shadow:0 8px 22px #17203314;outline:none}
+.transaction-kind-option strong{font-size:16px}.transaction-kind-option small{color:var(--muted,#7b8495);line-height:1.45}
+.transaction-kind-title{display:flex;align-items:center;justify-content:center;gap:7px}.transaction-kind-suggestion{position:absolute;top:-7px;left:14px;padding:0 5px;background:var(--surface,#fff);color:#858b96;font-size:10px;font-weight:650;line-height:1.3}
+:root[data-theme="dark"] .transaction-kind-suggestion{color:#a3a9b4}
+.transaction-kind-option:hover .transaction-kind-suggestion,.transaction-kind-option:focus-visible .transaction-kind-suggestion{color:#4f5968}
+:root[data-theme="dark"] .transaction-kind-option:hover .transaction-kind-suggestion,:root[data-theme="dark"] .transaction-kind-option:focus-visible .transaction-kind-suggestion{color:#f1f4f8}
+.transaction-kind-sparkles{position:absolute;inset:0;pointer-events:none}
+.transaction-kind-sparkles i{position:absolute;left:50%;top:50%;z-index:2;color:#d6a72f;font-size:12px;font-style:normal;line-height:1;opacity:0;text-shadow:0 0 5px #f6d778}
+.transaction-kind-option:hover .transaction-kind-sparkles i,.transaction-kind-option:focus-visible .transaction-kind-sparkles i{animation-duration:1.45s;animation-timing-function:ease-out;animation-iteration-count:infinite}
+.transaction-kind-option:hover .transaction-kind-sparkles i:nth-child(1),.transaction-kind-option:focus-visible .transaction-kind-sparkles i:nth-child(1){animation-name:suggestionScatterTL;animation-delay:0s}
+.transaction-kind-option:hover .transaction-kind-sparkles i:nth-child(2),.transaction-kind-option:focus-visible .transaction-kind-sparkles i:nth-child(2){animation-name:suggestionScatterTR;animation-delay:.22s}
+.transaction-kind-option:hover .transaction-kind-sparkles i:nth-child(3),.transaction-kind-option:focus-visible .transaction-kind-sparkles i:nth-child(3){animation-name:suggestionScatterBR;animation-delay:.44s}
+.transaction-kind-option:hover .transaction-kind-sparkles i:nth-child(4),.transaction-kind-option:focus-visible .transaction-kind-sparkles i:nth-child(4){animation-name:suggestionScatterBL;animation-delay:.66s}
+@keyframes suggestionScatterTL{0%,19%,100%{opacity:0;transform:translate(-50%,-50%) scale(.15)}36%{opacity:1;transform:translate(-12px,-11px) scale(1.2)}65%{opacity:0;transform:translate(-19px,-17px) scale(.35)}}
+@keyframes suggestionScatterTR{0%,19%,100%{opacity:0;transform:translate(-50%,-50%) scale(.15)}36%{opacity:1;transform:translate(8px,-12px) scale(1.2)}65%{opacity:0;transform:translate(16px,-19px) scale(.35)}}
+@keyframes suggestionScatterBR{0%,19%,100%{opacity:0;transform:translate(-50%,-50%) scale(.15)}36%{opacity:1;transform:translate(9px,4px) scale(1.2)}65%{opacity:0;transform:translate(17px,10px) scale(.35)}}
+@keyframes suggestionScatterBL{0%,19%,100%{opacity:0;transform:translate(-50%,-50%) scale(.15)}36%{opacity:1;transform:translate(-12px,3px) scale(1.2)}65%{opacity:0;transform:translate(-20px,10px) scale(.35)}}
+.transaction-kind-icon{width:52px;height:52px;display:grid;place-items:center;border-radius:16px;background:#e8f8ef;color:#18a969}
+.transaction-kind-icon svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round}
+.rent-kind-icon{background:#e4f2ff;color:#3985d6}
+.other-kind-icon{background:#f1edff;color:#785be7}
+.transaction-editor{display:grid;gap:12px}.transaction-editor label{display:grid;gap:6px;font-weight:600}
+.transaction-back{justify-self:start}.transaction-cost-heading{display:flex;flex-direction:column;gap:3px;margin-top:2px}.transaction-cost-heading span{color:var(--muted,#7b8495);font-size:12px}
+.transaction-cost-row{display:grid;grid-template-columns:34px minmax(0,1fr) minmax(0,.9fr) 24px;column-gap:6px;row-gap:4px;margin-top:8px;align-items:center}.transaction-cost-row [data-cost-amount]{grid-column:3;grid-row:1}.transaction-amount-suggestions{grid-column:3;grid-row:2;display:flex;gap:4px;min-width:0;overflow-x:auto;scrollbar-width:none}.transaction-amount-suggestions[hidden]{display:none}.transaction-amount-suggestions button{flex:0 0 auto;padding:3px 6px;border:1px solid #d8e9fb;border-radius:8px;background:#f4f9ff;color:#3979bd;font-size:10px;line-height:1.2;cursor:pointer}.transaction-amount-suggestions button:hover{background:#e4f2ff;border-color:#a9cbee}
+.transaction-cost-icon{width:34px;height:34px;display:grid;place-items:center;border:0;border-radius:11px;background:#e4f2ff;color:#3985d6;cursor:pointer}.transaction-cost-icon:focus-visible{outline:2px solid #3985d6;outline-offset:2px}
+.transaction-cost-icon svg,.transaction-icon-choice svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.transaction-icon-picker{padding:11px;margin-top:8px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}.transaction-icon-picker-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;font-size:13px}.transaction-icon-picker-head button{width:26px;height:26px;border:0;border-radius:50%;background:var(--surface);color:var(--text);font-size:19px}.transaction-icon-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}.transaction-icon-choice{display:grid;justify-items:center;gap:5px;min-width:0;padding:8px 3px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:#3985d6;font-size:10px}.transaction-icon-choice span{color:var(--text);text-align:center}.transaction-color-heading{margin:12px 0 7px;font-size:12px;font-weight:700}.transaction-color-options{display:flex;flex-wrap:wrap;gap:8px}.transaction-color-choice{width:30px;height:30px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);cursor:pointer}.transaction-color-choice span{width:17px;height:17px;border-radius:50%}
+.transaction-cost-remove{width:22px;height:22px;display:grid;place-items:center;justify-self:center;padding:0;border:1px solid #f1d8db;border-radius:50%;background:#fffafa;color:#c96b75;cursor:pointer;transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease}.transaction-cost-remove:hover{background:#ffe8ea;border-color:#edc1c6;color:#b84654;transform:scale(1.06)}.transaction-cost-remove svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.transaction-add-cost{justify-self:start}.transaction-cost-total{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line,#e5e7eb);border-radius:14px;background:var(--surface2,#f7f8fa)}
+.transaction-cost-total strong{font-size:17px}
+@media(max-width:360px){.transaction-kind-grid{grid-template-columns:1fr}.transaction-kind-option{min-height:125px}.transaction-cost-row{grid-template-columns:30px minmax(0,1fr) 24px;row-gap:4px}.transaction-cost-icon{width:30px;height:34px}.transaction-cost-icon svg{width:19px;height:19px}.transaction-icon-options{grid-template-columns:repeat(4,minmax(0,1fr))}.transaction-cost-row [data-cost-amount]{grid-column:2;grid-row:2}.transaction-amount-suggestions{grid-column:2;grid-row:3}.transaction-cost-remove{grid-column:3;grid-row:1 / span 3;align-self:center}}
+@media(max-width:700px){#page-wallet .wallet-quick{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:360px){#page-wallet .wallet-quick{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+</style>
+<style id="ledger-receipt-style">.ledger-transaction{padding:6px 0;border-bottom:1px solid var(--line);font-size:12px}.ledger-transaction:last-child{border-bottom:0}.ledger-receipt-lines{display:grid;gap:3px;margin:5px 0 0 8px}.ledger-receipt-line,.ledger-receipt-total{display:flex;justify-content:space-between;gap:10px;color:var(--muted);font-size:11px}.ledger-receipt-line strong,.ledger-receipt-total b{color:var(--text)}.ledger-receipt-total{padding-top:4px;margin:4px 0 0 8px;border-top:1px dashed var(--line)}</style>
+<style id="transaction-type-form-style">.transaction-editor-income .transaction-cost-total{border-color:#cdebd8;background:#f0fbf4}.transaction-editor-expense .transaction-cost-total{border-color:#f1d8d8;background:#fff6f5}.transaction-editor-income>button.btn:last-child{background:#15945c}.transaction-editor-expense>button.btn:last-child{background:#d7665e}</style>
+<style id="transaction-type-form-dark-style">
+:root[data-theme="dark"] .transaction-editor-income .transaction-cost-total{border-color:#286344;background:#173b2b;color:#d9f3e4}
+:root[data-theme="dark"] .transaction-editor-income .transaction-cost-total strong{color:#a7efc4}
+:root[data-theme="dark"] .transaction-editor-expense .transaction-cost-total{border-color:#65373e;background:#3a2528;color:#f1d9dc}
+:root[data-theme="dark"] .transaction-editor-expense .transaction-cost-total strong{color:#ffb9c0}
+</style><style id="transaction-single-amount-layout-style">.transaction-editor>#txSingleAmountSuggestions{grid-column:1/-1;grid-row:auto;margin-top:-8px}</style>
+<style id="history-receipt-tone-style">
+#page-history .history-symbol svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#page-history .history-item.expense-row:not(.history-receipt) .history-symbol{background:#ffeaeb;color:#c9434e}
+#page-history .history-receipt.income-row{border-color:#cdebd8;background:#f7fcf8}
+#page-history .history-receipt.expense-row{border-color:#f1d0d4;background:#fff8f8}
+#page-history .history-item.income-row:not(.history-receipt){border-color:#cdebd8;background:#f7fcf8}
+#page-history .history-item.expense-row:not(.history-receipt){border-color:#f1d0d4;background:#fff8f8}
+#page-history .history-receipt.income-row .history-symbol{background:#e2f5e9;color:#16844c}
+#page-history .history-receipt.expense-row .history-symbol{background:#ffeaeb;color:#c9434e}
+#page-history .history-receipt.income-row .receipt-total{border-top-color:#cdebd8}
+#page-history .history-receipt.expense-row .receipt-total{border-top-color:#f1d0d4}
+:root[data-theme="dark"] #page-history .history-receipt.income-row{border-color:#286344;background:#17231c}
+:root[data-theme="dark"] #page-history .history-receipt.expense-row{border-color:#65373e;background:#2b1c20}
+:root[data-theme="dark"] #page-history .history-item.income-row:not(.history-receipt){border-color:#286344;background:#17231c}
+:root[data-theme="dark"] #page-history .history-item.expense-row:not(.history-receipt){border-color:#65373e;background:#2b1c20}
+:root[data-theme="dark"] #page-history .history-receipt.income-row .history-symbol{background:#1b4933;color:#8ce3b0}
+:root[data-theme="dark"] #page-history .history-receipt.expense-row .history-symbol,:root[data-theme="dark"] #page-history .history-item.expense-row:not(.history-receipt) .history-symbol{background:#512a31;color:#ff9ca6}
+:root[data-theme="dark"] #page-history .history-receipt.income-row .receipt-total{border-top-color:#286344}
+:root[data-theme="dark"] #page-history .history-receipt.expense-row .receipt-total{border-top-color:#65373e}
+</style><style id="history-vcb-layout-style">
+#page-history .history-section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px}
+#page-history .history-section-heading h2{margin:0;font-size:20px}
+#page-history .history-section-heading button{padding:7px 0;border:0;background:transparent;color:#9bcf43;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+#page-history .history-filters{display:grid;grid-template-columns:minmax(130px,.65fr) minmax(0,1.35fr);gap:10px;align-items:center;margin-bottom:15px}
+#page-history .history-filters>.field{min-width:0;width:100%;padding:10px 11px}
+#page-history .history-filter-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;padding:4px;border-radius:14px;background:var(--surface2)}
+#page-history .history-filter-tabs button{min-width:0;padding:10px 4px;border:0;border-radius:11px;background:transparent;color:var(--muted);font-size:12px;font-weight:750;white-space:nowrap;cursor:pointer}
+#page-history .history-filter-tabs button.active{background:#cafa83;color:#172312;box-shadow:0 2px 8px #13230c16}
+#page-history .history-list{gap:8px}
+#page-history .history-vcb-row{display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:78px;padding:12px 14px}
+#page-history .history-vcb-copy{display:grid;gap:4px;min-width:0}
+#page-history .history-name-line{display:flex;align-items:center;gap:6px;min-width:0}
+#page-history .history-name-line strong{flex:0 1 auto;min-width:0}
+#page-history .history-new-badge{position:relative;isolation:isolate;overflow:hidden;flex:0 0 auto;padding:2px 7px;border:1px solid rgba(255,255,255,.62);border-radius:99px;background:#cafa83;color:#26351b;font-size:9px;font-weight:850;letter-spacing:.12px;line-height:1.35;box-shadow:0 1px 5px rgba(25,35,30,.16),inset 0 1px rgba(255,255,255,.5)}
+#page-history .history-badge-sweeps{position:absolute;inset:0;pointer-events:none}
+#page-history .history-badge-sweeps i{position:absolute;inset:-35% auto -35% 112%;width:76%;pointer-events:none;background:linear-gradient(105deg,transparent 0%,rgba(255,255,255,.18) 22%,rgba(255,255,255,.82) 42%,#fff 50%,rgba(255,255,255,.38) 62%,transparent 82%);filter:blur(.2px);animation:historyBadgeHolo 3.6s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes historyBadgeHolo{0%,8%{transform:translateX(0) skewX(-18deg);opacity:0}18%{opacity:.85}92%,100%{transform:translateX(-255%) skewX(-18deg);opacity:0}}
+#page-history .history-item.expense-row .history-new-badge{background:#d93643;color:#fff}
+:root[data-theme="dark"] #page-history .history-item.expense-row .history-new-badge{background:#c82f3b;color:#fff}
+#page-history .history-item:has(.history-new-badge){border-width:2px;box-shadow:0 3px 12px rgba(22,36,28,.1)}
+#page-history .history-item.income-row:has(.history-new-badge){border-color:#25834e}
+#page-history .history-item.expense-row:has(.history-new-badge){border-color:#c4313e}
+:root[data-theme="dark"] #page-history .history-item.income-row:has(.history-new-badge){border-color:#54b77b;box-shadow:0 3px 14px rgba(55,167,102,.12)}
+:root[data-theme="dark"] #page-history .history-item.expense-row:has(.history-new-badge){border-color:#e35863;box-shadow:0 3px 14px rgba(224,68,82,.13)}
+#page-history .history-vcb-copy time,#page-history .history-receipt .history-info time{color:var(--muted);font-size:12px;line-height:1.2}
+#page-history .history-vcb-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}
+#page-history .history-vcb-copy small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted);font-size:11px}
+#page-history .history-vcb-right{display:flex;align-items:center;gap:7px;white-space:nowrap}
+#page-history .history-delete-button{width:28px;height:28px;display:grid;place-items:center;flex:0 0 auto;padding:0;border:0;border-radius:9px;background:transparent;color:#9299a6;cursor:pointer;transition:background .16s ease,color .16s ease,transform .16s ease}
+#page-history .history-delete-button svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#page-history .history-delete-button:hover{background:#ffe5e7;color:#c4313e;transform:scale(1.06)}
+#page-history .history-delete-button:focus-visible{outline:2px solid #c4313e;outline-offset:1px}
+:root[data-theme="dark"] #page-history .history-delete-button{color:#a4aab5}
+:root[data-theme="dark"] #page-history .history-delete-button:hover{background:#512a31;color:#ff9ca6}
+.history-delete-confirm{display:grid;gap:15px}.history-delete-confirm>p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}.history-delete-summary{display:grid;gap:5px;padding:13px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface2)}.history-delete-summary strong{font-size:14px}.history-delete-summary small{color:var(--muted);font-size:12px}.history-delete-summary .income{color:#16844c}.history-delete-summary .expense{color:#c4313e}.history-delete-actions{display:flex;justify-content:flex-end;gap:9px}.history-delete-actions .btn.danger{background:#d93643;color:#fff}.history-delete-actions .btn.danger:hover{background:#b92734}
+#modalback:has(.history-delete-confirm){align-items:center}
+#modalback:has(.history-delete-confirm) .modal{margin-bottom:0}
+:root[data-theme="dark"] .history-delete-summary .income{color:#8ce3b0}:root[data-theme="dark"] .history-delete-summary .expense{color:#ff9ca6}
+#page-history .history-flow-icon{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;flex:0 0 auto}
+#page-history .history-flow-icon svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+#page-history .history-flow-icon.income{background:#e2f5e9;color:#16844c}
+#page-history .history-flow-icon.expense{background:#ffeaeb;color:#c9434e}
+:root[data-theme="dark"] #page-history .history-flow-icon.income{background:#1b4933;color:#8ce3b0}
+:root[data-theme="dark"] #page-history .history-flow-icon.expense{background:#512a31;color:#ff9ca6}
+#page-history .history-vcb-row:has(.history-new-badge) .history-flow-icon svg path:first-child{stroke-dasharray:30 30;stroke-dashoffset:30;animation:historyArrowTrace 1.8s ease-in-out infinite}
+#page-history .history-vcb-row:has(.history-new-badge) .history-flow-icon svg path:last-child{stroke-dasharray:12 12;stroke-dashoffset:12;animation:historyArrowHead 1.8s ease-in-out .5s infinite}
+@keyframes historyArrowTrace{0%,8%{stroke-dashoffset:30;opacity:.35}52%,76%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-30;opacity:.35}}
+@keyframes historyArrowHead{0%,25%{stroke-dashoffset:12;opacity:.3}62%,78%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-12;opacity:.3}}
+#page-history .history-vcb-right .history-amount{font-size:14px}
+#page-history .history-amount small{font-size:11px;font-weight:650;opacity:.8}
+#page-history .history-receipt-head .history-info{display:grid;gap:3px;min-width:0}
+#page-history .history-receipt-head .history-info strong{white-space:nowrap}
+#page-history .history-receipt-head .history-amount{white-space:nowrap}
+#page-history .history-data-tools{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;padding:16px 0 6px;border-top:1px solid var(--line)}
+#page-history .history-data-tools>div:first-child{display:grid;gap:3px}
+#page-history .history-data-tools>div:first-child strong{font-size:13px}
+#page-history .history-data-tools>div:first-child small{color:var(--muted);font-size:11px}
+#page-history .history-data-buttons{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+#page-history .history-data-buttons .btn{padding:8px 10px;font-size:12px}
+:root[data-theme="dark"] #page-history .history-filter-tabs button.active{background:#cafa83;color:#172312}
+@media(max-width:520px){#page-history .history-filters{grid-template-columns:1fr;gap:8px}#page-history .history-data-tools{align-items:flex-start;flex-direction:column}#page-history .history-data-buttons{width:100%;justify-content:flex-start}#page-history .history-vcb-row{padding:11px 10px;gap:7px}#page-history .history-vcb-right{gap:4px}#page-history .history-vcb-right .history-amount{font-size:12px}#page-history .history-vcb-copy strong{font-size:13px}}
+</style><style id="history-page-header-style">
+#page-history .history-pagehead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:5px 0 20px}
+#page-history .history-wallet-back{width:88px;height:38px;display:flex;align-items:center;justify-content:flex-start;gap:7px;padding:0;border:0;border-radius:0;background:transparent;color:var(--text);font:inherit;font-size:14px;font-weight:800;white-space:nowrap;cursor:pointer;transition:color .16s ease}
+#page-history .history-wallet-back svg{width:19px;height:19px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#page-history .history-wallet-back:hover{color:var(--accent)}
+#page-history .history-page-title{min-width:0;text-align:center}
+#page-history .history-page-title h1{margin:3px 0 0;font-size:clamp(18px,4vw,24px);letter-spacing:-.5px;white-space:nowrap}
+#page-history .history-page-title .eyebrow{font-size:9px;letter-spacing:.9px}
+#page-history .history-page-title .sub{font-size:11px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#page-history .history-home-button{width:38px;height:38px;display:grid;place-items:center;padding:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);cursor:pointer}
+#page-history .history-home-button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#page-history .history-home-button:hover{background:var(--surface2);color:var(--accent)}
+@media(max-width:380px){#page-history .history-pagehead{gap:5px}#page-history .history-wallet-back{font-size:12px}#page-history .history-page-title h1{font-size:17px}#page-history .history-page-title .sub{display:none}}
+</style></head>
 <body>
 <div id="welcomeSetup" class="welcome-setup" hidden role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
   <form class="welcome-card" onsubmit="saveWelcomeName(event)">
@@ -685,13 +946,14 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     <h1 id="welcomeTitle">Bạn tên gì nhỉ?</h1>
     <p>Nhập tên để cá nhân hoá hồ sơ và thẻ ví của bạn. Bạn có thể đổi lại sau trong Hồ sơ.</p>
     <label for="welcomeName">Tên của bạn</label>
-    <input id="welcomeName" class="field" type="text" maxlength="50" autocomplete="given-name" placeholder="Ví dụ: Minh Anh" required>
+    <input id="welcomeName" class="field" type="text" minlength="5" maxlength="50" autocomplete="given-name" placeholder="Ví dụ: Minh Anh" required>
     <button class="btn" type="submit">Bắt đầu sử dụng →</button>
   </form>
 </div>
 <style>
 .welcome-setup{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:22px;background:color-mix(in srgb,var(--bg) 82%,#000 18%);backdrop-filter:blur(12px)}
 .welcome-setup[hidden]{display:none}.welcome-card{width:min(100%,420px);padding:30px 25px;border:1px solid var(--line);border-radius:26px;background:var(--surface);box-shadow:0 24px 90px #0003;display:grid;gap:13px}.welcome-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#1ed760,#168b46);display:grid;place-items:center;color:white;font-size:24px;font-weight:900;margin-bottom:4px}.welcome-card h1{font-size:29px;letter-spacing:-.8px;margin:0}.welcome-card p{font-size:14px;line-height:1.55;color:var(--muted);margin:0 0 5px}.welcome-card label{font-size:13px;font-weight:750}.welcome-card .field{width:100%;min-height:46px;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--surface2);color:var(--text);outline:none}.welcome-card .field:focus{border-color:var(--accent)}.welcome-card .btn{margin-top:5px;min-height:46px}
+
 </style>
 <div class="app">
 <header class="topbar">
@@ -735,7 +997,6 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     <div class="card"><div class="staticon">↗</div><div class="statlabel">Tổng thu tháng này</div><div class="statvalue income" id="homeIncome">0 ₫</div><div class="statfoot">Tiền trợ cấp và khoản thu khác</div></div>
     <div class="card"><div class="staticon">↘</div><div class="statlabel">Tổng chi tháng này</div><div class="statvalue expense" id="homeExpense">0 ₫</div><div class="statfoot">Các khoản chi đã ghi nhận</div></div>
     <div class="card"><div class="staticon">◈</div><div class="statlabel">Số dư hiện tại</div><div class="statvalue" id="homeBalance">0 ₫</div><div class="statfoot">Sau khi trừ các khoản chi</div></div>
-    <div class="card"><div class="staticon">⌂</div><div class="statlabel">Tiền trọ tháng này</div><div class="statvalue" id="homeRent">0 ₫</div><div class="statfoot">Phòng, điện, nước và rác</div></div>
   </div>
   <div class="sectiontitle"><h2>Hôm nay của bạn</h2><span id="datePretty"></span></div>
   <div class="card" id="todayClasses"></div>
@@ -762,20 +1023,64 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
       <h1>Quản lý chi tiêu</h1>
       <div class="sub">Theo dõi từng ngày, từng tháng và số dư chuyển tiếp.</div>
     </div>
-    <button class="btn" onclick="openTransaction()">＋ Thêm khoản</button>
+
   </div>
 <!-- Banner Ví tiền -->
 
-  <div class="wallet-banner">
-    <div class="wallet-brandline">
-      <span class="wallet-brandmark">V</span>
-      <span>Vspace Wallet</span>
-      <span style="margin-left:auto;color:#65758c;font-size:12px">YOUR MONEY SPACE</span>
+  <div class="wallet-banner-carousel" id="walletBannerCarousel" aria-label="Banner ví Vspace" aria-roledescription="băng chuyền">
+    <div class="wallet-banner-track" id="walletBannerTrack">
+      <article class="wallet-banner" aria-label="Banner 1 trên 3">
+        <div class="wallet-brandline"><span class="wallet-brandmark">V</span><span>Vspace Wallet</span><span style="margin-left:auto;color:#65758c;font-size:12px">YOUR MONEY SPACE</span></div>
+        <div class="eyebrow">TÀI CHÍNH CỦA BẠN</div>
+        <h2>Quản lý tiền thông minh, sống chủ động hơn ✨</h2>
+        <p>Theo dõi thu chi mỗi ngày, kiểm soát ngân sách và dành dụm cho những mục tiêu của bạn.</p>
+      </article>
+      <article class="wallet-banner" aria-label="Banner 2 trên 3">
+        <div class="wallet-brandline"><span class="wallet-brandmark">↗</span><span>Chi tiêu có kế hoạch</span><span style="margin-left:auto;color:#65758c;font-size:12px">SPEND SMARTER</span></div>
+        <div class="eyebrow">BẮT ĐẦU TỪ HÔM NAY</div>
+        <h2>Mỗi khoản chi đều trong tầm kiểm soát 📊</h2>
+        <p>Ghi lại thu chi thường xuyên để hiểu rõ thói quen và chủ động cân đối ngân sách.</p>
+      </article>
+      <article class="wallet-banner" aria-label="Banner 3 trên 3">
+        <div class="wallet-brandline"><span class="wallet-brandmark">✦</span><span>Mục tiêu của bạn</span><span style="margin-left:auto;color:#65758c;font-size:12px">SAVE FOR MORE</span></div>
+        <div class="eyebrow">TỪNG BƯỚC TIẾN GẦN HƠN</div>
+        <h2>Dành dụm hôm nay, chạm tới ước mơ mai sau 🌱</h2>
+        <p>Đặt mục tiêu tiết kiệm phù hợp và theo dõi số dư để thấy nỗ lực của bạn mỗi ngày.</p>
+      </article>
     </div>
-    <div class="eyebrow">TÀI CHÍNH CỦA BẠN</div>
-    <h2>Quản lý tiền thông minh, sống chủ động hơn ✨</h2>
-    <p>Theo dõi thu chi mỗi ngày, kiểm soát ngân sách và dành dụm cho những mục tiêu của bạn.</p>
+    <button class="wallet-banner-arrow prev" type="button" aria-label="Banner trước">‹</button>
+    <button class="wallet-banner-arrow next" type="button" aria-label="Banner tiếp theo">›</button>
+    <div class="wallet-banner-dots" aria-label="Chọn banner">
+      <button class="wallet-banner-dot active" type="button" aria-label="Hiện banner 1" aria-current="true"></button>
+      <button class="wallet-banner-dot" type="button" aria-label="Hiện banner 2"></button>
+      <button class="wallet-banner-dot" type="button" aria-label="Hiện banner 3"></button>
+    </div>
   </div>
+  <script>
+  (function(){
+    const carousel=document.getElementById('walletBannerCarousel');
+    const track=document.getElementById('walletBannerTrack');
+    if(!carousel||!track)return;
+    const dots=Array.from(carousel.querySelectorAll('.wallet-banner-dot'));
+    let index=0;
+    let timer;
+    function show(nextIndex){
+      index=(nextIndex+dots.length)%dots.length;
+      track.style.transform='translateX(-'+(index*100)+'%)';
+      dots.forEach((dot,i)=>{dot.classList.toggle('active',i===index);if(i===index)dot.setAttribute('aria-current','true');else dot.removeAttribute('aria-current');});
+    }
+    function start(){clearInterval(timer);timer=setInterval(()=>show(index+1),5000);}
+    carousel.querySelector('.prev').addEventListener('click',()=>{show(index-1);start();});
+    carousel.querySelector('.next').addEventListener('click',()=>{show(index+1);start();});
+    dots.forEach((dot,i)=>dot.addEventListener('click',()=>{show(i);start();}));
+    carousel.addEventListener('mouseenter',()=>clearInterval(timer));
+    carousel.addEventListener('mouseleave',start);
+    carousel.addEventListener('focusin',()=>clearInterval(timer));
+    carousel.addEventListener('focusout',event=>{if(!carousel.contains(event.relatedTarget))start();});
+    document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(timer);else start();});
+    start();
+  })();
+  </script>
 
   <!-- Thẻ tài khoản -->
 
@@ -786,9 +1091,65 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     </div>
 
 <div class="wallet-account-user">
-  <div class="wallet-avatar" id="walletAvatar">VŨ</div>
+  <div class="wallet-avatar" id="walletAvatar"><svg class="default-avatar-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.4"/><path d="M1 24c.5-6.2 4.4-10 11-10s10.5 3.8 11 10z"/></svg></div>
   <div style="min-width:0;flex:1">
-    <strong id="walletUserName">Bạn</strong>
+    <span class="wallet-name-frame"><strong id="walletUserName">Bạn</strong><svg class="wallet-name-vine-art" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
+      <path class="name-vine-stem" d="M18 36C4 32 3 18 16 12c12-6 25 1 39-2 23-5 40 3 64-1 24-4 40-3 60 2 21 5 36-7 49 2 13 8 6 18-5 23 14 5 15 18 3 23-15 7-27-3-47 1-22 5-37-3-60 1-23 4-42-2-64 1-20 3-35 8-45-1-10-9-3-18 8-25Z C12 45 25 55 38 57 C44 59 46 53 52 52 C59 51 61 58 56 62 C51 66 43 64 43 59 C43 56 46 55 49 56 C75 58 95 55 119 58 C145 61 166 55 188 58 C194 59 196 53 202 52 C209 51 212 57 208 61 C203 65 196 62 197 58 C198 55 201 54 204 56 C215 54 222 48 224 41 C227 35 228 30 228 25"/>
+      <path class="name-vine-light-path" d="M18 36C4 32 3 18 16 12c12-6 25 1 39-2 23-5 40 3 64-1 24-4 40-3 60 2 21 5 36-7 49 2 13 8 6 18-5 23 14 5 15 18 3 23-15 7-27-3-47 1-22 5-37-3-60 1-23 4-42-2-64 1-20 3-35 8-45-1-10-9-3-18 8-25Z C12 45 25 55 38 57 C44 59 46 53 52 52 C59 51 61 58 56 62 C51 66 43 64 43 59 C43 56 46 55 49 56 C75 58 95 55 119 58 C145 61 166 55 188 58 C194 59 196 53 202 52 C209 51 212 57 208 61 C203 65 196 62 197 58 C198 55 201 54 204 56 C215 54 222 48 224 41 C227 35 228 30 228 25 M111 10c3-4 6-6 10-7 M29 51c-10 3-10 8 0 7 7-1 8-6 2-7 M211 51c10 3 10 8 0 7-7-1-8-6-2-7"/>
+      <path class="name-vine-light-spark" d="M18 36C4 32 3 18 16 12c12-6 25 1 39-2 23-5 40 3 64-1 24-4 40-3 60 2 21 5 36-7 49 2 13 8 6 18-5 23 14 5 15 18 3 23-15 7-27-3-47 1-22 5-37-3-60 1-23 4-42-2-64 1-20 3-35 8-45-1-10-9-3-18 8-25Z C12 45 25 55 38 57 C44 59 46 53 52 52 C59 51 61 58 56 62 C51 66 43 64 43 59 C43 56 46 55 49 56 C75 58 95 55 119 58 C145 61 166 55 188 58 C194 59 196 53 202 52 C209 51 212 57 208 61 C203 65 196 62 197 58 C198 55 201 54 204 56 C215 54 222 48 224 41 C227 35 228 30 228 25"/>
+      <path class="name-vine-stem wind-vine-branch" d="M111 10c3-4 6-6 10-7"/>
+      <path class="name-vine-stem wind-vine-branch" d="M29 51c-10 3-10 8 0 7 7-1 8-6 2-7M211 51c10 3 10 8 0 7-7-1-8-6-2-7"/>
+      <g class="falling-leaf falling-leaf-one" data-x="34" data-y="10" transform="translate(34 10) rotate(5)"><g class="falling-leaf-motion"><path class="fall-leaf-shape" d="M0 0C1-7 8-11 15-8c0 7-6 12-15 8Z"/><path class="fall-leaf-vein" d="M1 0 14-8"/></g></g>
+      <g class="falling-leaf falling-leaf-two" data-x="228" data-y="34" transform="translate(228 34) rotate(92)"><g class="falling-leaf-motion"><path class="fall-leaf-shape" d="M0 0C1-7 8-11 15-8c0 7-6 12-15 8Z"/><path class="fall-leaf-vein" d="M1 0 14-8"/></g></g>
+      <g class="falling-leaf falling-leaf-three" data-x="103" data-y="59" transform="translate(103 59) rotate(188)"><g class="falling-leaf-motion"><path class="fall-leaf-shape" d="M0 0C1-7 8-11 15-8c0 7-6 12-15 8Z"/><path class="fall-leaf-vein" d="M1 0 14-8"/></g></g>
+      <g class="swaying-leaves">
+        <g transform="translate(51 9)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C-8-8-16-6-13 0c4 5 9 5 13 0Z"/><path class="sway-leaf-vein" d="M-1 0-12-5"/></g></g>
+        <g transform="translate(84 8)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C4-9 13-10 15-5c-2 6-7 8-15 5Z"/><path class="sway-leaf-vein" d="m1-1 12-4"/></g></g>
+        <g transform="translate(157 8)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C4-9 13-10 15-5c-2 6-7 8-15 5Z"/><path class="sway-leaf-vein" d="m1-1 12-4"/></g></g>
+        <g transform="translate(190 9)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C-8-8-16-6-13 0c4 5 9 5 13 0Z"/><path class="sway-leaf-vein" d="M-1 0-12-5"/></g></g>
+        <g transform="translate(51 56)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C-8 8-16 6-13 0c4-5 9-5 13 0Z"/><path class="sway-leaf-vein" d="M-1 0-12 5"/></g></g>
+        <g transform="translate(84 57)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C4 9 13 10 15 5c-2-6-7-8-15-5Z"/><path class="sway-leaf-vein" d="m1 1 12 4"/></g></g>
+        <g transform="translate(157 57)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C4 9 13 10 15 5c-2-6-7-8-15-5Z"/><path class="sway-leaf-vein" d="m1 1 12 4"/></g></g>
+        <g transform="translate(190 56)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C-8 8-16 6-13 0c4-5 9-5 13 0Z"/><path class="sway-leaf-vein" d="M-1 0-12 5"/></g></g>
+        <g class="extra-sway-leaf" transform="translate(12 32)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C8-8 16-6 13 0c-4 5-9 5-13 0Z"/><path class="sway-leaf-vein" d="M1 0 12-5"/></g></g>
+        <g class="extra-sway-leaf" transform="translate(228 32)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C-8-8-16-6-13 0c4 5 9 5 13 0Z"/><path class="sway-leaf-vein" d="M-1 0-12-5"/></g></g>
+        <g class="extra-sway-leaf" transform="translate(122 8)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C-7-8-15-7-13-1c4 5 8 5 13 1Z"/><path class="sway-leaf-vein" d="M-1 0-12-5"/></g></g>
+        <g class="extra-sway-leaf" transform="translate(122 56)"><g class="sway-leaf-motion"><path class="sway-leaf-shape" d="M0 0C7-8 15-7 13-1c-4 5-8 5-13 1Z"/><path class="sway-leaf-vein" d="M1 0 12-5"/></g></g>
+      </g>
+      <path class="name-vine-leaves leaf-tone-dark" d="M34 10C25 1 15 3 18 10c5 6 11 6 16 0Z"/>
+      <path class="name-vine-leaves leaf-tone-mid" d="M69 8C72 0 83-1 87 3c-2 6-8 9-18 5Z"/>
+      <path class="name-vine-leaves leaf-tone-light" d="M105 10C96 2 86 4 89 11c5 5 10 5 16-1Z"/>
+      <path class="name-vine-leaves leaf-tone-mid" d="M143 7C147 0 158-1 162 3c-2 6-8 8-19 4Z"/>
+      <path class="name-vine-leaves leaf-tone-dark" d="M181 10C172 2 162 4 165 11c5 5 10 5 16-1Z"/>
+      <path class="name-vine-leaves leaf-tone-light" d="M215 9C219 1 229 0 232 5c-3 7-8 9-17 4Z"/>
+      <path class="name-vine-leaves leaf-tone-light" d="M34 57C25 65 15 63 18 57c5-6 11-6 16 0Z"/>
+      <path class="name-vine-leaves leaf-tone-dark" d="M69 59C72 65 83 67 87 63c-2-6-8-9-18-5Z"/>
+      <path class="name-vine-leaves leaf-tone-mid" d="M105 57C96 65 86 63 89 56c5-5 10-5 16 1Z"/>
+      <path class="name-vine-leaves leaf-tone-light" d="M143 60C147 67 158 68 162 64c-2-6-8-8-19-4Z"/>
+      <path class="name-vine-leaves leaf-tone-mid" d="M181 57C172 65 162 63 165 56c5-5 10-5 16 1Z"/>
+      <path class="name-vine-leaves leaf-tone-dark" d="M215 58C219 65 229 66 232 62c-3-7-8-9-17-4Z"/>
+      <path class="name-vine-leaves leaf-tone-mid" d="M12 22C3 18-2 24 2 30c6 1 10-2 10-8Z"/>
+      <path class="name-vine-leaves leaf-tone-dark" d="M14 43C4 45 2 53 8 56c6-2 8-6 6-13Z"/>
+      <path class="name-vine-leaves leaf-tone-light" d="M228 22c9-4 14 2 10 8-6 1-10-2-10-8Z"/>
+      <path class="name-vine-leaves leaf-tone-mid" d="M226 43c10 2 12 10 6 13-6-2-8-6-6-13Z"/>
+      <path class="name-vine-veins" d="M20 9l12 1M72 7l13-4M91 10l12-1M147 6l13-3M165 10l12 0M218 8l12-3M20 58l12-1M72 60l13 4M91 57l12 1M149 61l11 3M166 57l12 1M218 58l12 4M11 23l-8 5M13 44 7 54M229 23l8 5M227 44l6 10"/>
+    </svg><svg class="wallet-wind-leaves" viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true">
+      <g class="wallet-wind-leaf wallet-wind-leaf-a"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-22 13 C35 3 75 28 128 14 S211 3 258 13" dur="5.8s" keyTimes="0;0.58;0.792;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.555;0.615;0.732;0.792;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-b"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-24 47 C34 58 75 31 125 43 S211 59 260 38" dur="5.8s" keyTimes="0;0.586;0.798;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.561;0.621;0.738;0.798;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-c"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 26 C-6 26 0 16 20 16 A15 15 0 0 1 20 46 A15 15 0 0 1 20 16 C43 16 56 26 84 26 S210 26 270 26" dur="5.8s" keyTimes="0;0.591;0.803;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.566;0.626;0.743;0.803;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-d"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-24 57 C35 47 75 17 127 35 S212 51 258 52" dur="5.8s" keyTimes="0;0.597;0.809;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.572;0.632;0.749;0.809;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-e"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-24 39 C36 53 80 14 133 33 S215 47 260 22" dur="5.8s" keyTimes="0;0.603;0.815;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.578;0.638;0.755;0.815;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-f"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 7 C25 20 67 0 115 17 S205 34 270 8" dur="5.8s" keyTimes="0;0.609;0.821;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.584;0.644;0.761;0.821;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-g"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 55 C24 40 71 63 121 45 S212 27 270 55" dur="5.8s" keyTimes="0;0.614;0.826;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.589;0.649;0.766;0.826;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-h"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 21 C25 8 68 39 117 25 S210 8 270 26" dur="5.8s" keyTimes="0;0.62;0.832;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.595;0.655;0.772;0.832;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-i"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 43 C23 58 69 23 119 39 S210 60 270 42" dur="5.8s" keyTimes="0;0.626;0.838;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.601;0.661;0.778;0.838;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-j"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 7 C-5 7 0 8 20 8 A15 15 0 0 1 20 38 A15 15 0 0 1 20 8 C42 8 55 8 82 8 S210 8 270 8" dur="5.8s" keyTimes="0;0.631;0.843;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.606;0.666;0.783;0.843;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-k"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 16 C25 3 66 31 118 19 S210 6 270 19" dur="5.8s" keyTimes="0;0.637;0.849;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.612;0.672;0.789;0.849;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-l"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 26 C25 39 72 13 122 29 S210 45 270 26" dur="5.8s" keyTimes="0;0.643;0.855;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.618;0.678;0.795;0.855;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-m"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 36 C23 22 72 49 123 34 S208 20 270 39" dur="5.8s" keyTimes="0;0.649;0.861;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.624;0.684;0.801;0.861;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-n"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 48 C-6 48 0 20 20 20 A15 15 0 0 1 20 50 A15 15 0 0 1 20 20 C44 20 55 48 84 48 S210 48 270 48" dur="5.8s" keyTimes="0;0.654;0.866;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.629;0.689;0.806;0.866;1" dur="5.8s" repeatCount="indefinite"/></g>
+      <g class="wallet-wind-leaf wallet-wind-leaf-o"><path d="M0 0C4-7 12-8 15-4c-1 5-7 8-15 4Z"/><path class="wallet-wind-leaf-vein" d="M1 0 14-4"/><animateMotion begin="indefinite" path="M-38 61 C24 49 72 68 123 57 S210 43 270 61" dur="5.8s" keyTimes="0;0.66;0.872;1" keyPoints="0;0;1;1" calcMode="spline" keySplines="0 0 1 1;.42 0 .58 1;0 0 1 1" repeatCount="indefinite" rotate="auto"/><animate begin="indefinite" attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.635;0.695;0.812;0.872;1" dur="5.8s" repeatCount="indefinite"/></g>
+    </svg></span>
     <span class="wallet-member">✦ MEMBER</span>
   </div>
   <span style="font-size:24px">💳</span>
@@ -828,8 +1189,13 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
       </button>
     </div>
     <div id="walletCustomizePanel" class="wallet-customize-panel" hidden>
-      <div class="wallet-skins-heading"><div><strong>Trang trí thẻ</strong><span>Chọn màu cơ bản hoặc họa tiết cho thẻ</span></div><button type="button" class="wallet-customize-close" onclick="toggleWalletCustomize()" aria-label="Đóng cửa sổ">×</button></div>
-      <div class="wallet-customize-tabs" role="tablist" aria-label="Loại giao diện thẻ">
+      <div class="wallet-skins-heading"><div><strong>Trang trí thẻ</strong><span>Tùy chỉnh giao diện thẻ và khung tên</span></div><button type="button" class="wallet-customize-close" onclick="toggleWalletCustomize()" aria-label="Đóng cửa sổ">×</button></div>
+      <div class="wallet-customize-tabs wallet-customize-main-tabs" role="tablist" aria-label="Mục trang trí">
+        <button type="button" class="wallet-customize-tab active" role="tab" aria-selected="true" aria-controls="walletCardDesignSection" onclick="showWalletCustomizeSection('card')">Trang trí giao diện thẻ</button>
+        <button type="button" class="wallet-customize-tab" role="tab" aria-selected="false" aria-controls="walletNameFrameSection" onclick="showWalletCustomizeSection('name')">Trang trí khung tên</button>
+      </div>
+      <div id="walletCardDesignSection">
+      <div class="wallet-customize-tabs wallet-design-tabs" role="tablist" aria-label="Loại giao diện thẻ">
         <button type="button" class="wallet-customize-tab active" role="tab" aria-selected="true" aria-controls="walletBasicOptions walletPatternOptions" onclick="showWalletCustomize('all')">Tất cả</button>
         <button type="button" class="wallet-customize-tab" role="tab" aria-selected="false" aria-controls="walletBasicOptions" onclick="showWalletCustomize('basic')">Cơ bản</button>
         <button type="button" class="wallet-customize-tab" role="tab" aria-selected="false" aria-controls="walletPatternOptions" onclick="showWalletCustomize('patterns')">Họa tiết</button>
@@ -852,6 +1218,29 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
         <button type="button" class="wallet-skin-option" data-skin="sunset" onclick="setWalletSkin('sunset')"><span class="wallet-skin-preview skin-sunset"><i>🌅</i><b>VSPACE</b><small>GOLDEN HOUR</small></span><span>Hoàng hôn</span></button>
         <button type="button" class="wallet-skin-option" data-skin="forest" onclick="setWalletSkin('forest')"><span class="wallet-skin-preview skin-forest"><i>🍃</i><b>VSPACE</b><small>FOREST CALM</small></span><span>Rừng xanh</span></button>
         <button type="button" class="wallet-skin-option" data-skin="christmas" onclick="setWalletSkin('christmas')"><span class="wallet-skin-preview skin-christmas"><i>🎄</i><b>VSPACE</b><small>SNOWY NOEL</small></span><span>Đêm Tuyết Noel</span></button>
+      </div>
+      </div>
+      <div id="walletNameFrameSection" hidden>
+        <div class="wallet-customize-tabs wallet-name-frame-tabs" role="tablist" aria-label="Loại trang trí khung tên">
+          <button type="button" class="wallet-customize-tab active" role="tab" aria-selected="true" aria-controls="walletFrameBasicOptions walletFrameEffectsOptions" onclick="showWalletNameFrameCategory('all')">Tất cả</button>
+          <button type="button" class="wallet-customize-tab" role="tab" aria-selected="false" aria-controls="walletFrameBasicOptions" onclick="showWalletNameFrameCategory('basic')">Cơ bản</button>
+          <button type="button" class="wallet-customize-tab" role="tab" aria-selected="false" aria-controls="walletFrameEffectsOptions" onclick="showWalletNameFrameCategory('effects')">Hiệu ứng</button>
+        </div>
+        <div id="walletFrameBasicOptions">
+        <div class="wallet-customize-group-title">Màu cơ bản <span>Chọn màu khung tên bạn thích</span></div>
+        <div class="wallet-color-options" role="group" aria-label="Màu khung tên">
+          <button type="button" class="wallet-color-swatch wallet-frame-swatch" data-frame-style="green" onclick="setWalletNameFrameStyle('green')"><i class="wallet-frame-preview"><b class="wallet-frame-preview-green" data-frame-preview-name></b></i><span>Xanh lá</span></button>
+          <button type="button" class="wallet-color-swatch wallet-frame-swatch" data-frame-style="blue" onclick="setWalletNameFrameStyle('blue')"><i class="wallet-frame-preview"><b class="wallet-frame-preview-blue" data-frame-preview-name></b></i><span>Xanh dương</span></button>
+          <button type="button" class="wallet-color-swatch wallet-frame-swatch" data-frame-style="purple" onclick="setWalletNameFrameStyle('purple')"><i class="wallet-frame-preview"><b class="wallet-frame-preview-purple" data-frame-preview-name></b></i><span>Tím</span></button>
+          <button type="button" class="wallet-color-swatch wallet-frame-swatch" data-frame-style="gold" onclick="setWalletNameFrameStyle('gold')"><i class="wallet-frame-preview"><b class="wallet-frame-preview-gold" data-frame-preview-name></b></i><span>Vàng kim</span></button>
+        </div>
+        </div>
+        <div id="walletFrameEffectsOptions" hidden>
+          <div class="wallet-customize-group-title">Hiệu ứng <span>Chọn hiệu ứng chuyển động cho bảng tên</span></div>
+          <div class="wallet-color-options" role="group" aria-label="Hiệu ứng khung tên">
+            <button type="button" class="wallet-color-swatch wallet-frame-swatch" data-frame-style="vine" onclick="setWalletNameFrameStyle('vine')"><i class="wallet-vine-swatch wallet-vine-frame-preview" data-vine-frame-preview><b data-frame-preview-name></b></i><span>Dây Leo An Nhiên</span></button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -891,37 +1280,37 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
       </div>
       <b>Thêm khoản chi</b>
     </button>
-    <button class="quick" type="button" onclick="openWalletTransfer()">
-      <div class="qicon">
-        <svg viewBox="0 0 48 48" width="29" height="29" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <rect x="6" y="11" width="26" height="27" rx="6" fill="#B8ACF5"/>
-          <rect x="12" y="7" width="26" height="27" rx="6" fill="#E1DAFF" stroke="#8875DB" stroke-width="2"/>
-          <path d="M17 16h15l-4-4m4 4-4 4M33 25H18l4 4m-4-4 4-4" fill="none" stroke="#6653BE" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="37" cy="35" r="7" fill="#F8D56B" stroke="#D7A62C" stroke-width="1.5"/>
-          <path d="M34 35h6m-3-3v6" stroke="#9A7018" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <b>Chuyển nội bộ</b>
-    </button>
     <button class="quick" type="button" onclick="openWalletSavings()">
       <div class="qicon">
         <svg viewBox="0 0 48 48" width="32" height="32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs><linearGradient id="pigBody" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFD5E1"/><stop offset="1" stop-color="#F28EAF"/></linearGradient></defs>
-          <ellipse cx="24" cy="37" rx="15" ry="3" fill="#B4A6D8" opacity=".22"/>
-          <path d="M13 19 11 11q-.4-2 2-1l8 6" fill="#FFC3D5" stroke="#C95E83" stroke-width="1.8" stroke-linejoin="round"/>
-          <path d="M25 16 29 10q1-1.6 2.5.1l3.2 7" fill="#FFC3D5" stroke="#C95E83" stroke-width="1.8" stroke-linejoin="round"/>
-          <path d="M10 26c0-7 6-12 15-12 8 0 14 5 14 12 0 2-.8 4-2.4 5.6l.5 4.2q.2 1.8-1.8 1.8h-5l-1.4-4h-7l-1.2 4h-5.2l-.8-5.4C12 31 10 29 10 26Z" fill="url(#pigBody)" stroke="#C95E83" stroke-width="1.8" stroke-linejoin="round"/>
-          <ellipse cx="34" cy="25" rx="6.5" ry="4.8" fill="#FFEAF0" stroke="#C95E83" stroke-width="1.5"/>
-          <ellipse cx="32.2" cy="25" rx=".85" ry="1.25" fill="#A94368"/><ellipse cx="36" cy="25" rx=".85" ry="1.25" fill="#A94368"/>
-          <circle cx="26" cy="20" r="1.5" fill="#71354C"/><circle cx="26.5" cy="19.5" r=".45" fill="#FFF"/>
-          <ellipse cx="23" cy="25" rx="2.5" ry="1.6" fill="#EF729B" opacity=".8"/>
-          <path d="M20 14h8" stroke="#B64E75" stroke-width="2" stroke-linecap="round"/>
-          <path d="M5 28c-4-1-4-6 0-6 3 0 3 4 0 4" fill="none" stroke="#C95E83" stroke-width="1.8" stroke-linecap="round"/>
-          <circle cx="38" cy="9" r="6.5" fill="#FFD76A" stroke="#D49B28" stroke-width="1.5"/><path d="M38 5.8v6.4m1.8-5c-1.6-1.1-3.5.1-2 1.1 1.8 1.2.7 2.8-1.1 1.8" fill="none" stroke="#966619" stroke-width="1.2" stroke-linecap="round"/>
-          <path d="m44 17 1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#F6C64E"/>
+          <defs><linearGradient id="pigBody" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFE7A3"/><stop offset="1" stop-color="#E8A72F"/></linearGradient></defs>
+          <ellipse cx="24" cy="37" rx="15" ry="3" fill="#A77A1F" opacity=".18"/>
+          <path d="M13.2 18.5c-1.1-2.4-1.4-4.5-.9-6.3.3-1.2 1.4-1.6 2.5-.8l5 3.8" fill="#FFDB7D" stroke="#B87A17" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M26.3 14.8c.8-2.4 2-4.2 3.5-5.3 1-.8 2.2-.3 2.5.9l.8 5.7" fill="#FFDB7D" stroke="#B87A17" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+          <path d="M10 26c0-7 6-12 15-12 8 0 14 5 14 12 0 2-.8 4-2.4 5.6l.5 4.2q.2 1.8-1.8 1.8h-5l-1.4-4h-7l-1.2 4h-5.2l-.8-5.4C12 31 10 29 10 26Z" fill="url(#pigBody)" stroke="#B87A17" stroke-width="1.8" stroke-linejoin="round"/>
+          <ellipse cx="34" cy="25" rx="6.5" ry="4.8" fill="#FFF1C8" stroke="#B87A17" stroke-width="1.5"/>
+          <ellipse cx="32.2" cy="25" rx=".85" ry="1.25" fill="#9A6415"/><ellipse cx="36" cy="25" rx=".85" ry="1.25" fill="#9A6415"/>
+          <circle cx="26" cy="20" r="1.5" fill="#714B1C"/><circle cx="26.5" cy="19.5" r=".45" fill="#FFF"/>
+          <ellipse cx="23" cy="25" rx="2.5" ry="1.6" fill="#F5C453" opacity=".85"/>
+          <path d="M20 14h8" stroke="#A87317" stroke-width="2" stroke-linecap="round"/>
+          <path d="M11 29c-2.6 0-4.3-.9-4.3-2.7 0-1.8 2-2.7 3.4-1.5 1.1 1 .6 2.6-.8 2.6" fill="none" stroke="#B87A17" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="38" cy="9" r="6.5" fill="#FFE29A" stroke="#B87A17" stroke-width="1.5"/><path d="M38 5.8v6.4m1.8-5c-1.6-1.1-3.5.1-2 1.1 1.8 1.2.7 2.8-1.1 1.8" fill="none" stroke="#85560F" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="m44 17 1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#F4C14E"/>
         </svg>
       </div>
       <b>Tiết kiệm</b>
+    </button>
+    <button class="quick" type="button" onclick="openTransaction('receipt')">
+      <div class="qicon" aria-hidden="true">
+        <svg viewBox="0 0 48 48" width="31" height="31" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="walletReceiptPaper" x1="10" y1="6" x2="38" y2="43" gradientUnits="userSpaceOnUse"><stop stop-color="#fff"/><stop offset="1" stop-color="#c9e2ff"/></linearGradient></defs>
+          <path d="M13 6h22a3 3 0 0 1 3 3v32l-4-2.8-4 2.8-4-2.8-4 2.8-4-2.8-4 2.8V9a3 3 0 0 1 3-3Z" fill="url(#walletReceiptPaper)" stroke="#2863c5" stroke-width="2.2" stroke-linejoin="round"/>
+          <path d="M18 15h12M18 21h8" stroke="#4b83c9" stroke-width="2.2" stroke-linecap="round"/>
+          <path d="M18 29h5" stroke="#8eadd2" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="31" cy="31" r="6" fill="#2863c5"/><path d="m28.5 31 1.7 1.7 3.4-3.6" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <b>Biên lai</b>
     </button>
   </div>
 
@@ -944,7 +1333,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     </div>
     <p class="sub">
       Nhập số tiền ban đầu tại tháng bắt đầu theo dõi.
-      Các tháng tiếp theo sẽ tự động cộng dồn thu, trừ chi và tiền trọ.
+      Các tháng tiếp theo tự động cộng dồn thu và chi. Tiền nhà chỉ được tính nếu bạn thêm mục này.
     </p>
     <div class="formgrid">
       <label>Tháng bắt đầu theo dõi
@@ -964,7 +1353,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
       <div class="statvalue income" id="walletIncome">0 ₫</div>
     </div>
     <div class="card">
-      <div class="statlabel">Tổng chi gồm tiền trọ</div>
+      <div class="statlabel">Tổng chi tháng</div>
       <div class="statvalue expense" id="walletExpense">0 ₫</div>
     </div>
     <div class="card">
@@ -986,6 +1375,11 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     <div class="card">
       <div class="sectiontitle">
         <h2>Thu và chi</h2>
+      </div>
+      <div class="wallet-chart-switch" role="group" aria-label="Chọn kiểu biểu đồ thu chi">
+        <button type="button" class="active" aria-pressed="true" onclick="setWalletMonthlyChartType('bar')">Thanh</button>
+        <button type="button" aria-pressed="false" onclick="setWalletMonthlyChartType('pie')">Tròn</button>
+        <button type="button" aria-pressed="false" onclick="setWalletMonthlyChartType('line')">Đường</button>
       </div>
       <div id="walletMonthlyChart" class="wallet-chart">
         <p class="sub">Đang tải thống kê...</p>
@@ -1032,45 +1426,18 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     </p>
   </div>
   <div class="sectiontitle">
-    <h2>Chi phí ở trọ</h2>
-    <span>Được tính vào tổng chi tháng</span>
-  </div>
-
-  <div class="card">
-    <div class="formgrid">
-      <label>Tiền phòng (₫)
-        <input class="field" type="number" id="rentRoom" min="0" step="1">
-      </label>
-      <label>Tiền điện (₫)
-        <input class="field" type="number" id="rentElectric" min="0" step="1">
-      </label>
-      <label>Tiền nước (₫)
-        <input class="field" type="number" id="rentWater" min="0" step="1">
-      </label>
-      <label>Tiền rác / phí khác (₫)
-        <input class="field" type="number" id="rentOther" min="0" step="1">
-      </label>
-      <label>Ngày ghi nhận tiền trọ
-        <input class="field" type="date" id="rentDate">
-      </label>
-      <button class="btn" onclick="saveRent()">Lưu chi phí trọ</button>
-    </div>
-  </div>
-
-  <div class="sectiontitle">
     <h2>Sổ thu chi theo ngày</h2>
     <span>Kiểu bảng giống Excel</span>
   </div>
 
   <div class="tablewrap">
-    <table style="min-width:850px">
+    <table style="min-width:760px">
       <thead>
         <tr>
           <th>Ngày</th>
           <th>Nội dung thu chi</th>
           <th>Tổng thu</th>
-          <th>Chi thường</th>
-          <th>Tiền trọ</th>
+          <th>Chi</th>
           <th>Số dư cuối ngày</th>
         </tr>
       </thead>
@@ -1081,23 +1448,16 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
   <p class="sub">Lịch sử giao dịch và các tệp sao lưu nằm trong thẻ số dư phía trên. Chạm “Lịch sử giao dịch” để mở.</p>
 </section>
 <section class="page" id="page-history">
-  <div class="pagehead"><div><div class="eyebrow">VSPACE WALLET</div><h1>Lịch sử giao dịch</h1><div class="sub">Các khoản thu chi của bạn, sắp xếp mới nhất trước.</div></div><button class="btn secondary small" type="button" onclick="go('wallet')">‹ Quay lại Ví tiền</button></div>
+  <div class="history-pagehead"><button class="history-wallet-back" type="button" onclick="go('wallet')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7"/></svg><span>Ví tiền</span></button><button class="history-home-button" type="button" onclick="go('home')" aria-label="Về trang chủ" title="Trang chủ"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></button></div>
   <div class="bank-hero">
-    <div class="bank-brand"><span class="bank-mark">V</span><span>Vspace Wallet</span><span style="margin-left:auto;font-size:10px;letter-spacing:.5px;color:#d8f5e9">TÀI KHOẢN CỦA BẠN</span></div>
     <div class="bank-caption">SỐ DƯ HIỆN TẠI</div>
-    <div class="bank-balance-row"><div class="bank-balance" id="historyBalance">••••••••</div><button class="bank-eye" type="button" onclick="toggleWalletBalance()" id="historyEye" aria-label="Hiện số dư"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3 21 21" stroke-linecap="round"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.5.9-3.8 6-9 6-1 0-1.9-.2-2.7-.5M6.2 6.3C3.9 7.8 2.2 10.4 2 11" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div>
-    <div class="bank-meta"><span id="historyMonth">Tháng hiện tại</span><span>•</span><span id="historyHeroCount">0 giao dịch</span></div>
+    <div class="bank-balance-row"><div class="bank-balance" id="historyBalance">0<sup>VND</sup></div></div>
+    <div class="bank-meta"><span id="historyUnreadCount">0 giao dịch mới</span></div>
   </div>
-  <div class="bank-actions">
-    <button class="bank-action" onclick="openWalletTransaction('income')"><span class="bank-action-icon">↙</span>Thêm khoản thu</button>
-    <button class="bank-action" onclick="openWalletTransaction('expense')"><span class="bank-action-icon" style="background:#fff0e4;color:#c66a28">↗</span>Thêm khoản chi</button>
-    <button class="bank-action" onclick="openWalletTransfer()"><span class="bank-action-icon" style="background:#e9e4ff;color:#6550c8">⇄</span>Chuyển nội bộ</button>
-  </div>
-  <div class="sectiontitle"><h2>Giao dịch của bạn</h2><span id="historyCount">0 giao dịch</span></div>
-  <div class="toolbar"><input class="field" id="historyFilterMonth" type="month" aria-label="Lọc tháng"><select class="field" id="historyFilterType" aria-label="Lọc loại giao dịch"><option value="all">Tất cả khoản</option><option value="income">Khoản thu</option><option value="expense">Khoản chi</option></select></div>
-  <div class="toolbar" style="margin-top:8px"><button class="btn secondary" type="button" onclick="exportCSV()">Xuất CSV</button><button class="btn secondary" type="button" onclick="exportWalletXLSX()">Xuất Excel</button><label class="btn secondary" for="historyImportFile">Nhập file</label><input id="historyImportFile" type="file" accept=".csv,.txt,.json" hidden onchange="importFile(event)"></div>
+  <div class="sectiontitle history-section-heading"><h2>Lịch sử giao dịch</h2><button type="button" onclick="focusHistoryDate()">Tìm kiếm thêm</button></div>
+  <div class="history-filters"><input class="field" id="historyFilterMonth" type="date" aria-label="Lọc ngày, tháng, năm"><div class="history-filter-tabs" role="tablist" aria-label="Lọc giao dịch"><button class="active" type="button" role="tab" aria-selected="true" data-history-type="all" onclick="setHistoryTypeFilter('all',this)">Toàn bộ</button><button type="button" role="tab" aria-selected="false" data-history-type="income" onclick="setHistoryTypeFilter('income',this)">Tiền vào</button><button type="button" role="tab" aria-selected="false" data-history-type="expense" onclick="setHistoryTypeFilter('expense',this)">Tiền ra</button></div><select id="historyFilterType" hidden aria-hidden="true"><option value="all">Toàn bộ</option><option value="income">Tiền vào</option><option value="expense">Tiền ra</option></select></div>
   <div id="bankHistoryList" class="history-list"></div>
-  <button class="btn secondary" style="width:100%;margin-top:12px" onclick="go('wallet')">Mở sổ thu chi đầy đủ</button>
+  <div class="history-data-tools"><div><strong>Quản lý dữ liệu</strong><small>Sao lưu hoặc nhập giao dịch</small></div><div class="history-data-buttons"><button class="btn secondary" type="button" onclick="exportCSV()">Xuất CSV</button><button class="btn secondary" type="button" onclick="exportWalletXLSX()">Xuất Excel</button><label class="btn secondary" for="historyImportFile">Nhập file</label><input id="historyImportFile" type="file" accept=".csv,.txt,.json" hidden onchange="importFile(event)"></div></div>
 </section>
 <section class="page" id="page-music">
   <div class="pagehead"><div><div class="eyebrow">LISTEN YOUR WAY</div><h1>Âm nhạc của tôi</h1><div class="sub">Một góc thư giãn mang cảm hứng Spotify.</div></div></div>
@@ -1188,9 +1548,24 @@ let state={
   walletInitialBalance:0,
   walletBaseMonth:currentMonth()
 };
-function load(){try{const s=JSON.parse(localStorage.getItem('miSpaceV3')||'null');if(s)state={...state,...s}}catch(e){}}
+function load(){try{const s=JSON.parse(localStorage.getItem('miSpaceV3')||'null');if(s)state={...state,...s};const dedicatedPhoto=localStorage.getItem('miSpaceProfilePhotoV1');if(dedicatedPhoto&&dedicatedPhoto.startsWith('data:image/'))state.profilePhoto=dedicatedPhoto;}catch(e){console.error('Không đọc được dữ liệu Vspace:',e)}}
+function migrateLegacyRentTransactions(){
+  const legacy=state.rents||{};let changed=false;
+  if(!Array.isArray(state.transactions)){state.transactions=[];changed=true;}
+  Object.entries(legacy).forEach(([month,rent])=>{
+    const amount=['room','electric','water','other'].reduce((sum,key)=>sum+Number(rent?.[key]||0),0);
+    if(amount<=0)return;
+    const id='legacy-rent-'+month;
+    const costItems=[['Tiền phòng','room'],['Tiền điện','electric'],['Tiền nước','water'],['Phí khác','other']].map(([name,key])=>({name,amount:Number(rent?.[key]||0)})).filter(item=>item.amount>0);
+    if(!state.transactions.some(t=>t.id===id))state.transactions.push({id,type:'expense',title:'Tiền nhà',category:'Tiền nhà',amount,date:rent.date||`${month}-01`,note:'Đã chuyển từ mục tiền nhà cũ',costItems});
+    changed=true;
+  });
+  if(Object.keys(legacy).length||!state.rents){state.rents={};changed=true;}
+  delete state.walletRentEnabled;
+  if(changed)saveQuiet();
+}
 function save(){localStorage.setItem('miSpaceV3',JSON.stringify(state));renderAll()}
-function go(page){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});if(page==='notifications')renderNotices();if(page==='history')renderBankHistory()}
+function go(page){if(page!=='history'&&document.querySelector('#page-history')?.classList.contains('active'))markPendingHistorySeen();document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+page));document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===page));window.scrollTo({top:0,behavior:'smooth'});if(page==='notifications')renderNotices();if(page==='history')renderBankHistory()}
 function setTheme(theme){state.theme=theme;applyTheme();saveQuiet();toast(theme==='auto'?'Đã bật tự động theo thiết bị':'Đã đổi giao diện')}
 function cycleTheme(){const currentlyDark=document.documentElement.dataset.theme==='dark';setTheme(currentlyDark?'light':'dark')}
 function applyTheme(){const auto=state.theme==='auto';const dark=auto?window.matchMedia('(prefers-color-scheme: dark)').matches:state.theme==='dark';document.documentElement.dataset.theme=dark?'dark':'light';const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=dark?'#0e0f12':'#f7f7f8';const topIcon=$('themeTopIcon');if(topIcon)topIcon.textContent=dark?'☾':'☀';const topButton=document.querySelector('.theme-top-button');if(topButton){topButton.title=dark?'Đang tối — bấm để chuyển sáng':'Đang sáng — bấm để chuyển tối';topButton.setAttribute('aria-label',dark?'Đang dùng giao diện tối, bấm để chuyển sáng':'Đang dùng giao diện sáng, bấm để chuyển tối')}const sw=$('themeSwitch');if(sw){sw.checked=dark;sw.disabled=auto}const hint=$('themeSwitchHint');if(hint)hint.textContent=auto?'Đang tự động theo thiết bị.':(dark?'Đang dùng giao diện tối.':'Đang dùng giao diện sáng.');const autoSwitch=$('themeAutoSwitch');if(autoSwitch)autoSwitch.checked=auto;const autoHint=$('themeAutoHint');if(autoHint)autoHint.textContent=auto?'Đang bật — giao diện sẽ đổi theo thiết bị.':'Tắt để tự chọn giao diện sáng hoặc tối.'}
@@ -1217,7 +1592,7 @@ function saveQuiet(){try{localStorage.setItem('miSpaceV3',JSON.stringify(state))
  function goToCurrentWalletMonth(){
   $('walletMonth').value = currentMonth();
   $('filterMonth').value = currentMonth();
-if ($('historyFilterMonth')) $('historyFilterMonth').value = currentMonth();
+if ($('historyFilterMonth')) $('historyFilterMonth').value = '';
   renderAll();
 }
 function unread(){return state.notices.filter(n=>!n.read).length}
@@ -1295,7 +1670,6 @@ function renderStats(){
 
   $('homeIncome').textContent = money(homeStats.inc);
   $('homeExpense').textContent = money(homeStats.totalExpense);
-  $('homeRent').textContent = money(homeStats.rent);
   $('homeBalance').textContent = money(closingBalance(currentMonth()));
 
   $('walletIncome').textContent = money(walletStats.inc);
@@ -1305,26 +1679,12 @@ function renderStats(){
     closingBalance(selectedMonth)
   );
 
-  $('transactionCount').textContent =
-    state.transactions.filter(t =>
-      (t.date || '').startsWith(selectedMonth)
-    ).length + ' khoản';
-
-  const r = state.rents[selectedMonth] || {};
-
-  [
-    ['rentRoom', 'room'],
-    ['rentElectric', 'electric'],
-    ['rentWater', 'water'],
-    ['rentOther', 'other']
-  ].forEach(([id, key]) => {
-    if ($(id) && document.activeElement !== $(id)) {
-      $(id).value = r[key] || '';
-    }
-  });
-
-  if ($('rentDate') && document.activeElement !== $('rentDate')) {
-    $('rentDate').value = r.date || `${selectedMonth}-01`;
+  const transactionCountEl = $('transactionCount');
+  if (transactionCountEl) {
+    transactionCountEl.textContent =
+      state.transactions.filter(t =>
+        (t.date || '').startsWith(selectedMonth)
+      ).length + ' khoản';
   }
 
   if ($('walletInitialBalance')) {
@@ -1337,12 +1697,18 @@ function renderStats(){
       state.walletBaseMonth || currentMonth();
   }
 }
- function renderDailyLedger(){
+function renderDailyLedgerTransaction(t){
+  if(t.receipt!==true)return `<div class="ledger-transaction"><strong>${t.type==='income'?'Thu':'Chi'}: ${esc(t.title||'Giao dịch')}</strong></div>`;
+  const items=Array.isArray(t.costItems)?t.costItems:[];
+  const label=`${t.type==='income'?'Thu':'Chi'}: ${esc(t.title||'Giao dịch')}`;
+  if(!items.length)return `<div class="ledger-transaction"><strong>${label}</strong></div>`;
+  const rows=items.map(item=>`<div class="ledger-receipt-line"><span>${esc(item.name||'Chi phí')}</span><strong>${money(item.amount)}</strong></div>`).join('');
+  return `<div class="ledger-transaction"><strong>${label}</strong><div class="ledger-receipt-lines">${rows}</div><div class="ledger-receipt-total"><span>Tổng cộng</span><b>${money(t.amount)}</b></div></div>`;
+}
+function renderDailyLedger(){
   const month = walletMonth();
   const [year, mon] = month.split('-').map(Number);
   const daysInMonth = new Date(year, mon, 0).getDate();
-  const rent = state.rents[month] || {};
-  const rentDate = rent.date || `${month}-01`;
 
   let balance = openingBalance(month);
   let rows = '';
@@ -1362,23 +1728,16 @@ function renderStats(){
       .filter(t => t.type === 'expense')
       .reduce((sum, t) => sum + Number(t.amount || 0), 0);
 
-    const rentExpense = date === rentDate ? rentTotal(month) : 0;
+    balance += income - expense;
 
-    balance += income - expense - rentExpense;
-
-    const details = transactions.map(t =>
-      `${t.type === 'income' ? 'Thu' : 'Chi'}: ${t.title}`
-    );
-
-    if (rentExpense > 0) details.push('Chi: Tiền trọ');
+    const details = transactions.map(renderDailyLedgerTransaction);
 
     rows += `
       <tr>
         <td>${date}</td>
-        <td>${details.length ? details.map(esc).join('<br>') : '—'}</td>
+        <td>${details.length ? details.join('') : '—'}</td>
         <td class="income">${income ? '+' + money(income) : '—'}</td>
         <td class="expense">${expense ? '−' + money(expense) : '—'}</td>
-        <td class="expense">${rentExpense ? '−' + money(rentExpense) : '—'}</td>
         <td><strong>${money(balance)}</strong></td>
       </tr>`;
   }
@@ -1389,15 +1748,62 @@ function renderNotices(){renderBadges();let list=state.noticeEnabled?state.notic
 function readNotice(id){state.notices=state.notices.map(n=>n.id===id?{...n,read:true}:n);save()}
 function markAllRead(){state.notices=state.notices.map(n=>({...n,read:true}));save();toast('Đã đọc tất cả thông báo')}
 function toggleNotices(v){state.noticeEnabled=v;save();toast(v?'Đã bật thông báo trong app':'Đã tắt thông báo trong app')}
+function transactionTrendIcon(type){
+  return type==='income'
+    ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 17 6-6 4 4 8-9"/><path d="M15 6h6v6"/></svg>'
+    : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 7 6 6 4-4 8 9"/><path d="M15 18h6v-6"/></svg>';
+}
+function formatHistoryDate(date){const parts=String(date||'').split('-');return parts.length===3?`${parts[2]}/${parts[1]}/${parts[0]}`:String(date||'')}
+function setHistoryTypeFilter(type,button){
+  const filter=$('historyFilterType');if(filter)filter.value=type;
+  document.querySelectorAll('.history-filter-tabs [data-history-type]').forEach(tab=>{const active=tab===button;tab.classList.toggle('active',active);tab.setAttribute('aria-selected',String(active))});
+  renderBankHistory();
+}
+function formatHistoryPeriod(value){if(/^\d{4}-\d{2}-\d{2}$/.test(value))return formatHistoryDate(value);if(/^\d{4}-\d{2}$/.test(value)){const [year,month]=value.split('-');return `${month}/${year}`}return String(value||'')}
+function focusHistoryDate(){const input=$('historyFilterMonth');if(!input)return;input.focus();if(input.showPicker)input.showPicker()}
+let historySeenObserver;
+let historyPendingSeenIds=new Set();
+function updateHistoryUnreadCount(){const target=$('historyUnreadCount');if(!target)return;const unread=(state.transactions||[]).filter(t=>t.seen!==true).length;target.textContent=`${unread} giao dịch mới`}
+function historyNewBadge(t){return t.seen===true?'':'<span class="history-new-badge">Mới<span class="history-badge-sweeps" aria-hidden="true"><i></i></span></span>'}
+function markPendingHistorySeen(){if(!historyPendingSeenIds.size)return;let changed=false;for(const t of state.transactions||[]){if(historyPendingSeenIds.has(String(t.id))&&t.seen!==true){t.seen=true;changed=true}}historyPendingSeenIds.clear();if(changed)saveQuiet()}
+function observeHistoryTransactions(){
+  updateHistoryUnreadCount();
+  if(historySeenObserver)historySeenObserver.disconnect();
+  if(!('IntersectionObserver' in window))return;
+  const observer=new IntersectionObserver(entries=>{
+    for(const entry of entries){
+      if(!entry.isIntersecting||entry.intersectionRatio<.45)continue;
+      const id=entry.target.dataset.transactionId;
+      const transaction=(state.transactions||[]).find(t=>String(t.id)===id);
+      if(transaction&&transaction.seen!==true)historyPendingSeenIds.add(id);
+      observer.unobserve(entry.target);
+    }
+  },{threshold:.45});
+  historySeenObserver=observer;
+  document.querySelectorAll('#bankHistoryList [data-transaction-id]').forEach(row=>observer.observe(row));
+}
+function renderTransactionReceipt(t){
+  if(t.receipt!==true)return '';
+  const items=Array.isArray(t.costItems)?t.costItems:[];
+  if(!items.length)return '';
+  const icon=transactionCostIcon('receipt');
+  const lines=items.map(item=>{
+    const color=transactionIconColors.find(option=>option[1]===item.iconColor)||transactionIconColors[0];
+    const key=item.icon||transactionIconKeyForName(item.name)||'receipt';
+    return `<div class="receipt-line"><span class="receipt-line-icon" style="color:${color[1]};background:${color[2]}">${transactionCostIcon(key)}</span><span>${esc(item.name||'Chi phí')}</span><strong>${money(item.amount)}</strong></div>`;
+  }).join('');
+  return `<article data-transaction-id="${esc(t.id)}" class="history-item history-receipt ${t.type==='income'?'income-row':'expense-row'}"><div class="history-receipt-head"><div class="history-symbol">${icon}</div><div class="history-info"><time>${formatHistoryDate(t.date)}</time><div class="history-name-line"><strong>${esc(t.title||'Giao dịch')}</strong>${historyNewBadge(t)}</div><small>${esc(t.category||'Khác')}${t.note?' · '+esc(t.note):''}</small></div><div class="history-amount ${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</div><button class="history-delete-button" type="button" title="Xóa giao dịch" aria-label="Xóa giao dịch ${esc(t.title||'Giao dịch')}" onclick="event.stopPropagation();deleteTransaction('${esc(t.id)}')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M5 7l1 13h12l1-13M9 7V4h6v3"/></svg></button></div><div class="receipt-lines">${lines}</div><div class="receipt-total"><span>Tổng cộng</span><strong>${money(t.amount)}</strong></div></article>`;
+}
 function renderBankHistory(){
   const list=$('bankHistoryList'); if(!list) return;
-  const month=$('historyFilterMonth')?.value||currentMonth();
+  const selectedDate=$('historyFilterMonth')?.value||'';
   const type=$('historyFilterType')?.value||'all';
-  const rows=(state.transactions||[]).filter(t=>(t.date||'').startsWith(month)&&(type==='all'||t.type===type)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-  const count=$('historyHeroCount'); if(count) count.textContent=rows.length+' giao dịch'; const titleCount=$('historyCount'); if(titleCount) titleCount.textContent=rows.length+' giao dịch'; const teaser=$('walletHistoryTeaserCount'); if(teaser) teaser.textContent=rows.length?`${rows.length} giao dịch trong tháng · Chạm để xem tất cả`:'Chạm để xem và quản lý giao dịch'; const hm=$('historyMonth'); if(hm) hm.textContent=month;
-  list.innerHTML=rows.length?rows.map(t=>`<article class="history-item ${t.type==='expense'?'expense-row':''}"><div class="history-symbol">${t.type==='income'?'↙':'↗'}</div><div class="history-info"><strong>${esc(t.title||'Giao dịch')}</strong><small>${esc(t.date||'')} · ${esc(t.category||'Khác')}${t.note?' · '+esc(t.note):''}</small></div><div class="history-amount ${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</div></article>`).join(''):'<div class="card sub" style="text-align:center;padding:25px">Chưa có giao dịch trong tháng này.</div>';
+  const rows=(state.transactions||[]).map((t,index)=>({t,index})).filter(({t})=>(!selectedDate||(t.date||'')===selectedDate)&&(type==='all'||t.type===type)).sort((a,b)=>(b.t.date||'').localeCompare(a.t.date||'')||b.index-a.index).map(({t})=>t);
+  const titleCount=$('historyCount'); if(titleCount) titleCount.textContent=rows.length+' giao dịch'; const teaser=$('walletHistoryTeaserCount'); if(teaser) teaser.textContent=rows.length?`${rows.length} giao dịch${selectedDate?' trong ngày':' trong lịch sử'} · Chạm để xem tất cả`:'Chạm để xem và quản lý giao dịch';
+  list.innerHTML=rows.length?rows.map(t=>renderTransactionReceipt(t)||`<article data-transaction-id="${esc(t.id)}" class="history-item history-vcb-row ${t.type==='expense'?'expense-row':'income-row'}"><span class="history-flow-icon ${t.type==='income'?'income':'expense'}" aria-hidden="true"><svg viewBox="0 0 24 24">${t.type==='income'?'<path d="M4 16 10 10l4 4 6-8"/><path d="M14 6h6v6"/>':'<path d="m4 8 6 6 4-4 6 8"/><path d="M14 18h6v-6"/>'}</svg></span><div class="history-vcb-copy"><time>${formatHistoryDate(t.date)}</time><div class="history-name-line"><strong>${esc(t.title||'Giao dịch')}</strong>${historyNewBadge(t)}</div><small>${esc(t.category||'Khác')}${t.note?' · '+esc(t.note):''}</small></div><div class="history-vcb-right"><span class="history-amount ${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</span><button class="history-delete-button" type="button" title="Xóa giao dịch" aria-label="Xóa giao dịch ${esc(t.title||'Giao dịch')}" onclick="event.stopPropagation();deleteTransaction('${esc(t.id)}')"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M5 7l1 13h12l1-13M9 7V4h6v3"/></svg></button></div></article>`).join(''):'<div class="card sub" style="text-align:center;padding:25px">Không có giao dịch phù hợp.</div>';
+  observeHistoryTransactions();
 }
-function renderTransactions(){const month=$('filterMonth').value||currentMonth(),type=$('filterType').value;let rows=state.transactions.filter(t=>(t.date||'').startsWith(month)&&(type==='all'||t.type===type)).sort((a,b)=>b.date.localeCompare(a.date));$('transactionRows').innerHTML=rows.length?rows.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.title)}</td><td>${esc(t.category||'Khác')}</td><td class="${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</td><td><button class="btn danger small" onclick="deleteTransaction('${t.id}')">Xoá</button></td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:28px">Chưa có khoản nào trong tháng này.</td></tr>'}
+function renderTransactions(){const month=$('filterMonth')?.value||currentMonth(),type=$('filterType')?.value||'all';const target=$('transactionRows');if(!target)return;let rows=(state.transactions||[]).filter(t=>(t.date||'').startsWith(month)&&(type==='all'||t.type===type)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));target.innerHTML=rows.length?rows.map(t=>`<tr><td>${esc(t.date||'')}</td><td>${esc(t.title||'')}</td><td>${esc(t.category||'Khác')}</td><td class="${t.type==='income'?'income':'expense'}">${t.type==='income'?'+':'−'}${money(t.amount)}</td><td><button class="btn danger small" onclick="deleteTransaction('${t.id}')">Xoá</button></td></tr>`).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:28px">Chưa có khoản nào trong tháng này.</td></tr>'}
 function renderClasses(){let cs=state.classes.slice().sort((a,b)=>a.date.localeCompare(b.date)||a.time.localeCompare(b.time));$('classList').innerHTML=cs.length?cs.map(c=>`<div class="notice"><div class="feedicon">📘</div><div style="flex:1"><h3>${esc(c.subject)}</h3><p>${esc(c.date)} · ${esc(c.time)} · ${esc(c.room||'Chưa có phòng')}</p>${c.note?`<p>${esc(c.note)}</p>`:''}</div><button class="btn danger small" onclick="deleteClass('${c.id}')">Xoá</button></div>`).join(''):'<div class="card sub">Chưa có lịch học. Bấm “Thêm lịch” để nhập lịch của bạn.</div>';const todays=cs.filter(c=>c.date===todayISO());$('todayClasses').innerHTML=todays.length?todays.map(c=>`<div class="feeditem"><div class="feedicon">📚</div><div><strong>${esc(c.subject)}</strong><p>${esc(c.time)} · ${esc(c.room||'Chưa có phòng')}</p></div></div>`).join(''):'<div class="feeditem"><div class="feedicon">☕</div><div><strong>Chưa có lịch học được nhập cho hôm nay</strong><p>Thêm lịch học của bạn trong mục Thời khóa biểu.</p></div></div>'}
 
 function updateTodayLabels() {
@@ -1420,10 +1826,12 @@ function updateTodayLabels() {
     }).format(now);
 }
 
-function saveWelcomeName(e){e.preventDefault();const name=$('welcomeName').value.trim();if(!name){$('welcomeName').focus();return;}state.studentName=name;saveQuiet();$('welcomeSetup').hidden=true;renderAll();toast('Chào mừng, '+name+'!');}
+function saveWelcomeName(e){e.preventDefault();const input=$('welcomeName');const name=input.value.trim();if(name.length<5){input.setCustomValidity('Tên cần có ít nhất 5 ký tự nha.');input.reportValidity();input.focus();return;}input.setCustomValidity('');state.studentName=name;saveQuiet();$('welcomeSetup').hidden=true;renderAll();toast('Chào mừng, '+name+'!');}
 function showWelcomeIfNeeded(){const setup=$('welcomeSetup');if(!setup)return;const name=String(state.studentName||'').trim();if(!name||name==='Bạn'){state.studentName='';setup.hidden=false;setTimeout(()=>$('welcomeName')?.focus(),60)}else setup.hidden=true;}
 
 function renderAll() {
+// Restore the avatar first: a separate widget throwing during render must not hide the saved photo.
+try { applyProfilePhoto(); } catch (photoErr) { console.error('Không thể khôi phục ảnh hồ sơ:', photoErr); }
 renderBadges();
 renderStats();
 renderWalletInsights();
@@ -1432,46 +1840,181 @@ renderDailyLedger();
 renderClasses();
 renderNotices();
 
-$('profileName').textContent = state.studentName || 'Người dùng';
+const profileNameEl = $('profileName');
+if (profileNameEl) profileNameEl.textContent = state.studentName || 'Người dùng';
 const homeGreeting = $('homeGreeting');
 if (homeGreeting) homeGreeting.textContent = 'Chào ' + (String(state.studentName || '').trim() || 'bạn') + ' 👋';
 applyProfilePhoto();
-$('noticeToggle').checked = state.noticeEnabled;
+const noticeToggleEl = $('noticeToggle');
+if (noticeToggleEl) noticeToggleEl.checked = !!state.noticeEnabled;
 
 updateTodayLabels();
 }
 
-function openTransaction(){ $('modalTitle').textContent='Thêm khoản thu chi';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="submitTransaction(event)"><label>Loại khoản<select class="field" id="txType"><option value="expense">Khoản chi</option><option value="income">Khoản thu</option></select></label><label>Tên khoản mục<input class="field" id="txTitle" required placeholder="Ví dụ: Ăn sáng, tiền trợ cấp"></label><label>Nhóm<select class="field" id="txCategory"><option>Ăn uống</option><option>Đi lại</option><option>Học phí</option><option>Tiền trọ</option><option>Mua sắm</option><option>Trợ cấp</option><option>Lương / làm thêm</option><option>Khác</option></select></label><label>Số tiền (₫)<input class="field" id="txAmount" type="number" min="1" required placeholder="100000"></label><label>Ngày<input class="field" id="txDate" type="date" value="${todayISO()}" required></label><label>Ghi chú<input class="field" id="txNote" placeholder="Không bắt buộc"></label><button class="btn" type="submit">Lưu khoản này</button></form>`;$('modalback').classList.add('show')}
-function submitTransaction(e){e.preventDefault();state.transactions.push({id:Date.now().toString(),type:$('txType').value,title:$('txTitle').value.trim(),category:$('txCategory').value,amount:Number($('txAmount').value),date:$('txDate').value,note:$('txNote').value});closeModal();save();toast('Đã lưu khoản thu chi')}
-function closeModal(){$('modalback').classList.remove('show')}
-function deleteTransaction(id){if(confirm('Xoá khoản thu chi này?')){state.transactions=state.transactions.filter(t=>t.id!==id);save();toast('Đã xoá khoản')}}
-function saveRent(){
-  const month = walletMonth();
-
-  state.rents[month] = {
-    room: Number($('rentRoom').value) || 0,
-    electric: Number($('rentElectric').value) || 0,
-    water: Number($('rentWater').value) || 0,
-    other: Number($('rentOther').value) || 0,
-    date: $('rentDate').value || `${month}-01`
-  };
-
-  save();
-  toast('Đã lưu chi phí trọ');
+let activeTransactionKind='other';
+let activeTransactionSource='plain';
+function openTransaction(source='plain'){
+  activeTransactionSource=source==='receipt'?'receipt':'plain';
+  activeTransactionKind='other';
+  $('modalTitle').textContent=activeTransactionSource==='receipt'?'Tạo biên lai':'Thêm khoản';
+  $('modalContent').innerHTML=`<div class="transaction-kind-grid" role="group" aria-label="Chọn loại khoản cần thêm">
+    <button class="transaction-kind-option" type="button" onclick="openTransactionEditor('rent')"><span class="transaction-kind-icon rent-kind-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M9 42V11l15-6 15 6v31M5 42h38M15 16h4v4h-4zm14 0h4v4h-4zM15 25h4v4h-4zm14 0h4v4h-4zM20 42V34h8v8"/><path d="M43 42v-8" fill="none" stroke="#3985d6" stroke-width="2.3" stroke-linecap="round"/><path d="M43 25c-1.8 0-2.8 1.3-2.7 2.7-1.5.1-2.4 1.2-2.4 2.7 0 1.6 1.1 2.8 2.6 2.9.3 1.3 1.3 2.1 2.5 2.1s2.3-.9 2.5-2.1c1.5-.2 2.5-1.3 2.5-2.8s-1-2.6-2.4-2.8c0-1.4-1-2.7-2.6-2.7Z" fill="#d9ecff" stroke="#3985d6" stroke-width="1.7" stroke-linejoin="round"/></svg></span><strong class="transaction-kind-title">Tiền nhà <span class="transaction-kind-suggestion">Gợi ý<span class="transaction-kind-sparkles" aria-hidden="true"><i>✦</i><i>✧</i><i>✦</i><i>✧</i></span></span></strong><small>Tiền phòng, điện, nước…</small></button>
+    <button class="transaction-kind-option" type="button" onclick="openTransactionEditor('other')"><span class="transaction-kind-icon other-kind-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M11 7h17l7 7v25H11zM28 7v8h7M16 21h12M16 26h9"/><circle cx="35" cy="34" r="8" fill="#f1edff"/><path d="M35 30v8m-4-4h8"/></svg></span><strong>Khoản khác</strong><small>Tự đặt tên và chọn Thu hoặc Chi</small></button>
+  </div>`;
+  $('modalback').classList.add('show');
 }
+function transactionIconKeyForName(name){return {'Tiền phòng':'room','Tiền điện':'electric','Tiền nước':'water','Phí khác':'receipt'}[name]||''}
+function transactionCostIcon(key){
+  const icons={
+    room:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10 12 3l9 7v10H3V10M9 20v-6h6v6"/></svg>',
+    electric:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 5 13h6l-1 9 9-12h-6V2Z"/></svg>',
+    water:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C9.5 7 6 10.2 6 14a6 6 0 0 0 12 0c0-3.8-3.5-7-6-11Z"/><path d="M9.5 15.5a2.7 2.7 0 0 0 2.7 2.7"/></svg>',
+    receipt:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>',
+    food:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3v7m-3-7v4a3 3 0 0 0 6 0V3m-3 7v11m9-18v18m0-18c3 2 3 6 0 8"/></svg>',
+    travel:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 17 1-6 2-4h8l2 4 1 6M5 17h14M8 17v2m8-2v2M6 13h12"/><circle cx="8" cy="15" r=".7"/><circle cx="16" cy="15" r=".7"/></svg>',
+    shopping:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1 12H5L4 8Zm4 0a4 4 0 0 1 8 0"/></svg>',
+    health:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21S4 16 4 10a4 4 0 0 1 8-1 4 4 0 0 1 8 1c0 6-8 11-8 11Z"/><path d="M9 13h6m-3-3v6"/></svg>'
+  };
+  return icons[key]||'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h10l6 7-8 8-8-8V5Z"/><circle cx="9" cy="9" r="1"/></svg>';
+}
+const transactionIconChoices=[['room','Tiền phòng'],['electric','Tiền điện'],['water','Tiền nước'],['receipt','Phí khác'],['food','Ăn uống'],['travel','Di chuyển'],['shopping','Mua sắm'],['health','Sức khỏe']];
+const transactionIconColors=[['Xanh dương','#3985d6','#e4f2ff'],['Xanh lá','#23945f','#e2f5e9'],['Tím','#785be7','#f1edff'],['Cam','#d77a27','#fff0db'],['Hồng','#cc5d86','#ffe8f0'],['Đỏ','#cf4f59','#ffeaeb'],['Vàng','#a77b16','#fff5d6'],['Xám','#657083','#edf0f4']];
+function openCostIconPicker(button){
+  const old=document.querySelector('.transaction-icon-picker');
+  if(old){const wasSame=old.dataset.forRow===String([...document.querySelectorAll('.transaction-cost-row')].indexOf(button.closest('.transaction-cost-row')));old.remove();if(wasSame)return;}
+  const row=button.closest('.transaction-cost-row');
+  const picker=document.createElement('div');picker.className='transaction-icon-picker';picker.dataset.forRow=String([...document.querySelectorAll('.transaction-cost-row')].indexOf(row));
+  picker.innerHTML=`<div class="transaction-icon-picker-head"><strong>Chọn biểu tượng</strong><button type="button" aria-label="Đóng" onclick="this.closest('.transaction-icon-picker').remove()">×</button></div><div class="transaction-icon-options">${transactionIconChoices.map(([key,label])=>`<button type="button" class="transaction-icon-choice" onclick="chooseCostIcon(this,'${key}')">${transactionCostIcon(key)}<span>${label}</span></button>`).join('')}</div><div class="transaction-color-heading">Chọn màu</div><div class="transaction-color-options">${transactionIconColors.map(([label,color,bg])=>`<button type="button" class="transaction-color-choice" aria-label="${label}" title="${label}" onclick="chooseCostIconColor(this,'${color}','${bg}')"><span style="background:${color}"></span></button>`).join('')}</div>`;
+  row.insertAdjacentElement('afterend',picker);
+}
+function chooseCostIcon(button,key){
+  const picker=button.closest('.transaction-icon-picker');
+  const rows=[...document.querySelectorAll('.transaction-cost-row')];
+  const row=rows[Number(picker.dataset.forRow)];if(!row)return;
+  const icon=row.querySelector('[data-cost-icon]');icon.dataset.iconKey=key;icon.innerHTML=transactionCostIcon(key);
+}
+function chooseCostIconColor(button,color,bg){
+  const picker=button.closest('.transaction-icon-picker');
+  const row=[...document.querySelectorAll('.transaction-cost-row')][Number(picker.dataset.forRow)];if(!row)return;
+  const icon=row.querySelector('[data-cost-icon]');icon.dataset.iconColor=color;icon.dataset.iconBg=bg;icon.style.color=color;icon.style.backgroundColor=bg;
+}
+function transactionCostRow(name=''){
+  const key=transactionIconKeyForName(name);
+  const iconColor=key?'#3985d6':'#23945f';
+  const iconBg=key?'#e4f2ff':'#e2f5e9';
+  return `<div class="transaction-cost-row"><button class="transaction-cost-icon" data-cost-icon data-icon-key="${key}" data-icon-color="${iconColor}" data-icon-bg="${iconBg}" style="color:${iconColor};background-color:${iconBg}" type="button" aria-label="Chọn biểu tượng" onclick="openCostIconPicker(this)">${transactionCostIcon(key)}</button><input class="field" data-cost-name value="${esc(name)}" placeholder="Tên chi phí" aria-label="Tên chi phí"><input class="field" data-cost-amount type="number" min="0" step="1" placeholder="Số tiền (₫)" aria-label="Số tiền" oninput="updateTransactionTotal();updateAmountSuggestions(this)"><div class="transaction-amount-suggestions" hidden></div><button class="transaction-cost-remove" type="button" aria-label="Bỏ chi phí này" onclick="removeTransactionCost(this)" title="Xóa chi phí"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10h10"/></svg></button></div>`;
+}
+function openTransactionEditor(kind,type='expense'){
+  activeTransactionKind=['rent','income','expense'].includes(kind)?kind:'other';
+  const isRent=activeTransactionKind==='rent';
+  const fixedType=activeTransactionKind==='income'||activeTransactionKind==='expense';
+  const typeLabel=activeTransactionKind==='income'?'thu':activeTransactionKind==='expense'||isRent?'chi':'thu / chi';
+  const editorClass=activeTransactionKind==='income'?'transaction-editor-income':activeTransactionKind==='expense'?'transaction-editor-expense':'';
+  $('modalTitle').textContent=isRent?'Tiền nhà':activeTransactionKind==='income'?'Thêm khoản thu':activeTransactionKind==='expense'?'Thêm khoản chi':'Khoản khác';
+  const initialCosts=isRent?['Tiền phòng','Tiền điện','Tiền nước','Phí khác']:[''];
+  const titleLabel=isRent?'':`<label>Tên khoản ${fixedType?typeLabel:''}<input class="field" id="txTitle" required maxlength="80" placeholder="${activeTransactionKind==='income'?'Ví dụ: Lương, tiền thưởng':'Ví dụ: Ăn uống, mua sắm'}"></label>`;
+  const typeField=!isRent&&!fixedType?'<label>Thu hay chi<select class="field" id="txType"><option value="expense">Chi (trừ tiền)</option><option value="income">Thu (cộng tiền)</option></select></label>':'';
+  const categoryLabel=activeTransactionKind==='income'?'Nhóm thu':activeTransactionKind==='expense'?'Nhóm chi':'Nhóm';
+  $('modalContent').innerHTML=`<div class="transaction-editor ${editorClass}"><button class="btn ghost small transaction-back" type="button" onclick="openTransaction(activeTransactionSource)">‹ Chọn loại khoản</button>
+    ${titleLabel}${typeField}<label>${categoryLabel} (không bắt buộc)<input class="field" id="txCategory" placeholder="Ví dụ: ${activeTransactionKind==='income'?'Lương, thưởng':'Ăn uống, học tập'}"></label>
+    ${fixedType?`<label>Số tiền ${typeLabel}<input class="field" id="txSingleAmount" type="number" min="1" step="1" placeholder="Số tiền (₫)" oninput="updateSingleAmountSuggestions(this)" required></label><div id="txSingleAmountSuggestions" class="transaction-amount-suggestions" hidden></div>`:`<div class="transaction-cost-heading"><strong>${isRent?'Các khoản tiền nhà':'Các chi phí của khoản này'}</strong><span>Thêm hoặc bỏ từng dòng</span></div>
+    <div id="transactionCostList">${initialCosts.map(transactionCostRow).join('')}</div>
+    <button class="btn secondary small transaction-add-cost" type="button" onclick="addTransactionCost()">＋ Thêm chi phí</button>
+    <div class="transaction-cost-total"><span>Tổng khoản ${typeLabel}</span><strong id="txTotal">0 ₫</strong></div>`}
+    <label>Ngày<input class="field" id="txDate" type="date" value="${todayISO()}" required></label>
+    <label>Ghi chú<input class="field" id="txNote" placeholder="Không bắt buộc"></label>
+    ${fixedType?'<button class="btn secondary" type="button" onclick="submitTransaction(true)">Lưu và nhập tiếp</button>':''}<button class="btn" type="button" onclick="submitTransaction()">Lưu khoản ${typeLabel}</button>
+  </div>`;
+  $('modalback').classList.add('show');
+  if(!isRent&&!fixedType)$('txType').value=type;
+}
+function addTransactionCost(){
+  const list=$('transactionCostList');if(!list)return;
+  list.insertAdjacentHTML('beforeend',transactionCostRow());
+  const inputs=list.lastElementChild.querySelectorAll('input');inputs[0].focus();
+}
+function removeTransactionCost(button){
+  const list=$('transactionCostList');if(!list)return;
+  if(list.children.length===1){list.firstElementChild.querySelectorAll('input').forEach(input=>input.value='');}
+  else button.closest('.transaction-cost-row').remove();
+  updateTransactionTotal();
+}
+function updateTransactionTotal(){
+  const total=[...document.querySelectorAll('#transactionCostList [data-cost-amount]')].reduce((sum,input)=>sum+(Number(input.value)||0),0);
+  const target=$('txTotal');if(target)target.textContent=money(total);
+}
+function updateAmountSuggestions(input){
+  const box=input.closest('.transaction-cost-row').querySelector('.transaction-amount-suggestions');
+  const base=Number(input.value);
+  if(!input.value||!Number.isFinite(base)||base<=0){box.hidden=true;box.innerHTML='';return;}
+  const values=[10,100,1000,10000].map(multiplier=>Math.round(base*multiplier)).filter(value=>Number.isSafeInteger(value)&&value>0);
+  box.innerHTML=values.map(value=>`<button type="button" onclick="setSuggestedAmount(this,${value})">${new Intl.NumberFormat('vi-VN').format(value)}</button>`).join('');
+  box.hidden=values.length===0;
+}
+function setSuggestedAmount(button,amount){
+  const input=button.closest('.transaction-cost-row').querySelector('[data-cost-amount]');
+  input.value=amount;updateTransactionTotal();updateAmountSuggestions(input);
+}
+function updateSingleAmountSuggestions(input){
+  const box=$('txSingleAmountSuggestions');if(!box)return;
+  const base=Number(input.value);
+  if(!input.value||!Number.isFinite(base)||base<=0){box.hidden=true;box.innerHTML='';return;}
+  const values=[10,100,1000,10000].map(multiplier=>Math.round(base*multiplier)).filter(value=>Number.isSafeInteger(value)&&value>0);
+  box.innerHTML=values.map(value=>`<button type="button" onclick="setSingleSuggestedAmount(${value})">${new Intl.NumberFormat('vi-VN').format(value)}</button>`).join('');
+  box.hidden=values.length===0;
+}
+function setSingleSuggestedAmount(amount){const input=$('txSingleAmount');if(!input)return;input.value=amount;updateSingleAmountSuggestions(input)}
+function submitTransaction(keepOpen=false){
+  const items=[];
+  const isRent=activeTransactionKind==='rent';
+  const fixedType=activeTransactionKind==='income'||activeTransactionKind==='expense';
+  const title=isRent?'Tiền nhà':$('txTitle').value.trim();
+  if(fixedType){
+    const amount=Number($('txSingleAmount').value);
+    if(!title){$('txTitle').focus();return;}
+    if(!Number.isFinite(amount)||amount<=0){alert('Hãy nhập số tiền lớn hơn 0.');return;}
+    items.push({name:title,amount,icon:'',iconColor:'#3985d6',iconBg:'#e4f2ff'});
+  }else{
+    const rows=[...document.querySelectorAll('#transactionCostList .transaction-cost-row')];
+    for(const row of rows){
+      const name=row.querySelector('[data-cost-name]').value.trim();
+      const raw=row.querySelector('[data-cost-amount]').value;
+      if(!name&&!raw)continue;
+      const amount=Number(raw);
+      if(!name||!raw||!Number.isFinite(amount)||amount<=0){alert('Hãy nhập đủ tên và số tiền cho từng chi phí.');return;}
+      items.push({name,amount,icon:row.querySelector('[data-cost-icon]').dataset.iconKey||'',iconColor:row.querySelector('[data-cost-icon]').dataset.iconColor||'#3985d6',iconBg:row.querySelector('[data-cost-icon]').dataset.iconBg||'#e4f2ff'});
+    }
+    if(!items.length){alert('Hãy thêm ít nhất một chi phí có số tiền lớn hơn 0.');return;}
+  }
+  const type=isRent?'expense':(activeTransactionKind==='income'||activeTransactionKind==='expense'?activeTransactionKind:$('txType').value);
+  const total=items.reduce((sum,item)=>sum+item.amount,0);
+  const note=$('txNote').value.trim();
+  state.transactions.push({id:Date.now().toString(),type,title,category:isRent?'Tiền nhà':($('txCategory').value.trim()||title),amount:total,date:$('txDate').value,note,costItems:items,receipt:activeTransactionSource==='receipt'});
+  if(keepOpen&&(activeTransactionKind==='income'||activeTransactionKind==='expense')){
+    save();
+    $('txTitle').value='';$('txCategory').value='';$('txNote').value='';$('txDate').value=todayISO();$('txSingleAmount').value='';$('txSingleAmountSuggestions').hidden=true;$('txSingleAmountSuggestions').innerHTML='';$('txTitle').focus();
+    toast('Đã lưu. Bạn có thể nhập khoản tiếp theo.');return;
+  }
+  closeModal();save();toast('Đã lưu khoản thu chi');
+}
+function closeModal(){$('modalback').classList.remove('show')}
+function deleteTransaction(id){const transaction=(state.transactions||[]).find(t=>String(t.id)===String(id));if(!transaction)return;const title=esc(transaction.title||'Giao dịch');const type=transaction.type==='income'?'income':'expense';const sign=type==='income'?'+':'−';$('modalTitle').textContent='Xóa giao dịch?';$('modalContent').innerHTML=`<div class="history-delete-confirm"><p>Bạn có muốn xóa giao dịch này không?</p><div class="history-delete-summary"><strong>${title}</strong><span class="${type}">${sign}${money(transaction.amount)}</span><small>${formatHistoryDate(transaction.date)}</small></div><div class="history-delete-actions"><button class="btn secondary" type="button" onclick="closeModal()">Hủy</button><button class="btn danger" type="button" onclick="confirmDeleteTransaction('${esc(transaction.id)}')">Xóa giao dịch</button></div></div>`;$('modalback').classList.add('show')}
+function confirmDeleteTransaction(id){state.transactions=state.transactions.filter(t=>String(t.id)!==String(id));closeModal();save();toast('Đã xoá giao dịch')}
 function addClass(){$('modalTitle').textContent='Thêm lịch học';$('modalContent').innerHTML=`<form class="formgrid" onsubmit="submitClass(event)"><label>Tên môn học<input class="field" id="cSubject" required placeholder="Ví dụ: Đại số tuyến tính"></label><label>Ngày học<input class="field" type="date" id="cDate" value="${$('classDate').value||todayISO()}" required></label><label>Thời gian<input class="field" id="cTime" required placeholder="07:00 – 09:30"></label><label>Phòng học<input class="field" id="cRoom" placeholder="Ví dụ: A2-201"></label><label>Ghi chú<input class="field" id="cNote" placeholder="Giảng viên, nhóm lớp..."></label><button class="btn" type="submit">Lưu lịch học</button></form>`;$('modalback').classList.add('show')}
 function submitClass(e){e.preventDefault();state.classes.push({id:Date.now().toString(),subject:$('cSubject').value.trim(),date:$('cDate').value,time:$('cTime').value.trim(),room:$('cRoom').value.trim(),note:$('cNote').value.trim()});closeModal();save();toast('Đã thêm lịch học')}
 function deleteClass(id){if(confirm('Xoá lịch học này?')){state.classes=state.classes.filter(c=>c.id!==id);save()}}
 function applyProfilePhoto(){
+  // The server always replaces this one file, so the same saved path survives refreshes.
   const photo=state.profilePhoto||'';
+  const photoSrc=photo.startsWith('/uploads/profile-photo.jpg') ? photo.split('?')[0]+'?v='+ (window.__profilePhotoVersion||'saved') : photo;
   const profileAvatar=$('profileAvatar');
   const walletAvatar=$('walletAvatar');
-  const initials=(state.studentName||'Bạn').trim().split(/\s+/).slice(-2).map(part=>part.charAt(0)).join('').toUpperCase();
-  if(profileAvatar)profileAvatar.innerHTML=photo?`<img src="${photo}" alt="Ảnh hồ sơ">`:esc(initials);
-  if(walletAvatar)walletAvatar.innerHTML=photo?`<img src="${photo}" alt="Ảnh hồ sơ trên thẻ ví">`:esc(initials);
+  const defaultAvatar='<svg class="default-avatar-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7" r="4.4"/><path d="M1 24c.5-6.2 4.4-10 11-10s10.5 3.8 11 10z"/></svg>';
+  if(profileAvatar){profileAvatar.classList.toggle('has-photo',!!photo);profileAvatar.innerHTML=photo?`<img src="${photoSrc}" alt="Ảnh hồ sơ">`:defaultAvatar;}
+  if(walletAvatar){walletAvatar.classList.toggle('has-photo',!!photo);walletAvatar.innerHTML=photo?`<img src="${photoSrc}" alt="Ảnh hồ sơ trên thẻ ví">`:defaultAvatar;}
   const topButton=document.querySelector('button[aria-label="Hồ sơ"]');
   if(topButton){
-    if(photo){topButton.innerHTML=`<img class="profile-mini-photo" src="${photo}" alt="Ảnh hồ sơ">`;topButton.style.overflow='hidden';topButton.style.padding='0';}
+    if(photo){topButton.innerHTML=`<img class="profile-mini-photo" src="${photoSrc}" alt="Ảnh hồ sơ">`;topButton.style.overflow='hidden';topButton.style.padding='0';}
     else {topButton.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>';topButton.style.padding='';}
   }
 }
@@ -1539,11 +2082,39 @@ function confirmProfileCrop(){
     const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;
     const ctx=canvas.getContext('2d');if(!ctx)throw new Error('canvas');
     ctx.drawImage(profileCropImage,sx,sy,sourceSize,sourceSize,0,0,size,size);
-    const photo=canvas.toDataURL('image/jpeg',.82);
-    state.profilePhoto=photo;applyProfilePhoto();
-    try{localStorage.setItem('miSpaceV3',JSON.stringify(state));}
-    catch(storageError){console.warn('Không lưu được ảnh vào bộ nhớ trình duyệt',storageError);alert('Ảnh đã được áp dụng trong phiên này nhưng bộ nhớ trình duyệt không đủ để lưu lâu dài. Bà thử ảnh nhỏ hơn nhé.');}
-    cancelProfileCrop();toast('Đã cập nhật ảnh vuông cho hồ sơ và thẻ ví');
+    canvas.toBlob(async blob=>{
+      if(!blob){alert('Không tạo được file ảnh. Bà thử lại nhé.');return;}
+      try{
+        // Save the compact JPEG as a data URL in localStorage so it survives F5
+        // even if the local upload endpoint is unavailable or its file path changes.
+        const dataUrl=await new Promise((resolve,reject)=>{
+          const reader=new FileReader();
+          reader.onload=()=>resolve(String(reader.result||''));
+          reader.onerror=()=>reject(new Error('Không đọc được ảnh đã cắt'));
+          reader.readAsDataURL(blob);
+        });
+        if(!dataUrl.startsWith('data:image/jpeg;base64,'))throw new Error('Ảnh JPEG không hợp lệ');
+        // Store the photo under its own key so unrelated app state cannot overwrite it.
+        // The compact 360px JPEG data URL is restored explicitly by load() on every refresh.
+        try {
+          localStorage.setItem('miSpaceProfilePhotoV1', dataUrl);
+        } catch(storageErr) {
+          console.error('Không lưu được ảnh hồ sơ:', storageErr);
+          throw new Error('Trình duyệt không đủ dung lượng để lưu ảnh. Hãy thử ảnh khác.');
+        }
+        state.profilePhoto=dataUrl;
+        const stateSaved=saveQuiet();
+        applyProfilePhoto();
+        // Server-side backup is optional; localStorage photo key is the durable source on refresh.
+        fetch('/upload-profile-photo',{method:'POST',headers:{'Content-Type':'image/jpeg'},body:blob})
+          .catch(err=>console.warn('Không tạo được bản sao ảnh trên máy chủ:',err));
+        cancelProfileCrop();
+        toast(stateSaved?'Đã lưu ảnh hồ sơ':'Đã lưu ảnh hồ sơ riêng; một số dữ liệu khác chưa lưu được');
+      }catch(err){
+        console.error(err);
+        alert('Chưa lưu được ảnh vào trình duyệt. Hãy thử chọn ảnh khác hoặc kiểm tra dung lượng trình duyệt.');
+      }
+    },'image/jpeg',.82);
   }catch(err){console.error(err);alert('Không cắt được ảnh này. Bà thử chọn ảnh khác nhé.');}
 }
 function editProfile(){
@@ -1551,7 +2122,7 @@ function editProfile(){
   if(!title||!content||!back){alert('Không mở được khung đổi tên. Bà tải lại trang rồi thử lại nhé.');return;}
   title.textContent='Đổi tên';
   const currentName=String(state.studentName||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  content.innerHTML=`<form class="formgrid" id="editNameForm" onsubmit="saveProfileName(event)"><label for="editName">Tên hiển thị</label><input class="field" id="editName" maxlength="50" value="${currentName}" placeholder="Nhập tên bạn muốn dùng" autocomplete="name" required><p class="muted" style="margin:0">Tên mới sẽ cập nhật trên Hồ sơ và thẻ Ví.</p><button class="btn" id="saveProfileNameButton" type="submit">Lưu tên mới</button></form>`;
+  content.innerHTML=`<form class="formgrid" id="editNameForm" onsubmit="saveProfileName(event)"><label for="editName">Tên hiển thị</label><input class="field" id="editName" minlength="5" maxlength="50" value="${currentName}" placeholder="Nhập tên bạn muốn dùng" autocomplete="name" required><p class="muted" style="margin:0">Tên cần có ít nhất 5 ký tự. Tên mới sẽ cập nhật trên Hồ sơ và thẻ Ví.</p><button class="btn" id="saveProfileNameButton" type="submit">Lưu tên mới</button></form>`;
   back.classList.add('show');
   setTimeout(()=>{const input=$('editName');input?.focus();input?.select();},50);
 }
@@ -1560,6 +2131,8 @@ function saveProfileName(e){
   const input=$('editName');
   const name=String(input?.value||'').trim();
   if(!name){input?.setCustomValidity('Bà nhập tên trước nha.');input?.reportValidity();input?.focus();return false;}
+  if(name.length<5){input?.setCustomValidity('Tên cần có ít nhất 5 ký tự nha.');input?.reportValidity();input?.focus();return false;}
+  input?.setCustomValidity('');
   if(name.length>50){alert('Tên tối đa 50 ký tự nha.');input?.focus();return false;}
   const oldName=state.studentName;
   state.studentName=name;
@@ -1568,7 +2141,7 @@ function saveProfileName(e){
     alert('Trình duyệt đang chặn lưu dữ liệu nên chưa đổi tên được. Bà thử mở web bằng trình duyệt bình thường, không ở chế độ riêng tư, rồi thử lại nhé.');
     return false;
   }
-  try{renderAll();}catch(err){console.error('Lỗi cập nhật tên trên giao diện:',err);const profileName=$('profileName');if(profileName)profileName.textContent=name;const walletUserName=$('walletUserName');if(walletUserName)walletUserName.textContent=name;const walletAvatar=$('walletAvatar');if(walletAvatar)walletAvatar.textContent=name.trim().slice(-1).toUpperCase();}
+  try{renderAll();}catch(err){console.error('Lỗi cập nhật tên trên giao diện:',err);const profileName=$('profileName');if(profileName)profileName.textContent=name;const walletUserName=$('walletUserName');if(walletUserName)walletUserName.textContent=name;try{applyProfilePhoto();}catch(photoErr){console.error('Lỗi cập nhật ảnh đại diện:',photoErr);}}
   closeModal();
   toast('Đã đổi tên thành '+name);
   return false;
@@ -1818,7 +2391,7 @@ function toggleWalletBalance() {
     walletDisplay.setAttribute('aria-label', walletBalanceHidden ? 'Số dư đang được ẩn' : `Số dư ${balanceNumber} VND`);
   }
   const historyBalance = $('historyBalance');
-  if (historyBalance) historyBalance.innerHTML = balanceMarkup;
+  if (historyBalance) historyBalance.innerHTML = `${balanceNumber}<sup>VND</sup>`;
 
   const eyeOpen = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/></svg>';
   const eyeClosed = '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3 3L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.5.9-3.8 6-9 6-1 0-1.9-.2-2.7-.5M6.2 6.3C3.9 7.8 2.2 10.4 2 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -1829,33 +2402,11 @@ function toggleWalletBalance() {
     walletEye.setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư');
     walletEye.setAttribute('aria-pressed', String(!walletBalanceHidden));
   }
-  const historyEye = $('historyEye');
-  if (historyEye) {
-    historyEye.innerHTML = iconMarkup;
-    historyEye.setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư');
-  }
 }
 
 function openWalletTransaction(type) {
-  openTransaction();
-
-  const typeInput = $('txType');
-  if (typeInput) typeInput.value = type;
-}
-
-function openWalletTransfer() {
-  const destination = prompt('Tên ví nhận (mô phỏng):');
-  if (destination === null || !destination.trim()) return;
-
-  const amount = Number(prompt('Số tiền muốn chuyển (₫):'));
-  if (!Number.isFinite(amount) || amount <= 0) {
-    alert('Số tiền chưa hợp lệ.');
-    return;
-  }
-
-  // Chuyển nội bộ chỉ mô phỏng, không thay đổi số dư.
-  toast('Đã mô phỏng chuyển ' + money(amount) +
-    ' tới ' + destination.trim());
+  activeTransactionSource='plain';
+  openTransactionEditor(type);
 }
 
 function openWalletSavings() {
@@ -1900,6 +2451,63 @@ function saveWalletBudget() {
   toast('Đã lưu ngân sách tháng');
 }
 
+let walletMonthlyChartType = 'bar';
+function setWalletMonthlyChartType(type){
+  if(!['bar','pie','line'].includes(type))return;
+  walletMonthlyChartType=type;
+  document.querySelectorAll('#page-wallet .wallet-chart-switch button').forEach(button=>{
+    const active=button.getAttribute('onclick').includes("'"+type+"'");
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+  const month=walletMonth();
+  renderWalletMonthlyChart(month,monthTotals(month));
+}
+function renderWalletMonthlyChart(month,totals){
+  const chart=$('walletMonthlyChart');
+  const items=[
+    {label:'Thu',value:totals.inc,color:'#1d9e65'},
+    {label:'Chi',value:totals.exp,color:'#ff7182'}
+  ];
+  if(walletMonthlyChartType==='bar'){
+    const maxValue=Math.max(...items.map(item=>item.value),1);
+    chart.className='wallet-chart wallet-chart-bars';
+    const signedNet=(totals.net>=0?'+':'−')+money(Math.abs(totals.net));
+    chart.innerHTML=`<div class="wallet-chart-total"><div><span>Chênh lệch tháng này</span><strong>${esc(signedNet)}</strong><small>${totals.net>=0?'Thu đang cao hơn chi':'Chi đang cao hơn thu'}</small></div><span aria-hidden="true" style="font-size:24px">${totals.net>=0?'↗':'↘'}</span></div>`+items.map(item=>`
+      <div class="wallet-chart-row">
+        <div class="wallet-chart-row-head"><span class="wallet-chart-label" style="--chart-color:${item.color}"><i></i>${item.label}</span><span class="wallet-chart-value">${esc(money(item.value))}<small>${totals.inc+totals.totalExpense?Math.round(item.value/(totals.inc+totals.totalExpense)*100):0}%</small></span></div>
+        <div class="wallet-chart-track"><div class="wallet-chart-fill ${item.label==='Thu'?'':'expense-fill'}" style="width:${Math.min(100,item.value/maxValue*100)}%"></div></div>
+      </div>
+    `).join('');
+    return;
+  }
+  if(walletMonthlyChartType==='pie'){
+    const sum=items.reduce((total,item)=>total+item.value,0);
+    let angle=0;
+    const gradient=sum>0?items.map(item=>{const start=angle;angle+=item.value/sum*360;return `${item.color} ${start}deg ${angle}deg`;}).join(', '):'var(--surface2) 0deg 360deg';
+    chart.className='';
+    chart.innerHTML=`<div class="wallet-pie-layout"><div class="wallet-pie" role="img" aria-label="Biểu đồ tròn thu và chi" style="background:conic-gradient(${gradient})"><div class="wallet-pie-hole"><small>Tổng thu chi</small><strong>${esc(money(sum))}</strong></div></div><div class="wallet-pie-legend">${items.map(item=>`<div class="wallet-pie-item" style="--pie-color:${item.color}"><i></i><span>${item.label}</span><small>${esc(money(item.value))} · ${sum?Math.round(item.value/sum*100):0}%</small></div>`).join('')}</div></div>${sum?'':'<p class="sub">Chưa có khoản thu chi trong tháng này.</p>'}`;
+    return;
+  }
+  const [year,monthNumber]=month.split('-').map(Number);
+  const days=new Date(year,monthNumber,0).getDate();
+  const income=Array(days).fill(0),expense=Array(days).fill(0);
+  state.transactions.filter(t=>(t.date||'').startsWith(month)).forEach(t=>{
+    const day=Number((t.date||'').slice(8,10));
+    if(day<1||day>days)return;
+    if(t.type==='income')income[day-1]+=Number(t.amount)||0;
+    else expense[day-1]+=Number(t.amount)||0;
+  });
+  const maxValue=Math.max(...income,...expense,1);
+  const left=34,right=350,top=16,bottom=166;
+  const xAt=i=>days===1?(left+right)/2:left+i*(right-left)/(days-1);
+  const yAt=value=>bottom-(value/maxValue)*(bottom-top);
+  const points=values=>values.map((value,i)=>`${xAt(i).toFixed(1)},${yAt(value).toFixed(1)}`).join(' ');
+  const dots=(values,cls,label)=>values.map((value,i)=>value>0?`<circle class="${cls}" cx="${xAt(i).toFixed(1)}" cy="${yAt(value).toFixed(1)}" r="3"><title>Ngày ${i+1} · ${label}: ${esc(money(value))}</title></circle>`:'').join('');
+  const labels=[...new Set([1,Math.ceil(days/2),days])];
+  chart.className='';
+  chart.innerHTML=`<div class="wallet-line-wrap"><svg class="wallet-line-chart" viewBox="0 0 370 195" role="img" aria-label="Biểu đồ đường thu và chi theo ngày trong tháng ${esc(month)}"><line class="wallet-line-grid" x1="${left}" y1="${top}" x2="${right}" y2="${top}"/><line class="wallet-line-grid" x1="${left}" y1="${(top+bottom)/2}" x2="${right}" y2="${(top+bottom)/2}"/><line class="wallet-line-grid" x1="${left}" y1="${bottom}" x2="${right}" y2="${bottom}"/><polygon class="wallet-line-area-income" points="${right},${bottom} ${points(income)} ${left},${bottom}"/><polygon class="wallet-line-area-expense" points="${right},${bottom} ${points(expense)} ${left},${bottom}"/><polyline class="wallet-line-income" points="${points(income)}"/><polyline class="wallet-line-expense" points="${points(expense)}"/>${dots(income,'wallet-line-dot-income','Thu')}${dots(expense,'wallet-line-dot-expense','Chi')}${labels.map(day=>`<text class="wallet-line-label" x="${xAt(day-1)}" y="187" text-anchor="middle">${day}</text>`).join('')}</svg><div class="wallet-line-legend"><span><i></i>Thu · cộng tiền</span><span><i></i>Chi · trừ tiền</span></div></div>`;
+}
 function renderWalletInsights() {
   const month = walletMonth();
   const totals = monthTotals(month);
@@ -1908,8 +2516,6 @@ function renderWalletInsights() {
 
   // Thẻ tài khoản
   $('walletUserName').textContent = state.studentName || 'Bạn';
-  $('walletAvatar').textContent =
-    (state.studentName || 'V').trim().slice(-1).toUpperCase();
   $('walletAccountMonth').textContent = monthLabel;
 
   const balanceNumber = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 0 }).format(Number(balance) || 0);
@@ -1917,9 +2523,7 @@ function renderWalletInsights() {
     ? '••••••••'
     : `${balanceNumber}<sup>VND</sup>`;
   const historyBalance = $('historyBalance');
-  if (historyBalance) historyBalance.innerHTML = walletBalanceHidden ? '••••••••' : `${balanceNumber}<sup>VND</sup>`;
-  const historyEye = $('historyEye');
-  if (historyEye) { historyEye.setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư'); historyEye.innerHTML = walletBalanceHidden ? '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3 21 21" stroke-linecap="round"/><path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c5.2 0 8.5 5.1 9 6-.5.9-3.8 6-9 6-1 0-1.9-.2-2.7-.5M6.2 6.3C3.9 7.8 2.2 10.4 2 11" stroke-linecap="round" stroke-linejoin="round"/></svg>' : '<svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>'; }
+  if (historyBalance) historyBalance.innerHTML = `${balanceNumber}<sup>VND</sup>`;
   const historyMonth = $('historyMonth'); if (historyMonth) historyMonth.textContent = 'Tháng ' + monthLabel;
   renderBankHistory();
 
@@ -1929,28 +2533,8 @@ function renderWalletInsights() {
   $('walletEye').setAttribute('aria-label', walletBalanceHidden ? 'Hiện số dư' : 'Ẩn số dư');
   $('walletEye').setAttribute('aria-pressed', String(!walletBalanceHidden));
 
-  // Biểu đồ thu, chi và tiền trọ trong tháng
-  const maxValue = Math.max(
-    totals.inc, totals.exp, totals.rent, 1
-  );
-
-  const chartItems = [
-    { label: 'Thu', value: totals.inc, cls: '' },
-    { label: 'Chi', value: totals.exp, cls: 'expense-fill' },
-    { label: 'Tiền trọ', value: totals.rent, cls: 'expense-fill' }
-  ];
-
-  $('walletMonthlyChart').innerHTML = chartItems.map(item => `
-    <div class="wallet-chart-row">
-      <span>${item.label}</span>
-      <div class="wallet-chart-track">
-        <div class="wallet-chart-fill ${item.cls}"
-          style="width:${Math.min(100, item.value / maxValue * 100)}%">
-        </div>
-      </div>
-      <strong>${esc(money(item.value))}</strong>
-    </div>
-  `).join('');
+  // Vẽ kiểu biểu đồ đang chọn, mặc định là biểu đồ thanh.
+  renderWalletMonthlyChart(month,totals);
 
   // Tổng chi theo danh mục, gồm cả tiền trọ
   const categories = {};
@@ -1966,17 +2550,11 @@ function renderWalletInsights() {
         Number(t.amount || 0);
     });
 
-  if (totals.rent > 0) {
-    categories['Chi phí ở trọ'] =
-      (categories['Chi phí ở trọ'] || 0) + totals.rent;
-  }
-
   const icons = {
     'Ăn uống': '🍜',
     'Đi lại': '🚌',
     'Học phí': '📚',
-    'Tiền trọ': '🏠',
-    'Chi phí ở trọ': '🏠',
+    'Tiền nhà': '🏢',
     'Mua sắm': '🛍️',
     'Giải trí': '🎧',
     'Khác': '📦'
@@ -1985,23 +2563,21 @@ function renderWalletInsights() {
   const categoryItems = Object.entries(categories)
     .sort((a, b) => b[1] - a[1]);
 
+  const categoryColors=['#1d9e65','#ef8c45','#6d7ee8','#c16db1','#38a5b0','#d4a42d'];
   $('walletCategoryChart').innerHTML = categoryItems.length
-    ? categoryItems.map(([name, amount]) => `
-      <div class="wallet-category-row">
-        <div class="wallet-category-icon">
-          ${icons[name] || '💳'}
-        </div>
+    ? `<div class="wallet-category-summary"><div><span>Tổng chi trong tháng</span><strong>${esc(money(totals.totalExpense))}</strong></div><small>${categoryItems.length} nhóm chi tiêu</small></div>`+categoryItems.map(([name, amount],index) => {
+      const share=totals.totalExpense?Math.round(amount/totals.totalExpense*100):0;
+      return `
+      <div class="wallet-category-row" style="--category-color:${categoryColors[index%categoryColors.length]}">
+        <div class="wallet-category-icon">${icons[name] || '💳'}</div>
         <div class="wallet-category-info">
           <strong>${esc(name)}</strong>
-          <small>${totals.totalExpense
-            ? Math.round(amount / totals.totalExpense * 100)
-            : 0}% tổng chi</small>
+          <div class="wallet-category-track"><i style="width:${share}%"></i></div>
+          <small>${share}% tổng chi</small>
         </div>
-        <div class="wallet-category-amount">
-          ${esc(money(amount))}
-        </div>
+        <div class="wallet-category-amount">${esc(money(amount))}</div>
       </div>
-    `).join('')
+    `}).join('')
     : '<p class="sub">Chưa có khoản chi trong tháng này.</p>';
 
   // Ngân sách tháng
@@ -2039,31 +2615,37 @@ function download(content,name,type){const blob=new Blob(['\ufeff',content],{typ
 function resetDemo(){if(confirm('Đặt lại dữ liệu về trạng thái ban đầu? Việc này sẽ xoá các khoản và lịch bạn đã nhập.')){state.transactions=[];state.rents={};state.classes=[];state.notices=defaultNotices.map(n=>({...n}));save();toast('Đã đặt lại dữ liệu')}}
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 let toastTimer;function toast(msg){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.style.display='none',2200)}
-$('filterMonth').value = currentMonth();
-$('walletMonth').value = currentMonth();
-$('classDate').value = todayISO();
+if ($('filterMonth')) $('filterMonth').value = currentMonth();
+if ($('walletMonth')) $('walletMonth').value = currentMonth();
+if ($('classDate')) $('classDate').value = todayISO();
 
-$('filterMonth').addEventListener('change', renderTransactions);
+if ($('filterMonth')) $('filterMonth').addEventListener('change', renderTransactions);
 if ($('historyFilterMonth')) $('historyFilterMonth').addEventListener('change', renderBankHistory);
 if ($('historyFilterType')) $('historyFilterType').addEventListener('change', renderBankHistory);
-$('filterType').addEventListener('change', renderTransactions);
+if ($('filterType')) $('filterType').addEventListener('change', renderTransactions);
 
-$('walletMonth').addEventListener('change', () => {
-$('filterMonth').value = walletMonth();
-renderAll();
+if ($('walletMonth')) $('walletMonth').addEventListener('change', () => {
+  if ($('filterMonth')) $('filterMonth').value = walletMonth();
+  renderAll();
 });
 
 load();
+migrateLegacyRentTransactions();
+// Apply the dedicated persisted photo immediately after loading Local Storage,
+// before other startup UI code can throw and interrupt rendering.
+try { applyProfilePhoto(); } catch (photoErr) { console.error('Không thể khôi phục ảnh hồ sơ khi khởi động:', photoErr); }
 if(!state.theme)state.theme='light';
 /* 'auto' was the old default and could make a fresh install appear inconsistent; keep explicit light/dark choices. */
 if(state.theme==='auto')state.theme='light';
 if(state.studentName==='Hoàng Anh Tấn Vũ')state.studentName='';
 applyTheme();
 
-$('filterMonth').value = currentMonth();
-$('walletMonth').value = currentMonth();
+if ($('filterMonth')) $('filterMonth').value = currentMonth();
+if ($('walletMonth')) $('walletMonth').value = currentMonth();
 
 renderAll();
+// Profile photo is stored as a JPEG data URL in localStorage, so reapply it on every refresh.
+applyProfilePhoto();
 showWelcomeIfNeeded();
 
 
@@ -2094,17 +2676,132 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', (
  if(!card||!panel||!basic||!patterns)return;
  /* Đưa bảng tùy chỉnh ra khỏi thẻ ví để không bị overflow/transform của thẻ cắt hoặc làm lệch modal. */
  document.body.appendChild(panel);
- window.toggleWalletCustomize=function(){const trigger=document.querySelector('#page-wallet .wallet-customize-trigger');const opening=panel.hidden;panel.hidden=!opening;document.body.classList.toggle('wallet-customize-open',opening);if(trigger)trigger.setAttribute('aria-expanded',String(opening));if(opening){showWalletCustomize('all');const first=panel.querySelector('.wallet-customize-tab');if(first)setTimeout(()=>first.focus(),0);}};
- window.showWalletCustomize=function(which){const showAll=which==='all';const isBasic=which==='basic';const basicTitle=document.getElementById('walletBasicTitle');const patternTitle=document.getElementById('walletPatternTitle');basic.hidden=!(showAll||isBasic);patterns.hidden=!(showAll||!isBasic);if(basicTitle)basicTitle.hidden=!(showAll||isBasic);if(patternTitle)patternTitle.hidden=!(showAll||!isBasic);panel.querySelectorAll('.wallet-customize-tab').forEach((b)=>{const active=(which==='all'&&b.textContent.trim()==='Tất cả')||(which==='basic'&&b.textContent.trim()==='Cơ bản')||(which==='patterns'&&b.textContent.trim()==='Họa tiết');b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});};
+ function syncWalletFramePreviewNames(){const source=document.getElementById('walletUserName');const name=source?.textContent?.trim()||'Tên của bạn';const frame=source?.closest('.wallet-name-frame');const sourceStyle=source?getComputedStyle(source):null;const baseTextColor=frame?getComputedStyle(frame).color:'#fff';const vineArt=frame?.querySelector('.wallet-name-vine-art');panel.querySelectorAll('[data-frame-preview-name]').forEach(el=>{el.textContent=name;if(sourceStyle){el.style.fontFamily=sourceStyle.fontFamily;el.style.fontSize=sourceStyle.fontSize;el.style.fontWeight=sourceStyle.fontWeight;el.style.lineHeight=sourceStyle.lineHeight;el.style.letterSpacing=sourceStyle.letterSpacing;el.style.textTransform=sourceStyle.textTransform;el.style.fontStyle=sourceStyle.fontStyle;}el.style.color=el.closest('[data-vine-frame-preview]')?'#17432a':baseTextColor;});if(vineArt)panel.querySelectorAll('[data-vine-frame-preview]').forEach(slot=>{if(!slot.querySelector('svg.wallet-name-vine-art'))slot.appendChild(vineArt.cloneNode(true));});}
+ window.toggleWalletCustomize=function(){const trigger=document.querySelector('#page-wallet .wallet-customize-trigger');const opening=panel.hidden;panel.hidden=!opening;document.body.classList.toggle('wallet-customize-open',opening);if(trigger)trigger.setAttribute('aria-expanded',String(opening));if(opening){syncWalletFramePreviewNames();showWalletCustomizeSection('card');showWalletCustomize('all');const first=panel.querySelector('.wallet-customize-tab');if(first)setTimeout(()=>first.focus(),0);}};
+ window.showWalletCustomizeSection=function(which){const isName=which==='name';document.getElementById('walletCardDesignSection').hidden=isName;document.getElementById('walletNameFrameSection').hidden=!isName;panel.querySelectorAll('.wallet-customize-main-tabs .wallet-customize-tab').forEach(b=>{const active=(isName&&b.textContent.trim()==='Trang trí khung tên')||(!isName&&b.textContent.trim()==='Trang trí giao diện thẻ');b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});if(isName)showWalletNameFrameCategory('all');};
+ window.showWalletCustomize=function(which){const showAll=which==='all';const isBasic=which==='basic';const basicTitle=document.getElementById('walletBasicTitle');const patternTitle=document.getElementById('walletPatternTitle');basic.hidden=!(showAll||isBasic);patterns.hidden=!(showAll||!isBasic);if(basicTitle)basicTitle.hidden=!(showAll||isBasic);if(patternTitle)patternTitle.hidden=!(showAll||!isBasic);panel.querySelectorAll('.wallet-design-tabs .wallet-customize-tab').forEach((b)=>{const active=(which==='all'&&b.textContent.trim()==='Tất cả')||(which==='basic'&&b.textContent.trim()==='Cơ bản')||(which==='patterns'&&b.textContent.trim()==='Họa tiết');b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});};
+ window.showWalletNameFrameCategory=function(which){const showAll=which==='all';const effects=which==='effects';document.getElementById('walletFrameBasicOptions').hidden=effects;document.getElementById('walletFrameEffectsOptions').hidden=!effects&&!showAll;panel.querySelectorAll('.wallet-name-frame-tabs .wallet-customize-tab').forEach(b=>{const label=b.textContent.trim();const active=(showAll&&label==='Tất cả')||(effects&&label==='Hiệu ứng')||(!showAll&&!effects&&label==='Cơ bản');b.classList.toggle('active',active);b.setAttribute('aria-selected',String(active));});};
  function clearThemes(){card.classList.remove('wallet-color-blue','wallet-color-green','wallet-color-purple','wallet-color-rose','wallet-color-graphite','wallet-color-gold','wallet-skin-sakura','wallet-skin-beach','wallet-skin-aurora','wallet-skin-lavender','wallet-skin-sunset','wallet-skin-forest','wallet-skin-christmas');}
- window.setWalletCardColor=function(color){clearThemes();card.classList.add('wallet-color-'+color);panel.querySelectorAll('.wallet-color-swatch').forEach(b=>b.classList.toggle('active',b.dataset.walletColor===color));panel.querySelectorAll('.wallet-skin-option').forEach(b=>b.classList.remove('active'));try{localStorage.setItem('vspaceWalletCardColor',color);localStorage.removeItem('vspace-wallet-skin')}catch(e){}};
- window.setWalletSkin=function(skin){clearThemes();card.classList.add('wallet-skin-'+skin);panel.querySelectorAll('.wallet-skin-option').forEach(b=>b.classList.toggle('active',b.dataset.skin===skin));panel.querySelectorAll('.wallet-color-swatch').forEach(b=>b.classList.remove('active'));try{localStorage.setItem('vspace-wallet-skin',skin);localStorage.removeItem('vspaceWalletCardColor')}catch(e){}};
+ window.setWalletCardColor=function(color){clearThemes();card.classList.add('wallet-color-'+color);panel.querySelectorAll('#walletBasicOptions .wallet-color-swatch[data-wallet-color]').forEach(b=>b.classList.toggle('active',b.dataset.walletColor===color));panel.querySelectorAll('#walletPatternOptions .wallet-skin-option').forEach(b=>b.classList.remove('active'));try{localStorage.setItem('vspaceWalletCardColor',color);localStorage.removeItem('vspace-wallet-skin')}catch(e){}};
+ window.setWalletSkin=function(skin){clearThemes();card.classList.add('wallet-skin-'+skin);panel.querySelectorAll('#walletPatternOptions .wallet-skin-option').forEach(b=>b.classList.toggle('active',b.dataset.skin===skin));panel.querySelectorAll('#walletBasicOptions .wallet-color-swatch[data-wallet-color]').forEach(b=>b.classList.remove('active'));try{localStorage.setItem('vspace-wallet-skin',skin);localStorage.removeItem('vspaceWalletCardColor')}catch(e){}};
+ let walletWindLeavesStarted=false;
+ function startWalletWindLeaves(){if(walletWindLeavesStarted)return;document.querySelectorAll('#page-wallet .wallet-wind-leaves animateMotion,#page-wallet .wallet-wind-leaves animate[attributeName="opacity"]').forEach(animation=>{try{animation.beginElement()}catch(e){}});walletWindLeavesStarted=true}
+ window.setWalletNameFrameStyle=function(style){const frame=document.querySelector('#page-wallet .wallet-name-frame');if(!frame||!['green','blue','purple','gold','vine'].includes(style))return;frame.classList.remove('wallet-name-frame-green','wallet-name-frame-blue','wallet-name-frame-purple','wallet-name-frame-gold','wallet-name-frame-vine');frame.classList.remove('wallet-name-wind');frame.classList.add('wallet-name-frame-'+style);if(style==='vine'){frame.classList.add('wallet-name-wind');startWalletWindLeaves()}panel.querySelectorAll('.wallet-frame-swatch[data-frame-style]').forEach(b=>b.classList.toggle('active',b.dataset.frameStyle===style));try{localStorage.setItem('vspace-wallet-name-frame-style',style);localStorage.removeItem('vspace-wallet-name-wind')}catch(e){}};
+ try{const frameStyle=localStorage.getItem('vspace-wallet-name-frame-style');if(frameStyle&&['green','blue','purple','gold','vine'].includes(frameStyle))setWalletNameFrameStyle(frameStyle);else setWalletNameFrameStyle('green')}catch(e){setWalletNameFrameStyle('green')}
  panel.addEventListener('click',function(e){if(e.target===panel)window.toggleWalletCustomize();});
  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)window.toggleWalletCustomize();});
  try{const skin=localStorage.getItem('vspace-wallet-skin');const color=localStorage.getItem('vspaceWalletCardColor');if(skin&&['sakura','beach','aurora','lavender','sunset','forest','christmas'].includes(skin))setWalletSkin(skin);else setWalletCardColor(color&&['blue','green','purple','rose','graphite','gold'].includes(color)?color:'blue')}catch(e){setWalletCardColor('blue')}
 })();
 </script>
 
+<style id="wallet-name-frame-customization">
+#page-wallet .wallet-name-frame.wallet-name-frame-blue{background:radial-gradient(ellipse at 52% 48%,rgba(40,120,199,.96),rgba(112,180,232,.94) 48%,rgba(217,239,255,.98));box-shadow:0 4px 11px rgba(25,76,133,.24),inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 7px rgba(35,96,165,.27),inset 2px 0 5px rgba(255,255,255,.32)}
+#page-wallet .wallet-name-frame.wallet-name-frame-purple{background:radial-gradient(ellipse at 52% 48%,rgba(130,80,184,.96),rgba(178,135,218,.94) 48%,rgba(240,221,255,.98));box-shadow:0 4px 11px rgba(82,46,126,.24),inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 7px rgba(95,53,143,.27),inset 2px 0 5px rgba(255,255,255,.32)}
+#page-wallet .wallet-name-frame.wallet-name-frame-gold{background:radial-gradient(ellipse at 52% 48%,rgba(168,117,25,.96),rgba(215,174,81,.94) 48%,rgba(255,240,189,.98));box-shadow:0 4px 11px rgba(103,70,13,.24),inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 7px rgba(137,92,17,.27),inset 2px 0 5px rgba(255,255,255,.32)}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine{background:radial-gradient(ellipse at 52% 48%,#e3f8e6 0%,#bce8c5 58%,#7fbd8d 100%);box-shadow:0 4px 11px rgba(16,83,43,.2),inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 7px rgba(18,91,47,.2),inset 2px 0 5px rgba(255,255,255,.32)}
+#page-wallet .wallet-name-frame .wallet-name-vine-art{position:absolute;inset:1px;width:calc(100% - 2px);height:calc(100% - 2px);z-index:1;opacity:0;pointer-events:none;overflow:visible}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine{overflow:visible}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine .wallet-name-vine-art{inset:-8px -5px -3px;width:calc(100% + 10px);height:calc(100% + 11px)}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine .wallet-name-vine-art{opacity:1}
+#page-wallet .wallet-name-vine-art .name-vine-stem{fill:none;stroke:#1d7140;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#page-wallet .wallet-name-vine-art .name-vine-leaves{fill:#4c9654;stroke:#347d47;stroke-width:.8;stroke-linejoin:round}
+#page-wallet .wallet-name-vine-art .leaf-tone-dark{fill:#347d47}
+#page-wallet .wallet-name-vine-art .leaf-tone-mid{fill:#4c9654}
+#page-wallet .wallet-name-vine-art .leaf-tone-light{fill:#72b36b}
+#page-wallet .wallet-name-vine-art .name-vine-veins{fill:none;stroke:#b9e1ae;stroke-width:.85;stroke-linecap:round}
+#page-wallet .wallet-name-vine-art .name-vine-light-path{fill:none;stroke:#caffb6;stroke-width:0.45;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:8 900;stroke-dashoffset:0;opacity:0;filter:drop-shadow(0 0 3px #62d985);animation:walletVineStemGlide 5.2s linear infinite;pointer-events:none}
+#page-wallet .wallet-name-vine-art .name-vine-light-spark{fill:none;stroke:#efffe8;stroke-width:0.45;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:10 900;stroke-dashoffset:0;opacity:0;filter:drop-shadow(0 0 3px #8df5a9);animation:walletVineSparkSplit 5.2s linear infinite;pointer-events:none}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine .falling-leaf-motion{transform-box:fill-box;transform-origin:center}
+#page-wallet .wallet-name-vine-art .fall-leaf-shape{fill:#4c9654;stroke:#347d47;stroke-width:.8;stroke-linejoin:round}
+#page-wallet .wallet-name-vine-art .fall-leaf-vein{fill:none;stroke:#c5e9b6;stroke-width:.8;stroke-linecap:round}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine .sway-leaf-motion{transform-box:fill-box;transform-origin:center}
+#page-wallet .wallet-name-vine-art .sway-leaf-shape{fill:#4c9654;stroke:#347d47;stroke-width:.75;stroke-linejoin:round}
+#page-wallet .wallet-name-vine-art .sway-leaf-vein{fill:none;stroke:#c5e9b6;stroke-width:.7;stroke-linecap:round}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine::after{display:none}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine strong{z-index:2;color:#17432a}
+#page-wallet .wallet-name-frame.wallet-name-frame-vine~.wallet-member{position:relative;z-index:2}
+@keyframes walletNameWind{0%,48%,58%,100%{transform:rotate(-2deg) translateX(0)}60%{transform:rotate(-3.2deg) translateX(-1px)}64%{transform:rotate(-4deg) translateX(-1.5px)}69%{transform:rotate(-.3deg) translateX(1.5px)}73%{transform:rotate(-3.5deg) translateX(-1.2px)}77%{transform:rotate(-1.2deg) translateX(.8px)}79%{transform:rotate(-1.7deg) translateX(.4px)}}
+#page-wallet .wallet-name-frame.wallet-name-wind{transform-origin:left center;animation:walletNameWind 5.8s ease-in-out infinite}
+#page-wallet .wallet-name-frame.wallet-name-wind::after{animation:none;opacity:0}
+#page-wallet .wallet-name-frame .wallet-wind-leaves{position:absolute;inset:0;width:100%;height:100%;z-index:1;overflow:hidden;opacity:0;pointer-events:none}
+#page-wallet .wallet-name-frame.wallet-name-wind .wallet-wind-leaves{opacity:1}
+#page-wallet .wallet-name-frame .wallet-wind-leaf{fill:#579e5b;stroke:#347d47;stroke-width:.8;stroke-linejoin:round}
+#page-wallet .wallet-name-frame .wallet-wind-leaf-vein{fill:none;stroke:#c5e9b6;stroke-width:.75;stroke-linecap:round}
+#walletCustomizePanel .wallet-name-wind-option i{display:grid;place-items:center;color:#147c4b;background:linear-gradient(145deg,#ddf7e5,#a9dfbb)}
+#walletCustomizePanel .wallet-name-wind-option svg{width:29px;height:25px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+@keyframes walletVineStemGlide{0%,8%{stroke-dasharray:8 900;stroke-dashoffset:0;opacity:0}14%{stroke-dasharray:18 900;stroke-dashoffset:-18;opacity:.92}42%{stroke-dasharray:36 900;stroke-dashoffset:-105;opacity:1}45%{stroke-dasharray:36 900;stroke-dashoffset:-105;opacity:1}78%{stroke-dasharray:72 900;stroke-dashoffset:-650;opacity:.92}90%,100%{stroke-dasharray:105 900;stroke-dashoffset:-900;opacity:0}}
+@keyframes walletVineSparkSplit{0%,41%{stroke-dashoffset:0;opacity:0}42%{stroke-dashoffset:-105;opacity:0}43.5%{stroke-dashoffset:-112;opacity:1}46%{stroke-dashoffset:-155;opacity:.8}49%{stroke-dashoffset:-205;opacity:0}100%{stroke-dashoffset:-900;opacity:0}}
+#walletCustomizePanel .wallet-customize-main-tabs{margin-bottom:12px}
+#walletCustomizePanel .wallet-frame-swatch.active{border-color:#d8ff9b;background:#ffffff18}
+#walletCustomizePanel .wallet-color-swatch i.wallet-frame-preview{height:42px!important;display:grid!important;place-items:center;overflow:hidden;border:0;border-radius:0!important;padding:0;background:transparent!important;box-shadow:none!important;transform:none!important}
+#walletCustomizePanel #walletFrameBasicOptions .wallet-color-options{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#walletCustomizePanel .wallet-frame-preview-green{background:radial-gradient(ellipse at 52% 48%,rgba(34,148,78,.96) 0%,rgba(91,195,126,.94) 48%,rgba(220,255,231,.98) 100%)}
+#walletCustomizePanel .wallet-frame-preview-blue{background:radial-gradient(ellipse at 52% 48%,rgba(40,120,199,.96),rgba(112,180,232,.94) 48%,rgba(217,239,255,.98))}
+#walletCustomizePanel .wallet-frame-preview-purple{background:radial-gradient(ellipse at 52% 48%,rgba(130,80,184,.96),rgba(178,135,218,.94) 48%,rgba(240,221,255,.98))}
+#walletCustomizePanel .wallet-frame-preview-gold{background:radial-gradient(ellipse at 52% 48%,rgba(168,117,25,.96),rgba(215,174,81,.94) 48%,rgba(255,240,189,.98))}
+#walletCustomizePanel .wallet-frame-preview b{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:calc(100% - 10px);height:31px;box-sizing:border-box;overflow:hidden;border:0;border-radius:999px;padding:4px 10px;box-shadow:0 3px 8px #182b2030,inset 0 2px 3px #ffffffcc,inset 0 -3px 7px #24512a38;color:inherit;font-size:14px;font-weight:900;line-height:1.25;text-overflow:ellipsis;white-space:nowrap;transform:rotate(-2deg)}
+#walletCustomizePanel .wallet-vine-swatch{display:grid!important;place-items:center;background:radial-gradient(ellipse at center,#18733b,#d5f4da)!important}
+#walletCustomizePanel .wallet-vine-swatch svg{width:100%;height:31px;fill:none;stroke:#1d7140;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#walletCustomizePanel .wallet-vine-swatch .preview-vine-leaves{fill:#347d47;stroke:#1c6235;stroke-width:.8}
+</style>
+
+<script id="wallet-vine-random-fall-script">
+(function(){
+ const frame=document.querySelector('#page-wallet .wallet-name-frame');
+ if(!frame)return;
+ const anchors=[...frame.querySelectorAll('.falling-leaf')];
+ const leaves=anchors.map(anchor=>anchor.querySelector('.falling-leaf-motion'));
+ if(leaves.length<3||!window.MutationObserver)return;
+ let timer=0,active=null,nextIndex=0;
+ const random=(min,max)=>min+Math.random()*(max-min);
+ const leafTones=['#347d47','#438a4e','#579e5b','#72b36b'];
+ frame.querySelectorAll('.fall-leaf-shape,.sway-leaf-shape').forEach(leaf=>leaf.style.fill=leafTones[Math.floor(Math.random()*leafTones.length)]);
+ const swayLeaves=[...frame.querySelectorAll('.sway-leaf-motion')];
+ for(let i=swayLeaves.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[swayLeaves[i],swayLeaves[j]]=[swayLeaves[j],swayLeaves[i]]}
+ const windDuration=4700;
+ swayLeaves.slice(0,Math.max(1,swayLeaves.length-3)).forEach(leaf=>{const angle=random(18,27),drift=random(2.5,4.5);leaf.animate([
+  {transform:'rotate(0deg) translateX(0px)',offset:0},
+  {transform:'rotate('+angle+'deg) translateX('+drift+'px)',offset:.2},
+  {transform:'rotate('+angle*.55+'deg) translateX('+(drift*.45)+'px)',offset:.38},
+  {transform:'rotate(0deg) translateX(0px)',offset:.5},
+  {transform:'rotate('+(-angle)+'deg) translateX('+(-drift)+'px)',offset:.7},
+  {transform:'rotate('+(-angle*.5)+'deg) translateX('+(-drift*.4)+'px)',offset:.86},
+  {transform:'rotate(0deg) translateX(0px)',offset:1}
+ ],{duration:windDuration,iterations:Infinity,easing:'ease-in-out'})});
+ const homeTransforms=anchors.map((anchor,i)=>'translate('+anchor.dataset.x+' '+anchor.dataset.y+') rotate('+[5,92,188][i%3]+')');
+ anchors.forEach((anchor,i)=>anchor.setAttribute('transform',homeTransforms[i]));
+ function stop(){clearTimeout(timer);timer=0;if(active){active.cancel();active=null}}
+ function schedule(){
+  if(!frame.classList.contains('wallet-name-frame-vine'))return;
+  timer=setTimeout(()=>{
+   const index=nextIndex;
+   nextIndex=(nextIndex+1)%leaves.length;
+   const leaf=leaves[index],side=Math.random()<.5?-1:1;
+   const anchor=anchors[index],startY=Number(anchor.dataset.y)||0,fallDistance=Math.max(16,61-startY);
+   const drift=side*random(9,22),spin=side*random(150,300),duration=random(1150,1950);
+   active=leaf.animate([
+    {transform:'translate(0,0) rotate(0deg) scale(1)',opacity:1,offset:0},
+    {transform:'translate('+side*random(3,9)+'px,'+fallDistance*.28+'px) rotate('+spin*.28+'deg) scale(1)',opacity:1,offset:.28},
+    {transform:'translate('+drift*.55+'px,'+fallDistance*.66+'px) rotate('+spin*.68+'deg) scale(.92)',opacity:1,offset:.66},
+    {transform:'translate('+drift+'px,'+fallDistance+'px) rotate('+spin+'deg) scale(.76)',opacity:0,offset:1}
+   ],{duration,easing:'cubic-bezier(.34,.02,.64,.98)',fill:'forwards'});
+   active.onfinish=()=>{
+    anchor.setAttribute('transform',homeTransforms[index]);
+    if(active){active.cancel();active=null}
+    active=leaf.animate([
+     {transform:'scale(.08) rotate(-24deg)',opacity:0,offset:0},
+     {transform:'scale(1.12) rotate(5deg)',opacity:1,offset:.78},
+     {transform:'scale(1) rotate(0deg)',opacity:1,offset:1}
+    ],{duration:random(480,760),easing:'cubic-bezier(.2,.8,.25,1)',fill:'forwards'});
+    active.onfinish=()=>{if(active){active.cancel();active=null}schedule()};
+   };
+  },random(850,3100));
+ }
+ const observer=new MutationObserver(()=>{if(frame.classList.contains('wallet-name-frame-vine')){if(!timer&&!active)schedule()}else stop()});
+ observer.observe(frame,{attributes:true,attributeFilter:['class']});
+ if(frame.classList.contains('wallet-name-frame-vine'))schedule();
+})();
+</script>
 
 <style id="wallet-card-actions-final">
 #page-wallet .wallet-card-bottom-actions{
@@ -2162,6 +2859,7 @@ body>#walletCustomizePanel[hidden]{display:none!important}
  #page-wallet .wallet-card-bottom-actions .wallet-customize-trigger{gap:6px!important;padding:10px 6px!important;font-size:12px!important}
  #page-wallet .wallet-card-bottom-actions .wallet-history-teaser-copy strong{font-size:11px!important}
 }
+
 </style>
 
 
@@ -2185,6 +2883,7 @@ body.wallet-customize-open::before{
 #walletCustomizePanel:not([hidden]){
   box-shadow:0 18px 60px rgba(0,0,0,.52),0 0 0 100vmax rgba(0,0,0,.72)!important;
 }
+
 </style>
 
 
@@ -2275,6 +2974,7 @@ body.wallet-customize-open::before{
  #walletCustomizePanel .wallet-color-swatch i{height:54px!important}
  #walletCustomizePanel .wallet-skin-preview{min-height:78px!important}
 }
+
 </style>
 
 
@@ -2289,6 +2989,7 @@ body.wallet-customize-open::before{
 #walletCustomizePanel .wallet-skin-preview,
 #walletCustomizePanel .wallet-color-preview{border-radius:5px!important}
 @media(max-width:480px){#walletCustomizePanel:not([hidden]){padding:16px!important;border-radius:8px!important}}
+
 </style>
 
 <!-- VSPACE APP LOADER: màn hình tải ngắn khi mở app -->
@@ -2305,6 +3006,7 @@ body.wallet-customize-open::before{
 @keyframes vspace-loading{0%{transform:translateX(-120%)}100%{transform:translateX(400%)}}
 @keyframes vspace-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
 @media(prefers-reduced-motion:reduce){#vspaceAppLoader .loader-bar{animation:none}}
+
 </style>
 <div id="vspaceAppLoader" role="status" aria-live="polite" aria-label="Vspace đang tải">
  <div class="loader-content">
@@ -2343,6 +3045,7 @@ body.wallet-customize-open::before{
 .profile-crop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}.profile-crop-head strong{font-size:17px}.profile-crop-head p{margin:5px 0 0;color:var(--muted,#777);font-size:12px;line-height:1.4}
 .profile-crop-view{position:relative;width:min(100%,320px);aspect-ratio:1/1;margin:0 auto;overflow:hidden;border-radius:14px;background:#202020;touch-action:none;cursor:grab}.profile-crop-view:active{cursor:grabbing}.profile-crop-view img{position:absolute;max-width:none;max-height:none;user-select:none;-webkit-user-drag:none;touch-action:none;pointer-events:auto}
 .profile-crop-zoom{display:flex;flex-direction:column;gap:9px;font-size:13px;margin:16px 0}.profile-crop-zoom input{width:100%;accent-color:var(--accent,#21a366)}.profile-crop-actions{display:flex;justify-content:flex-end;gap:9px}.profile-crop-actions button{min-width:100px}
+
 </style>
 
 </body></html>
@@ -2352,6 +3055,7 @@ body.wallet-customize-open::before{
 #walletCustomizePanel .wallet-customize-group-title span{color:#8290a3;font-size:10px;font-weight:600}
 #walletCustomizePanel .wallet-customize-group-title[hidden]{display:none!important}
 #walletCustomizePanel #walletBasicOptions[hidden],#walletCustomizePanel #walletPatternOptions[hidden]{display:none!important}
+
 </style>
 
 <style id="wallet-customize-follow-app-theme">
@@ -2387,6 +3091,7 @@ body.wallet-customize-open::before{
 :root[data-theme="dark"] #walletCustomizePanel .wallet-customize-group-title span{color:#929baa!important}
 :root[data-theme="dark"] #walletCustomizePanel .wallet-color-swatch:hover,:root[data-theme="dark"] #walletCustomizePanel .wallet-skin-option:hover{border-color:#65748b!important;box-shadow:0 8px 18px #0005!important}
 :root[data-theme="dark"] body.wallet-customize-open::before{background:rgba(0,0,0,.68)!important}
+
 </style>
 
 
@@ -2415,4 +3120,44 @@ body.wallet-customize-open::before{
   background:#2b3039!important;border-color:#3b424e!important;color:#f4f5f7!important;
 }
 #walletCustomizePanel .wallet-customize-close:focus-visible{outline:2px solid #7aa7e8!important;outline-offset:2px!important}
+
 </style>
+
+<style id="wallet-customize-tabs-match-history">
+#walletCustomizePanel .wallet-customize-main-tabs,#walletCustomizePanel .wallet-name-frame-tabs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:3px!important;padding:4px!important;border-radius:14px!important;background:#eaf0f7!important;border:1px solid #e3e9f1!important}
+#walletCustomizePanel .wallet-name-frame-tabs{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#walletCustomizePanel .wallet-design-tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:3px!important;padding:4px!important;border-radius:14px!important;background:#eaf0f7!important;border:1px solid #e3e9f1!important}
+#walletCustomizePanel .wallet-customize-tabs .wallet-customize-tab{min-width:0;padding:10px 4px!important;border:0!important;border-radius:11px!important;background:transparent!important;color:#69778c!important;font-size:12px!important;font-weight:750!important;white-space:normal!important;box-shadow:none!important}
+#walletCustomizePanel .wallet-customize-tabs .wallet-customize-tab.active,#walletCustomizePanel .wallet-customize-tabs .wallet-customize-tab[aria-selected="true"]{background:#cafa83!important;color:#172312!important;box-shadow:0 2px 8px #13230c16!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tabs{background:#252a32!important;border-color:#343b46!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tabs .wallet-customize-tab{color:#b6bdc9!important}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tabs .wallet-customize-tab.active,:root[data-theme="dark"] #walletCustomizePanel .wallet-customize-tabs .wallet-customize-tab[aria-selected="true"]{background:#cafa83!important;color:#172312!important}
+</style>
+
+<style id="wallet-frame-preview-pill-shape">
+#walletCustomizePanel .wallet-color-swatch i.wallet-frame-preview{border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#walletCustomizePanel .wallet-frame-preview b{border-radius:999px!important}
+</style>
+
+<style id="wallet-vine-frame-real-preview">
+#walletCustomizePanel .wallet-color-swatch i.wallet-vine-frame-preview{position:relative;height:42px!important;display:flex!important;align-items:center;justify-content:center;overflow:visible!important;border:0;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#walletCustomizePanel .wallet-vine-frame-preview .wallet-name-vine-art{position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:1;pointer-events:none;overflow:visible}
+#walletCustomizePanel .wallet-vine-frame-preview .name-vine-stem{fill:none;stroke:#1d7140;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#walletCustomizePanel .wallet-vine-frame-preview .name-vine-leaves{fill:#4c9654;stroke:#347d47;stroke-width:.8;stroke-linejoin:round}
+#walletCustomizePanel .wallet-vine-frame-preview .leaf-tone-dark{fill:#347d47}
+#walletCustomizePanel .wallet-vine-frame-preview .leaf-tone-mid{fill:#4c9654}
+#walletCustomizePanel .wallet-vine-frame-preview .leaf-tone-light{fill:#72b36b}
+#walletCustomizePanel .wallet-vine-frame-preview .name-vine-veins{fill:none;stroke:#b9e1ae;stroke-width:.85;stroke-linecap:round}
+#walletCustomizePanel .wallet-vine-frame-preview .fall-leaf-shape,#walletCustomizePanel .wallet-vine-frame-preview .sway-leaf-shape{fill:#4c9654;stroke:#347d47;stroke-width:.8;stroke-linejoin:round}
+#walletCustomizePanel .wallet-vine-frame-preview .fall-leaf-vein,#walletCustomizePanel .wallet-vine-frame-preview .sway-leaf-vein{fill:none;stroke:#c5e9b6;stroke-width:.75;stroke-linecap:round}
+#walletCustomizePanel .wallet-vine-frame-preview .name-vine-light-path{fill:none;stroke:#caffb6;stroke-width:.45;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:8 900;opacity:0;filter:drop-shadow(0 0 2px #62d985);animation:walletVineStemGlide 5.2s linear infinite;pointer-events:none}
+#walletCustomizePanel .wallet-vine-frame-preview .name-vine-light-spark{fill:none;stroke:#efffe8;stroke-width:.45;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:10 900;opacity:0;filter:drop-shadow(0 0 2px #8df5a9);animation:walletVineSparkSplit 5.2s linear infinite;pointer-events:none}
+#walletCustomizePanel .wallet-vine-frame-preview [data-frame-preview-name]{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;width:calc(100% - 10px);height:31px;box-sizing:border-box;overflow:hidden;padding:4px 10px 4px 16px;border:0;border-radius:999px;background:radial-gradient(ellipse at 52% 48%,#e3f8e6 0%,#bce8c5 58%,#7fbd8d 100%);box-shadow:0 3px 8px rgba(16,83,43,.2),inset 0 2px 3px rgba(255,255,255,.8),inset 0 -3px 7px rgba(18,91,47,.2);text-overflow:ellipsis;white-space:nowrap;color:#17432a;font-size:14px;font-weight:900;line-height:1.25;transform:rotate(-2deg)}
+</style>
+
+<style id="wallet-customize-selected-sample-strong">
+#walletCustomizePanel .wallet-color-swatch.active,#walletCustomizePanel .wallet-skin-option.active{position:relative!important;border:2px solid #35ad68!important;background:#e9f8ee!important;box-shadow:0 0 0 3px rgba(53,173,104,.2),0 8px 18px rgba(28,118,67,.2)!important;transform:translateY(-2px)!important}
+#walletCustomizePanel .wallet-color-swatch.active::after,#walletCustomizePanel .wallet-skin-option.active::after{content:"✓";position:absolute;top:5px;right:5px;z-index:5;display:grid;place-items:center;width:19px;height:19px;border:2px solid #fff;border-radius:50%;background:#20a45b;color:#fff;font-size:12px;font-weight:900;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+:root[data-theme="dark"] #walletCustomizePanel .wallet-color-swatch.active,:root[data-theme="dark"] #walletCustomizePanel .wallet-skin-option.active{border-color:#a4ec67!important;background:#26362c!important;box-shadow:0 0 0 3px rgba(164,236,103,.22),0 8px 18px rgba(0,0,0,.38)!important}
+</style>
+
