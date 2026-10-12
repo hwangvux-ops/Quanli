@@ -1129,7 +1129,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     <h1 id="welcomeTitle">Bạn tên gì nhỉ?</h1>
     <p>Nhập tên để cá nhân hoá hồ sơ và thẻ ví của bạn. Bạn có thể đổi lại sau trong Hồ sơ.</p>
     <label for="welcomeName">Tên của bạn</label>
-    <input id="welcomeName" class="field" type="text" minlength="5" maxlength="50" autocomplete="given-name" placeholder="Ví dụ: Minh Anh" required>
+    <input id="welcomeName" class="field" type="text" minlength="3" maxlength="50" autocomplete="given-name" placeholder="Ví dụ: Minh Anh" required>
     <button class="btn" type="submit">Bắt đầu sử dụng →</button>
   </form>
 </div>
@@ -2127,7 +2127,7 @@ function updateTodayLabels() {
     }).format(now);
 }
 
-function saveWelcomeName(e){e.preventDefault();const input=$('welcomeName');const name=input.value.trim();if(name.length<5){input.setCustomValidity('Tên cần có ít nhất 5 ký tự nha.');input.reportValidity();input.focus();return;}input.setCustomValidity('');state.studentName=name;saveQuiet();$('welcomeSetup').hidden=true;renderAll();toast('Chào mừng, '+name+'!');}
+function saveWelcomeName(e){e.preventDefault();const input=$('welcomeName');const name=input.value.trim();if(name.length<3){input.setCustomValidity('Tên cần có ít nhất 3 ký tự nha.');input.reportValidity();input.focus();return;}input.setCustomValidity('');state.studentName=name;saveQuiet();$('welcomeSetup').hidden=true;renderAll();toast('Chào mừng, '+name+'!');}
 function showWelcomeIfNeeded(){const setup=$('welcomeSetup');if(!setup)return;const name=String(state.studentName||'').trim();if(!name||name==='Bạn'){state.studentName='';setup.hidden=false;setTimeout(()=>$('welcomeName')?.focus(),60)}else setup.hidden=true;}
 
 function renderPersonalTrash(){
@@ -2547,7 +2547,7 @@ function editProfile(){
   if(!title||!content||!back){alert('Không mở được khung đổi tên. Bà tải lại trang rồi thử lại nhé.');return;}
   title.textContent='Đổi tên';
   const currentName=String(state.studentName||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  content.innerHTML=`<form class="formgrid" id="editNameForm" onsubmit="saveProfileName(event)"><label for="editName">Tên hiển thị</label><input class="field" id="editName" minlength="5" maxlength="50" value="${currentName}" placeholder="Nhập tên bạn muốn dùng" autocomplete="name" required><p class="muted" style="margin:0">Tên cần có ít nhất 5 ký tự. Tên mới sẽ cập nhật trên Hồ sơ và thẻ Ví.</p><button class="btn" id="saveProfileNameButton" type="submit">Lưu tên mới</button></form>`;
+  content.innerHTML=`<form class="formgrid" id="editNameForm" onsubmit="saveProfileName(event)"><label for="editName">Tên hiển thị</label><input class="field" id="editName" minlength="3" maxlength="50" value="${currentName}" placeholder="Nhập tên bạn muốn dùng" autocomplete="name" required><p class="muted" style="margin:0">Tên cần có ít nhất 3 ký tự. Tên mới sẽ cập nhật trên Hồ sơ và thẻ Ví.</p><button class="btn" id="saveProfileNameButton" type="submit">Lưu tên mới</button></form>`;
   back.classList.add('show');
   setTimeout(()=>{const input=$('editName');input?.focus();input?.select();},50);
 }
@@ -2556,7 +2556,7 @@ function saveProfileName(e){
   const input=$('editName');
   const name=String(input?.value||'').trim();
   if(!name){input?.setCustomValidity('Bà nhập tên trước nha.');input?.reportValidity();input?.focus();return false;}
-  if(name.length<5){input?.setCustomValidity('Tên cần có ít nhất 5 ký tự nha.');input?.reportValidity();input?.focus();return false;}
+  if(name.length<3){input?.setCustomValidity('Tên cần có ít nhất 3 ký tự nha.');input?.reportValidity();input?.focus();return false;}
   input?.setCustomValidity('');
   if(name.length>50){alert('Tên tối đa 50 ký tự nha.');input?.focus();return false;}
   const oldName=state.studentName;
