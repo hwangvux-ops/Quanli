@@ -4277,10 +4277,24 @@ async function renderSaveSlots(mode){
   const fileSupported='showDirectoryPicker' in window;
   $('modalContent').innerHTML=`<p class="save-slots-note">${mode==='save'?'Chọn một ô để lưu bản sao lưu. Nếu ô đã có dữ liệu, bản cũ sẽ được thay thế.':'Chọn ô có dữ liệu để khôi phục. Dữ liệu MiSpace hiện tại sẽ bị thay thế sau khi bạn xác nhận.'}</p>
   <div class="save-slots-grid">${slots.map((slot,i)=>`<button type="button" class="save-slot ${slot?'filled':''}" onclick="selectSaveSlot('${mode}',${i})"><span class="slot-icon">${slot?(mode==='save'?'💾':'📦'):'＋'}</span><strong>${slot?esc(slotDisplayName(slot,i)):`Ô ${i+1}`}</strong><small>${slot?esc(slotDateText(slot.date||slot.data?._mispaceSaveMeta?.savedAt)): 'Ô trống'}</small></button>`).join('')}</div>
-  <p class="save-slots-note">${dir?'Đang lưu file trong thư mục <b>saves</b> đã chọn.': 'Các ô lưu được giữ trong bộ nhớ của trình duyệt/ứng dụng này, nên dùng được trên iPhone khi ghim màn hình chính. Muốn sao lưu ra ngoài, dùng nút “Sao lưu JSON”.'} ${fileSupported?'Bạn có thể chọn thêm thư mục <b>saves</b> trên máy tính nếu muốn lưu thành file riêng.':''}</p>
-  <div class="save-slot-actions"><button class="btn secondary small" type="button" onclick="pickSavesFolderFromModal()">📁 ${dir?'Đổi thư mục saves':'Chọn thư mục lưu'}</button><button class="btn secondary small" type="button" onclick="closeModal()">Đóng</button></div>`;
+  <p class="save-slots-note">${dir?'Đang lưu file JSON trực tiếp trong thư mục <b>saves</b> đã chọn.':'Trên iPhone, mỗi lần Save sẽ tạo/tải xuống một file JSON để bạn lưu trong ứng dụng Tệp (Files), không lưu bản sao vào bộ nhớ website.'} ${fileSupported?'Trên máy tính, bạn cũng có thể chọn thư mục để lưu file trực tiếp.':''}</p>
+  <div class="save-slot-actions">${!dir?'<button class="btn secondary small" type="button" onclick="pickBackupFileToLoad()">📂 Chọn file từ Tệp để Load</button>':''}<button class="btn secondary small" type="button" onclick="pickSavesFolderFromModal()">📁 ${dir?'Đổi thư mục saves':'Chọn thư mục lưu (máy tính)'}</button><button class="btn secondary small" type="button" onclick="closeModal()">Đóng</button></div>`;
 }
 async function pickSavesFolderFromModal(){const dir=await chooseSavesDirectory();if(dir){toast('Đã chọn thư mục saves');const title=$('modalTitle').textContent;renderSaveSlots(title.includes('Load')?'load':'save')}}
+function pickBackupFileToLoad(){
+  const input=document.createElement('input');input.type='file';input.accept='.json,application/json';
+  input.onchange=async()=>{
+    const file=input.files&&input.files[0];if(!file)return;
+    try{
+      const data=JSON.parse(await file.text());
+      if(!data||typeof data!=='object'||!Array.isArray(data.transactions))throw new Error('File này không phải bản sao lưu MiSpace hợp lệ.');
+      const savedName=data._mispaceSaveMeta?.slotName||file.name;
+      if(!confirm(`Khôi phục bản sao lưu “${savedName}” từ file đã chọn? Toàn bộ dữ liệu MiSpace hiện tại sẽ được thay thế.`))return;
+      restoreFullBackup(data);
+    }catch(err){alert('Không đọc được file sao lưu: '+(err.message||err))}
+  };
+  input.click();
+}
 async function selectSaveSlot(mode,index){
   if(mode==='save'){
     // Không bắt buộc chọn thư mục: trên iPhone/iPad (kể cả ghim màn hình chính), dùng localStorage làm các ô lưu mặc định.
@@ -4296,9 +4310,15 @@ async function selectSaveSlot(mode,index){
     const backup=buildFullBackup(slotName);
     try{
       const dir=await getSavesDirectory(false);
-      if(dir){const fh=await dir.getFileHandle(slotFilename(index),{create:true});const writable=await fh.createWritable();await writable.write(JSON.stringify(backup,null,2));await writable.close();}
-      else {localStorage.setItem('miSpaceSaveSlot'+(index+1),JSON.stringify(backup));}
-      toast(`Đã lưu “${slotName}” thành công`);renderSaveSlots('save');
+      if(dir){
+        const fh=await dir.getFileHandle(slotFilename(index),{create:true});const writable=await fh.createWritable();await writable.write(JSON.stringify(backup,null,2));await writable.close();
+        toast(`Đã lưu file “${slotFilename(index)}” thành công`);renderSaveSlots('save');
+      }else{
+        const fileName=`MiSpace-${slotName.replace(/[^a-zA-Z0-9À-ỹ_-]+/g,'-').replace(/^-+|-+$/g,'')||('Save-'+(index+1))}-${new Date().toISOString().slice(0,10)}.json`;
+        download(JSON.stringify(backup,null,2),fileName,'application/json');
+        alert('MiSpace đã tạo file sao lưu JSON. Trên iPhone, hãy chọn Lưu vào Tệp (Save to Files) nếu được hỏi; nếu file chỉ tải xuống, mở Safari > Tải về rồi chia sẻ/lưu file vào Tệp. Để khôi phục, nhấn Load rồi “Chọn file từ Tệp để Load”.');
+        renderSaveSlots('save');
+      }
     }catch(err){alert('Không lưu được bản sao lưu: '+(err.message||err))}
     return;
   }
