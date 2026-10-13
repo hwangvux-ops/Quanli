@@ -4295,6 +4295,27 @@ function pickBackupFileToLoad(){
   };
   input.click();
 }
+async function saveJsonFileOnDevice(content,fileName){
+  const blob=new Blob(['\\ufeff',content],{type:'application/json;charset=utf-8'});
+  // iOS Safari / Home Screen web app: open the native share sheet so the user can choose "Save to Files".
+  try{
+    if(typeof navigator!=='undefined' && typeof navigator.share==='function' && typeof File==='function'){
+      const file=new File([blob],fileName,{type:'application/json'});
+      if(typeof navigator.canShare!=='function' || navigator.canShare({files:[file]})){
+        await navigator.share({files:[file],title:fileName});
+        return 'shared';
+      }
+    }
+  }catch(err){
+    if(err && err.name==='AbortError') return 'cancelled';
+    // Fall through to browser download where supported.
+  }
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=fileName;a.rel='noopener';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  return 'download';
+}
 async function selectSaveSlot(mode,index){
   if(mode==='save'){
     // Không bắt buộc chọn thư mục: trên iPhone/iPad (kể cả ghim màn hình chính), dùng localStorage làm các ô lưu mặc định.
@@ -4315,8 +4336,14 @@ async function selectSaveSlot(mode,index){
         toast(`Đã lưu file “${slotFilename(index)}” thành công`);renderSaveSlots('save');
       }else{
         const fileName=`MiSpace-${slotName.replace(/[^a-zA-Z0-9À-ỹ_-]+/g,'-').replace(/^-+|-+$/g,'')||('Save-'+(index+1))}-${new Date().toISOString().slice(0,10)}.json`;
-        download(JSON.stringify(backup,null,2),fileName,'application/json');
-        alert('MiSpace đã tạo file sao lưu JSON. Trên iPhone, hãy chọn Lưu vào Tệp (Save to Files) nếu được hỏi; nếu file chỉ tải xuống, mở Safari > Tải về rồi chia sẻ/lưu file vào Tệp. Để khôi phục, nhấn Load rồi “Chọn file từ Tệp để Load”.');
+        const result=await saveJsonFileOnDevice(JSON.stringify(backup,null,2),fileName);
+        if(result==='shared'){
+          alert('Đã mở bảng Chia sẻ của iPhone. Hãy chọn “Lưu vào Tệp” (Save to Files) rồi chọn thư mục muốn lưu. File chưa được lưu cho đến khi bạn xác nhận trong bảng này.');
+        }else if(result==='download'){
+          alert('Trình duyệt đã được yêu cầu tải file JSON xuống. Nếu không thấy bảng Chia sẻ, hãy mở Safari > Tải về (Downloads), rồi dùng nút Chia sẻ để lưu file vào Tệp. Nếu bạn đang mở từ biểu tượng Màn hình chính mà không có file tải xuống, hãy mở website bằng Safari rồi thử Save lại.');
+        }else{
+          toast('Bạn đã đóng bảng Chia sẻ; file chưa được lưu.');
+        }
         renderSaveSlots('save');
       }
     }catch(err){alert('Không lưu được bản sao lưu: '+(err.message||err))}
