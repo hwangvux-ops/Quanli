@@ -4277,13 +4277,13 @@ async function renderSaveSlots(mode){
   const fileSupported='showDirectoryPicker' in window;
   $('modalContent').innerHTML=`<p class="save-slots-note">${mode==='save'?'Chọn một ô để lưu bản sao lưu. Nếu ô đã có dữ liệu, bản cũ sẽ được thay thế.':'Chọn ô có dữ liệu để khôi phục. Dữ liệu MiSpace hiện tại sẽ bị thay thế sau khi bạn xác nhận.'}</p>
   <div class="save-slots-grid">${slots.map((slot,i)=>`<button type="button" class="save-slot ${slot?'filled':''}" onclick="selectSaveSlot('${mode}',${i})"><span class="slot-icon">${slot?(mode==='save'?'💾':'📦'):'＋'}</span><strong>${slot?esc(slotDisplayName(slot,i)):`Ô ${i+1}`}</strong><small>${slot?esc(slotDateText(slot.date||slot.data?._mispaceSaveMeta?.savedAt)): 'Ô trống'}</small></button>`).join('')}</div>
-  <p class="save-slots-note">${fileSupported?'Thư mục lưu: <b>saves</b> bên trong thư mục bạn chọn. Lần đầu dùng, hãy cấp quyền truy cập thư mục.':'Trình duyệt này không hỗ trợ ghi trực tiếp vào thư mục. Các ô sẽ được lưu trong bộ nhớ trình duyệt; bạn vẫn có thể dùng “Sao lưu JSON” để tải file về.'}</p>
+  <p class="save-slots-note">${dir?'Đang lưu file trong thư mục <b>saves</b> đã chọn.': 'Các ô lưu được giữ trong bộ nhớ của trình duyệt/ứng dụng này, nên dùng được trên iPhone khi ghim màn hình chính. Muốn sao lưu ra ngoài, dùng nút “Sao lưu JSON”.'} ${fileSupported?'Bạn có thể chọn thêm thư mục <b>saves</b> trên máy tính nếu muốn lưu thành file riêng.':''}</p>
   <div class="save-slot-actions"><button class="btn secondary small" type="button" onclick="pickSavesFolderFromModal()">📁 ${dir?'Đổi thư mục saves':'Chọn thư mục lưu'}</button><button class="btn secondary small" type="button" onclick="closeModal()">Đóng</button></div>`;
 }
 async function pickSavesFolderFromModal(){const dir=await chooseSavesDirectory();if(dir){toast('Đã chọn thư mục saves');const title=$('modalTitle').textContent;renderSaveSlots(title.includes('Load')?'load':'save')}}
 async function selectSaveSlot(mode,index){
   if(mode==='save'){
-    if('showDirectoryPicker' in window){let dir=await getSavesDirectory(false);if(!dir){dir=await getSavesDirectory(true);if(!dir)return;renderSaveSlots('save');return;}}
+    // Không bắt buộc chọn thư mục: trên iPhone/iPad (kể cả ghim màn hình chính), dùng localStorage làm các ô lưu mặc định.
     const old=await readSlot(index);
     const suggestedName=old?slotDisplayName(old,index):`Bản lưu ${index+1}`;
     const enteredName=prompt(`Đặt tên cho ô lưu ${index+1}:`,suggestedName);
@@ -4297,7 +4297,7 @@ async function selectSaveSlot(mode,index){
     try{
       const dir=await getSavesDirectory(false);
       if(dir){const fh=await dir.getFileHandle(slotFilename(index),{create:true});const writable=await fh.createWritable();await writable.write(JSON.stringify(backup,null,2));await writable.close();}
-      else {localStorage.setItem('miSpaceSaveSlot'+(index+1),JSON.stringify(backup));download(JSON.stringify(backup,null,2),slotFilename(index),'application/json');}
+      else {localStorage.setItem('miSpaceSaveSlot'+(index+1),JSON.stringify(backup));}
       toast(`Đã lưu “${slotName}” thành công`);renderSaveSlots('save');
     }catch(err){alert('Không lưu được bản sao lưu: '+(err.message||err))}
     return;
