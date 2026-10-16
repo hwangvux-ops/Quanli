@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0e0f12">
 <script>/* Set the saved theme before CSS paints, avoiding a light-background flash. */
-try{const saved=JSON.parse(localStorage.getItem('miSpaceV3')||'null');const mode=saved&&saved.theme?saved.theme:'light';const dark=mode==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:mode==='dark';document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]').content=dark?'#0e0f12':'#f7f7f8'}catch(e){document.documentElement.dataset.theme='light'}
+try{const saved=JSON.parse(localStorage.getItem('miSpaceV3')||'null');const mode=saved&&saved.theme?saved.theme:'light';const dark=mode==='auto'?window.matchMedia('(prefers-color-scheme: dark)').matches:mode==='dark';document.documentElement.dataset.theme=dark?'dark':'light';document.querySelector('meta[name="theme-color"]').content=dark?'#0e0f12':'#f7f7f8';if(saved&&saved.uiSkin==='halloween'){document.documentElement.dataset.skin='halloween';document.documentElement.dataset.theme='dark'}}catch(e){document.documentElement.dataset.theme='light'}
 </script>
 <title>MiSpace — Personal Hub</title>
 <link rel="manifest" href="manifest.json">
@@ -1936,23 +1936,30 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
 
   <div class="wallet-banner-carousel" id="walletBannerCarousel" aria-label="Banner ví Vspace" aria-roledescription="băng chuyền">
     <div class="wallet-banner-track" id="walletBannerTrack">
-      <article class="wallet-banner" aria-label="Banner 1 trên 3">
+      <article class="wallet-banner" aria-label="Banner 1 trên 4">
         <div class="wallet-brandline"><span class="wallet-brandmark">V</span><span>Vspace Wallet</span><span style="margin-left:auto;color:#65758c;font-size:12px">YOUR MONEY SPACE</span></div>
         <div class="eyebrow">TÀI CHÍNH CỦA BẠN</div>
         <h2>Quản lý tiền thông minh, sống chủ động hơn ✨</h2>
         <p>Theo dõi thu chi mỗi ngày, kiểm soát ngân sách và dành dụm cho những mục tiêu của bạn.</p>
       </article>
-      <article class="wallet-banner" aria-label="Banner 2 trên 3">
+      <article class="wallet-banner" aria-label="Banner 2 trên 4">
         <div class="wallet-brandline"><span class="wallet-brandmark">↗</span><span>Chi tiêu có kế hoạch</span><span style="margin-left:auto;color:#65758c;font-size:12px">SPEND SMARTER</span></div>
         <div class="eyebrow">BẮT ĐẦU TỪ HÔM NAY</div>
         <h2>Mỗi khoản chi đều trong tầm kiểm soát 📊</h2>
         <p>Ghi lại thu chi thường xuyên để hiểu rõ thói quen và chủ động cân đối ngân sách.</p>
       </article>
-      <article class="wallet-banner" aria-label="Banner 3 trên 3">
+      <article class="wallet-banner" aria-label="Banner 3 trên 4">
         <div class="wallet-brandline"><span class="wallet-brandmark">✦</span><span>Mục tiêu của bạn</span><span style="margin-left:auto;color:#65758c;font-size:12px">SAVE FOR MORE</span></div>
         <div class="eyebrow">TỪNG BƯỚC TIẾN GẦN HƠN</div>
         <h2>Dành dụm hôm nay, chạm tới ước mơ mai sau 🌱</h2>
         <p>Đặt mục tiêu tiết kiệm phù hợp và theo dõi số dư để thấy nỗ lực của bạn mỗi ngày.</p>
+      </article>
+      <article class="wallet-banner halloween" aria-label="Banner 4 trên 4">
+        <div class="wallet-brandline"><span class="wallet-brandmark" data-hw-pumpkin></span><span>Halloween 31/10</span><span id="hwCountdown" style="margin-left:auto;font-size:12px">HAPPY HALLOWEEN</span></div>
+        <div class="eyebrow">ĐỪNG ĐỂ VÍ BỊ “HÙ DỌA”</div>
+        <h2>Vui Halloween hết mình, không sợ hết tiền</h2>
+        <p>Đặt ngân sách cho hóa trang, tiệc tùng và quà kẹo để mùa lễ hội chỉ có ma, không có hóa đơn đáng sợ.</p>
+        <span class="hw-banner-art" data-hw-art aria-hidden="true"></span>
       </article>
     </div>
     <button class="wallet-banner-arrow prev" type="button" aria-label="Banner trước">‹</button>
@@ -1961,6 +1968,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
       <button class="wallet-banner-dot active" type="button" aria-label="Hiện banner 1" aria-current="true"></button>
       <button class="wallet-banner-dot" type="button" aria-label="Hiện banner 2"></button>
       <button class="wallet-banner-dot" type="button" aria-label="Hiện banner 3"></button>
+      <button class="wallet-banner-dot" type="button" aria-label="Hiện banner 4"></button>
     </div>
   </div>
   <script>
@@ -1968,12 +1976,21 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     const carousel=document.getElementById('walletBannerCarousel');
     const track=document.getElementById('walletBannerTrack');
     if(!carousel||!track)return;
+    const hw=carousel.querySelector('.wallet-banner.halloween');
+    if(hw){
+      const p=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Ho_Chi_Minh',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+      const left=Math.round((Date.UTC(+p.year,9,31)-Date.UTC(+p.year,+p.month-1,+p.day))/864e5);
+      if(left<-2||left>30){hw.remove();const d=carousel.querySelectorAll('.wallet-banner-dot');d[d.length-1]?.remove();}
+      else{const c=document.getElementById('hwCountdown');if(c)c.textContent=left>0?'CÒN '+left+' NGÀY':left===0?'HÔM NAY!':'HAPPY HALLOWEEN';}
+      const n=track.children.length;Array.from(track.children).forEach((a,i)=>a.setAttribute('aria-label','Banner '+(i+1)+' trên '+n));
+    }
     const dots=Array.from(carousel.querySelectorAll('.wallet-banner-dot'));
     let index=0;
     let timer;
     function show(nextIndex){
       index=(nextIndex+dots.length)%dots.length;
       track.style.transform='translateX(-'+(index*100)+'%)';
+      carousel.classList.toggle('hw-on',!!track.children[index]?.classList.contains('halloween'));
       dots.forEach((dot,i)=>{dot.classList.toggle('active',i===index);if(i===index)dot.setAttribute('aria-current','true');else dot.removeAttribute('aria-current');});
     }
     function start(){clearInterval(timer);timer=setInterval(()=>show(index+1),5000);}
@@ -2172,6 +2189,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
           <div class="wallet-customize-group-title">Hiệu ứng <span>Chọn hiệu ứng chuyển động cho bảng tên</span></div>
           <div class="wallet-color-options" role="group" aria-label="Hiệu ứng khung tên">
             <button type="button" class="wallet-color-swatch wallet-frame-swatch" data-frame-style="vine" onclick="setWalletNameFrameStyle('vine')"><i class="wallet-vine-swatch wallet-vine-frame-preview" data-vine-frame-preview><b data-frame-preview-name></b></i><span>Dây Leo An Nhiên</span></button>
+            <button type="button" class="wallet-color-swatch wallet-frame-swatch" data-frame-style="pumpkin" onclick="setWalletNameFrameStyle('pumpkin')"><i class="wallet-pumpkin-swatch" data-pumpkin-preview><b data-frame-preview-name></b></i><span>Bí Ngô Cười</span></button>
           </div>
         </div>
       </div>
@@ -2416,6 +2434,8 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     <div class="settingsrow"><div><strong>Thông báo trong app</strong><p>Bật hoặc tắt hộp thông báo nội bộ.</p></div><input type="checkbox" id="noticeToggle" checked onchange="toggleNotices(this.checked)" style="width:22px;height:22px;accent-color:var(--accent)"></div>
     
   </div>
+  <div class="sectiontitle"><h2>Cửa hàng giao diện</h2></div>
+  <div class="card theme-store" id="themeStore"></div>
   <div class="sectiontitle"><h2>Dữ liệu cá nhân</h2></div>
   <div class="pd-label">Sao lưu &amp; khôi phục</div>
   <div class="card pd-card personal-data-tools">
@@ -2810,7 +2830,7 @@ function renderLedgerCalendar(days,month,listHTML=''){
     const dn=i-offset+1,col=i%7,wk=col===5?' sat':col===6?' sun':'';
     if(dn<1||dn>days.length){const od=new Date(y,m-1,dn);cells+=`<div class="ledger-cal-day out${wk}"><span class="n"><b>${od.getDate()}</b><i>${VNLunar.label(od.getDate(),od.getMonth()+1,od.getFullYear())}</i></span></div>`;continue}
     const it=days[dn-1];
-    cells+=`<button type="button" class="ledger-cal-day${wk}${it.income||it.expense?(it.income>=it.expense?' pos':' neg'):''}${it.date===today?' today':''}${it.date===sel?' sel':''}" onclick="selectLedgerDay('${it.date}')" aria-label="Ngày ${dn}"><span class="n"><b>${dn}</b><i>${VNLunar.label(dn,m,y)}</i></span>${it.income?`<small class="income">+${ledgerShort(it.income)}</small>`:''}${it.expense?`<small class="expense">−${ledgerShort(it.expense)}</small>`:''}</button>`;
+    cells+=`<button type="button" class="ledger-cal-day${wk}${it.income||it.expense?(it.income>=it.expense?' pos':' neg'):''}${!it.expense&&it.date<today?' nospend':''}${!it.income&&!it.expense?' notx':''}${it.date===today?' today':''}${it.date===sel?' sel':''}" onclick="selectLedgerDay('${it.date}')" aria-label="Ngày ${dn}"><span class="n"><b>${dn}</b><i>${VNLunar.label(dn,m,y)}</i></span>${it.income?`<small class="income">+${ledgerShort(it.income)}</small>`:''}${it.expense?`<small class="expense">−${ledgerShort(it.expense)}</small>`:''}</button>`;
   }
   const inc=days.reduce((a,d)=>a+d.income,0),exp=days.reduce((a,d)=>a+d.expense,0),net=inc-exp;
   let detail='';
@@ -3083,6 +3103,7 @@ renderDailyLedger();
 renderClasses();
 renderNotices();
 renderRecurringCards();
+renderThemeStore();
 renderPersonalTrash();
 
 const profileNameEl = $('profileName');
@@ -3512,6 +3533,100 @@ const goOriginal=go;go=function(page){goOriginal.apply(this,arguments);if(page==
 walletCatIcons.warn=['#FFE6E3','#B93B33','#F0645A','<path d="M24 6 4 40h40z" fill="@f"/><path d="M24 18v10M24 33v2" stroke="#fff" stroke-width="3"/>'];
 function fillPersonalDataIcons(){document.querySelectorAll('[data-pd-ico]').forEach(el=>{el.innerHTML=catIconHTML(el.dataset.pdIco,'pd-ico-tile')})}
 fillPersonalDataIcons();document.addEventListener('DOMContentLoaded',fillPersonalDataIcons);
+/* ===== Cửa hàng giao diện ===== */
+const UI_SKINS=[
+  {id:'',name:'Mặc định',emoji:'✨',tag:'Miễn phí',desc:'Giao diện sáng hoặc tối theo cài đặt của bạn.'},
+  {id:'halloween',name:'Halloween',emoji:'🎃',tag:'Sự kiện · đến 02/11',desc:'Nền tím đen, điểm nhấn cam bí ngô, có dơi bay ngang màn hình.'},
+  {id:'xmas',name:'Giáng sinh',emoji:'🎄',tag:'Sắp ra mắt',soon:true,desc:'Sắc đỏ xanh ấm áp cho mùa lễ cuối năm.'},
+  {id:'tet',name:'Tết Nguyên Đán',emoji:'🧧',tag:'Sắp ra mắt',soon:true,desc:'Đỏ vàng may mắn, đón năm mới.'}
+];
+function applyUiSkin(){
+  const root=document.documentElement;
+  if(state.uiSkin==='halloween'){root.dataset.skin='halloween';root.dataset.theme='dark';const m=document.querySelector('meta[name="theme-color"]');if(m)m.content='#140c1f';const h=$('themeSwitchHint');if(h)h.textContent='Giao diện Halloween đang bật (luôn ở chế độ tối).'}
+  else delete root.dataset.skin;
+  const w=document.getElementById('hwWebs');
+  if(state.uiSkin==='halloween'&&!w){const d=document.createElement('div');d.id='hwWebs';d.className='hw-webs';d.setAttribute('aria-hidden','true');d.innerHTML='<i class="hw-web hw-web-l"></i><i class="hw-web hw-web-r"></i><span class="hw-thread"><em class="hw-spider">'+HW.spider()+'</em></span>'+hwFlyersHTML();document.body.appendChild(d)}
+  else if(state.uiSkin!=='halloween'&&w)w.remove();
+}
+const applyThemeBase=applyTheme;applyTheme=function(){applyThemeBase.apply(this,arguments);applyUiSkin()};
+function renderThemeStore(){
+  const el=$('themeStore');if(!el)return;const cur=state.uiSkin||'';
+  el.innerHTML='<div class="ts-grid">'+UI_SKINS.map(k=>{
+    const on=!k.soon&&k.id===cur;
+    return `<article class="ts-card${on?' on':''}${k.soon?' soon':''}"><div class="ts-prev ts-${k.id||'default'}"><span class="ts-emo">${k.id==='halloween'?HW.pumpkin():k.emoji}</span><i></i><i></i></div><div class="ts-info"><strong>${esc(k.name)}</strong><small class="ts-tag">${esc(k.tag)}</small><p>${esc(k.desc)}</p></div><button class="btn ${on?'secondary':''} small" type="button" ${k.soon||on?'disabled':''} data-id="${esc(k.id)}" onclick="setUiSkin(this.dataset.id)">${k.soon?'Sắp ra mắt':on?'Đang dùng ✓':'Dùng ngay'}</button></article>`}).join('')+'</div>';
+}
+function setUiSkin(id){state.uiSkin=id==='halloween'?'halloween':'';applyTheme();saveQuiet();renderThemeStore();toast(state.uiSkin?'Đã bật giao diện Halloween':'Đã quay về giao diện mặc định')}
+/* ===== Bộ SVG Halloween (không dùng emoji) ===== */
+let HW_UID=0;
+const HW={
+  pumpkin(){const u='hwp'+(++HW_UID);return `<svg viewBox="0 0 48 44" aria-hidden="true"><defs><radialGradient id="${u}" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#ffc766"/><stop offset=".6" stop-color="#f58a1f"/><stop offset="1" stop-color="#c85a0a"/></radialGradient></defs><path d="M24 10c0-4 2-6 5-7" fill="none" stroke="#5a8f3a" stroke-width="3" stroke-linecap="round"/><ellipse cx="12.5" cy="26" rx="10.5" ry="15" fill="url(#${u})" stroke="#b9500c" stroke-width=".8"/><ellipse cx="35.5" cy="26" rx="10.5" ry="15" fill="url(#${u})" stroke="#b9500c" stroke-width=".8"/><ellipse cx="24" cy="26" rx="11" ry="16.5" fill="url(#${u})" stroke="#b9500c" stroke-width=".8"/><path d="M17 21l3.4 5.5h-6.8zM31 21l3.4 5.5h-6.8zM24 28.5l-2 3h4zM15.5 33q8.5 6.5 17 0l-2.2 .2-2.2 2.2-2.1-2-2 2.2-2-2-2.1 2-2.2-2.2z" fill="#fff0a8"/></svg>`},
+  ghost(){const u='hwg'+(++HW_UID);return `<svg viewBox="0 0 40 46" aria-hidden="true"><defs><linearGradient id="${u}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cdbdff"/></linearGradient></defs><path d="M4 44V19C4 9 11 2 20 2s16 7 16 17v25l-5-4-5 4-6-4-6 4-5-4z" fill="url(#${u})" stroke="#a98bff" stroke-width="1" stroke-linejoin="round"/><ellipse cx="14" cy="17" rx="2.3" ry="3.1" fill="#2b1233"/><ellipse cx="26" cy="17" rx="2.3" ry="3.1" fill="#2b1233"/><ellipse cx="20" cy="26" rx="2.6" ry="3.4" fill="#2b1233"/><circle cx="9" cy="23" r="2.2" fill="#ff9ec4" opacity=".6"/><circle cx="31" cy="23" r="2.2" fill="#ff9ec4" opacity=".6"/></svg>`},
+  bat(){return `<svg viewBox="0 0 64 32" aria-hidden="true"><g class="hw-wing hw-wing-l"><path d="M31 15C27 8 17 5 3 8c3 3 3 6 5 9 2-2 4-2 6 0 2-2 5-2 7 1 3-2 7-1 10 2z" fill="#3a2358" stroke="#9b7bd8" stroke-width=".8" stroke-linejoin="round"/></g><g class="hw-wing hw-wing-r"><path d="M33 15C37 8 47 5 61 8c-3 3-3 6-5 9-2-2-4-2-6 0-2-2-5-2-7 1-3-2-7-1-10 2z" fill="#3a2358" stroke="#9b7bd8" stroke-width=".8" stroke-linejoin="round"/></g><ellipse cx="32" cy="17" rx="4.6" ry="6.6" fill="#2d1b45" stroke="#9b7bd8" stroke-width=".8"/><path d="M28.4 12L29.4 5.5 32 11zM35.6 12L34.6 5.5 32 11z" fill="#2d1b45" stroke="#9b7bd8" stroke-width=".8" stroke-linejoin="round"/><circle cx="30.4" cy="15.5" r="1.1" fill="#ffd34d"/><circle cx="33.6" cy="15.5" r="1.1" fill="#ffd34d"/></svg>`},
+  spider(){return `<svg viewBox="0 0 28 28" aria-hidden="true"><g fill="none" stroke="#a48ad6" stroke-width="1.3" stroke-linecap="round"><path d="M10 15Q4 11 2 16M10 17.5Q3 18 3 24M11 19.5Q8 23 9 27M11.5 13.5Q7 8 5 11"/><path d="M18 15Q24 11 26 16M18 17.5Q25 18 25 24M17 19.5Q20 23 19 27M16.5 13.5Q21 8 23 11"/></g><ellipse cx="14" cy="18" rx="5.2" ry="6" fill="#2b1b3d" stroke="#a48ad6" stroke-width=".8"/><circle cx="14" cy="10.6" r="3.4" fill="#2b1b3d" stroke="#a48ad6" stroke-width=".8"/><circle cx="12.7" cy="10" r=".9" fill="#ffd34d"/><circle cx="15.3" cy="10" r=".9" fill="#ffd34d"/><path d="M14 14.5v6" stroke="#ff8a1f" stroke-width="1.6" stroke-linecap="round"/></svg>`}
+};
+/* ===== Khung tên Bí Ngô Cười: viên thuốc có gân bí ngô nổi, xoay vòng → hiện tên khắc phát sáng → quay lại bí ngô cười ===== */
+function pumpkinArtHTML(){
+  const u='pk'+(++HW_UID);
+  const leaf=(cls,curl)=>`<svg class="pk2-lf ${cls}" viewBox="0 0 36 28"><defs><linearGradient id="${u}${cls}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c4f27a"/><stop offset="1" stop-color="#5fae2e"/></linearGradient></defs><path d="M31 24C30 12 19 3 3 4 3 17 14 26 31 24Z" fill="url(#${u}${cls})" stroke="#3f8a22" stroke-width=".8" stroke-linejoin="round"/><path d="M30 23C21 17 12 11 5 5.5" fill="none" stroke="#3f8a22" stroke-width=".9" stroke-linecap="round" opacity=".75"/><path d="M31 25C26 20 15 19 8 22 13 28 24 28 31 25Z" fill="#6cb53a" stroke="#3f8a22" stroke-width=".7" stroke-linejoin="round"/>${curl?'<path d="M30 14C33 9 36 12 34 14.5 32.5 16 31 14.5 32.5 13.5" fill="none" stroke="#6fb336" stroke-width="1.2" stroke-linecap="round"/>':''}</svg>`;
+  const star=(c)=>`<svg class="pk2-star ${c}" viewBox="0 0 10 10"><path d="M5 0l1.2 3.8L10 5 6.2 6.2 5 10 3.8 6.2 0 5l3.8-1.2z" fill="#ffe27a"/></svg>`;
+  return `<span class="pk2" aria-hidden="true">
+<i class="pk2-aura"></i>
+${leaf('pk2-lf-l',false)}${leaf('pk2-lf-r',true)}
+<i class="pk2-body"><svg class="pk2-bsvg" viewBox="0 0 200 56" preserveAspectRatio="none">
+<defs>
+<radialGradient id="${u}a" cx="50%" cy="28%" r="80%"><stop offset="0" stop-color="#ffb347"/><stop offset=".45" stop-color="#fb8a1c"/><stop offset="1" stop-color="#d4570a"/></radialGradient>
+<linearGradient id="${u}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".6"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="${u}r" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b94a05" stop-opacity="0"/><stop offset=".5" stop-color="#b94a05" stop-opacity=".75"/><stop offset="1" stop-color="#b94a05" stop-opacity="0"/></linearGradient>
+</defs>
+<path vector-effect="non-scaling-stroke" d="M28 7.5Q100 4.5 172 7.5C184 7.5 194 17 194 29 194 41 184 50.5 172 50.5Q100 53.5 28 50.5C16 50.5 6 41 6 29 6 17 16 7.5 28 7.5Z" fill="url(#${u}a)" stroke="#a84505" stroke-width="1"/>
+<g fill="none" stroke-linecap="round">
+<path vector-effect="non-scaling-stroke" d="M40 10C26 22 26 40 40 50" stroke="#b34a06" stroke-opacity=".7" stroke-width="1.3"/>
+<path vector-effect="non-scaling-stroke" d="M70 8C54 20 54 40 70 51" stroke="#b34a06" stroke-opacity=".7" stroke-width="1.3"/>
+<path vector-effect="non-scaling-stroke" d="M130 8C146 20 146 40 130 51" stroke="#b34a06" stroke-opacity=".7" stroke-width="1.3"/>
+<path vector-effect="non-scaling-stroke" d="M160 10C174 22 174 40 160 50" stroke="#b34a06" stroke-opacity=".7" stroke-width="1.3"/>
+<path vector-effect="non-scaling-stroke" d="M43 12C31 23 31 39 43 48M73 10C60 21 60 39 73 49M127 10C140 21 140 39 127 49M157 12C169 23 169 39 157 48" stroke="#ffd58a" stroke-opacity=".45" stroke-width="1"/>
+</g>
+<g fill="url(#${u}g)">
+<ellipse cx="22" cy="21" rx="9" ry="4.5" transform="rotate(-20 22 21)"/>
+<ellipse cx="55" cy="14" rx="9" ry="3.4" transform="rotate(-10 55 14)"/>
+<ellipse cx="100" cy="17" rx="14" ry="3.4"/>
+<ellipse cx="145" cy="14" rx="9" ry="3.4" transform="rotate(10 145 14)"/>
+<ellipse cx="178" cy="21" rx="9" ry="4.5" transform="rotate(20 178 21)"/>
+</g>
+<path d="M14 44Q100 57 186 44Q100 51 14 44Z" fill="#7a2b00" opacity=".28"/>
+</svg></i>
+<span class="pk2-clip"><span class="pk2-sweep"></span></span>
+<svg class="pk2-stem" viewBox="0 0 46 22"><defs><linearGradient id="${u}s" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4f8e2d"/><stop offset=".5" stop-color="#86c14b"/><stop offset="1" stop-color="#4a8a29"/></linearGradient><linearGradient id="${u}l" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b9f070"/><stop offset="1" stop-color="#5fae2e"/></linearGradient></defs>
+<path d="M7 21C9 13 9 6 14 2l5 2C17 8 18 14 22 21z" fill="url(#${u}s)" stroke="#33621c" stroke-width=".8" stroke-linejoin="round"/>
+<path d="M14 2l5 2" stroke="#d6f59a" stroke-width="1" stroke-linecap="round" opacity=".7"/>
+<path d="M19 5C26 -1 33 2 32 8 31 12 26 11 27 8 28 6 30 7 30 8.5" fill="none" stroke="#6fb336" stroke-width="1.5" stroke-linecap="round"/>
+<path d="M28 15C31 7 40 5 45 8 43 15 35 18 28 15Z" fill="url(#${u}l)" stroke="#3f8a22" stroke-width=".7" stroke-linejoin="round"/>
+<path d="M29 14.5C34 11.5 39 9.5 44 8" fill="none" stroke="#3f8a22" stroke-width=".7" stroke-linecap="round" opacity=".8"/>
+<path d="M11 13C8 7 3 6 0 8 1 14 7 16 11 13Z" fill="url(#${u}l)" stroke="#3f8a22" stroke-width=".7" stroke-linejoin="round"/>
+</svg>
+<svg class="pk2-face" viewBox="0 0 100 30">
+<g class="pk2-f pk2-f-awake pk2-glow"><path class="pk2-eye" d="M25 2.5L33 14.5H17z"/><path class="pk2-eye" d="M75 2.5L83 14.5H67z"/><path d="M50 14l-3.2 4.8h6.4z"/><path transform="translate(0 2.4)" d="M25 19.5Q50 33 75 19.5L71 20.5 67.5 24 63.5 21 59.5 25.2 55 22 50 26.2 45 22 40.5 25.2 36.5 21 32.5 24 29 20.5Z"/></g>
+<g class="pk2-f pk2-f-laugh pk2-glow"><path class="pk2-lq" d="M25 1.5L33 12.5H17z"/><path class="pk2-lq" d="M75 1.5L83 12.5H67z"/><g class="pk2-haha" transform="translate(0 1.2)"><path d="M20 17L27 19.5 31 17 37 20.5 43 17 50 21 57 17 63 20.5 69 17 73 19.5 80 17Q79 29 50 29 21 29 20 17Z"/><g fill="#e0710f" stroke="none"><rect x="34" y="19.8" width="5.5" height="4.4" rx="1"/><rect x="60.5" y="19.8" width="5.5" height="4.4" rx="1"/><rect x="46" y="24.6" width="8" height="4.4" rx="1"/></g></g></g>
+</svg>
+${star('pk2-star-a')}${star('pk2-star-b')}${star('pk2-star-c')}${star('pk2-star-d')}
+<i class="pk2-flash"></i><i class="pk2-sp" style="--a:0deg"></i><i class="pk2-sp" style="--a:60deg"></i><i class="pk2-sp" style="--a:120deg"></i><i class="pk2-sp" style="--a:180deg"></i><i class="pk2-sp" style="--a:240deg"></i><i class="pk2-sp" style="--a:300deg"></i></span>`;
+}
+function injectPumpkinArt(){
+  document.querySelectorAll('#page-wallet .wallet-name-frame,[data-pumpkin-preview]').forEach(f=>{
+    f.querySelectorAll('.pk-art,.wallet-name-pumpkin-art').forEach(x=>x.remove());
+    if(!f.querySelector('.pk2')){f.classList.add('pk-host');f.insertAdjacentHTML('afterbegin',pumpkinArtHTML())}
+  });
+}
+function injectHwArt(){
+  document.querySelectorAll('[data-hw-pumpkin]').forEach(el=>{if(!el.firstElementChild)el.innerHTML=HW.pumpkin()});
+  document.querySelectorAll('[data-hw-art]').forEach(el=>{if(!el.firstElementChild)el.innerHTML='<span class="hw-art-ghost">'+HW.ghost()+'</span><span class="hw-art-bat">'+HW.bat()+'</span>'});
+}
+injectPumpkinArt();injectHwArt();document.addEventListener('DOMContentLoaded',()=>{injectPumpkinArt();injectHwArt()});
+/* Sinh vật Halloween: ít và gọn, chỉ ở các góc màn hình để không rối mắt */
+function hwFlyersHTML(){
+  return `<span class="hw-crit hw-bat-hover">${HW.bat()}</span><span class="hw-crit hw-bat-fly">${HW.bat()}</span><span class="hw-crit hw-ghost-float">${HW.ghost()}</span>`;
+}
+applyUiSkin();
 function openTransactionEditor(kind,type='expense'){
   activeTransactionKind=['rent','income','expense'].includes(kind)?kind:'other';
   const isRent=activeTransactionKind==='rent';
@@ -4896,7 +5011,7 @@ function importFile(e){
           const customization=data.walletCustomization||{};
           const validColors=['blue','green','purple','rose','graphite','gold'];
           const validSkins=['sakura','beach','aurora','lavender','sunset','forest','christmas'];
-          const validFrames=['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine'];
+          const validFrames=['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine','pumpkin'];
           if(validFrames.includes(customization.nameFrameStyle))window.setWalletNameFrameStyle(customization.nameFrameStyle);
           if(validSkins.includes(customization.skin))window.setWalletSkin(customization.skin);
           else if(validColors.includes(customization.cardColor))window.setWalletCardColor(customization.cardColor);
@@ -5066,7 +5181,7 @@ function restoreFullBackup(data){
   state={...state,...restored};if(!Array.isArray(state.transactions))state.transactions=[];
   if(!saveQuiet()){state=previousState;alert('Không thể khôi phục vì bộ nhớ đã đầy. Dữ liệu hiện tại vẫn được giữ nguyên.');return;}
   try{if(typeof state.profilePhoto==='string'&&state.profilePhoto.startsWith('data:image/'))localStorage.setItem('miSpaceProfilePhotoV1',state.profilePhoto);else localStorage.removeItem('miSpaceProfilePhotoV1')}catch(err){console.warn(err)}
-  const customization=data.walletCustomization||{};const validColors=['blue','green','purple','rose','graphite','gold'];const validSkins=['sakura','beach','aurora','lavender','sunset','forest','christmas'];const validFrames=['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine'];
+  const customization=data.walletCustomization||{};const validColors=['blue','green','purple','rose','graphite','gold'];const validSkins=['sakura','beach','aurora','lavender','sunset','forest','christmas'];const validFrames=['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine','pumpkin'];
   if(validFrames.includes(customization.nameFrameStyle)&&window.setWalletNameFrameStyle)window.setWalletNameFrameStyle(customization.nameFrameStyle);
   if(validSkins.includes(customization.skin)&&window.setWalletSkin)window.setWalletSkin(customization.skin);else if(validColors.includes(customization.cardColor)&&window.setWalletCardColor)window.setWalletCardColor(customization.cardColor);
   closeModal();renderAll();toast('Đã khôi phục bản sao lưu');
@@ -5157,8 +5272,8 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', (
  window.setWalletSkin=function(skin){clearThemes();card.classList.add('wallet-skin-'+skin);panel.querySelectorAll('#walletPatternOptions .wallet-skin-option').forEach(b=>b.classList.toggle('active',b.dataset.skin===skin));panel.querySelectorAll('#walletBasicOptions .wallet-color-swatch[data-wallet-color]').forEach(b=>b.classList.remove('active'));try{localStorage.setItem('vspace-wallet-skin',skin);localStorage.removeItem('vspaceWalletCardColor')}catch(e){}};
  let walletWindLeavesStarted=false;
  function startWalletWindLeaves(){if(walletWindLeavesStarted)return;document.querySelectorAll('#page-wallet .wallet-wind-leaves animateMotion,#page-wallet .wallet-wind-leaves animate[attributeName="opacity"]').forEach(animation=>{try{animation.beginElement()}catch(e){}});walletWindLeavesStarted=true}
- window.setWalletNameFrameStyle=function(style){const frame=document.querySelector('#page-wallet .wallet-name-frame');const styles=['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine'];if(!frame||!styles.includes(style))return;frame.classList.remove(...styles.map(name=>'wallet-name-frame-'+name));frame.classList.remove('wallet-name-wind');frame.classList.add('wallet-name-frame-'+style);if(style==='vine'){frame.classList.add('wallet-name-wind');startWalletWindLeaves()}panel.querySelectorAll('.wallet-frame-swatch[data-frame-style]').forEach(b=>b.classList.toggle('active',b.dataset.frameStyle===style));try{localStorage.setItem('vspace-wallet-name-frame-style',style);localStorage.removeItem('vspace-wallet-name-wind')}catch(e){}};
- try{const frameStyle=localStorage.getItem('vspace-wallet-name-frame-style');if(frameStyle&&['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine'].includes(frameStyle))setWalletNameFrameStyle(frameStyle);else setWalletNameFrameStyle('green')}catch(e){setWalletNameFrameStyle('green')}
+ window.setWalletNameFrameStyle=function(style){const frame=document.querySelector('#page-wallet .wallet-name-frame');const styles=['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine','pumpkin'];if(!frame||!styles.includes(style))return;frame.classList.remove(...styles.map(name=>'wallet-name-frame-'+name));frame.classList.remove('wallet-name-wind');frame.classList.add('wallet-name-frame-'+style);if(style==='vine'){frame.classList.add('wallet-name-wind');startWalletWindLeaves()}panel.querySelectorAll('.wallet-frame-swatch[data-frame-style]').forEach(b=>b.classList.toggle('active',b.dataset.frameStyle===style));try{localStorage.setItem('vspace-wallet-name-frame-style',style);localStorage.removeItem('vspace-wallet-name-wind')}catch(e){}};
+ try{const frameStyle=localStorage.getItem('vspace-wallet-name-frame-style');if(frameStyle&&['green','blue','purple','gold','pink','mint','lavender','peach','silver','beige','navy','midnight','sapphire','teal','emerald','forest','olive','burgundy','wine','ruby','cherry','plum','indigo','aubergine','charcoal','obsidian','chocolate','coffee','copper','bronze','vine','pumpkin'].includes(frameStyle))setWalletNameFrameStyle(frameStyle);else setWalletNameFrameStyle('green')}catch(e){setWalletNameFrameStyle('green')}
  panel.addEventListener('click',function(e){if(e.target===panel)window.toggleWalletCustomize();});
  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)window.toggleWalletCustomize();});
  try{const skin=localStorage.getItem('vspace-wallet-skin');const color=localStorage.getItem('vspaceWalletCardColor');if(skin&&['sakura','beach','aurora','lavender','sunset','forest','christmas'].includes(skin))setWalletSkin(skin);else setWalletCardColor(color&&['blue','green','purple','rose','graphite','gold'].includes(color)?color:'blue')}catch(e){setWalletCardColor('blue')}
@@ -6539,4 +6654,414 @@ body.wallet-customize-open::before{
 .adv-more{margin-top:10px}.adv-more>summary{padding:11px 14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--accent);font-size:13px;font-weight:700;text-align:center;cursor:pointer;list-style:none}
 .adv-more>summary::-webkit-details-marker{display:none}.adv-more[open]>summary{margin-bottom:10px}
 </style>
+<style id="halloween-banner-style">
+#page-wallet .wallet-banner-track .wallet-banner.halloween{border-color:#ff8a2a44;color:#fff;background:radial-gradient(ellipse at 88% 18%,#ff7a1a66 0,transparent 40%),radial-gradient(ellipse at 8% 100%,#7b3fe44d 0,transparent 48%),linear-gradient(135deg,#1b1030,#2a1442 55%,#3a1a2a);box-shadow:0 15px 38px #2a144266}
+#page-wallet .wallet-banner.halloween .wallet-brandline,#page-wallet .wallet-banner.halloween h2{color:#fff}
+#page-wallet .wallet-banner.halloween .wallet-brandline span[style]{color:#ffb869!important;font-weight:800;letter-spacing:.04em}
+#page-wallet .wallet-banner.halloween .eyebrow{color:#ff9a3d}
+#page-wallet .wallet-banner.halloween p{color:#d9c9f2}
+#page-wallet .wallet-banner.halloween .wallet-brandmark{background:linear-gradient(135deg,#ff8a1f,#ff5a00);color:#fff;font-size:18px}
+#page-wallet .wallet-banner-carousel.hw-on .wallet-banner-dot{background:#ffffff66}
+#page-wallet .wallet-banner-carousel.hw-on .wallet-banner-dot.active{background:#ff8a1f}
+</style>
+<style id="ui-skin-style">
+.ts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.ts-card{display:grid;align-content:start;gap:9px;padding:10px;border:1.5px solid var(--line);border-radius:16px;background:var(--surface)}
+.ts-card.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}.ts-card.soon{opacity:.62}
+.ts-prev{position:relative;display:grid;align-content:end;gap:5px;height:90px;padding:10px;overflow:hidden;border-radius:12px}
+.ts-prev i{display:block;height:7px;border-radius:99px;background:#ffffff55}.ts-prev i+i{width:60%}
+.ts-emo{position:absolute;top:8px;right:10px;font-size:26px}
+.ts-default{background:linear-gradient(115deg,#f7f7f8 50%,#17191e 50%)}.ts-default i{background:#8b95a555}
+.ts-halloween{background:radial-gradient(ellipse at 90% 10%,#ff7a1a88 0,transparent 55%),linear-gradient(135deg,#1b1030,#2a1442 60%,#3a1a2a)}.ts-halloween i{background:#ff8a1fcc}
+.ts-xmas{background:linear-gradient(135deg,#7a1f2b,#1d5a3a)}.ts-tet{background:linear-gradient(135deg,#b3202a,#e8b030)}
+.ts-info strong{display:block;font-size:14px}.ts-tag{display:inline-block;margin:3px 0;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--muted);font-size:11px;font-weight:700}
+.ts-info p{margin:4px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+.ts-card .btn{width:100%}.ts-card .btn[disabled]{opacity:.7;cursor:default}
+html[data-skin="halloween"]{--bg:#140c1f;--surface:#1f1330;--surface2:#2b1b42;--text:#f6efff;--muted:#b9a8d6;--line:#3a2658;--accent:#ff8a1f;--accent2:#3b2210;--danger:#ff6b7a;--shadow:0 8px 28px #0006}
+html[data-skin="halloween"] body{background:radial-gradient(ellipse at 100% 0%,#ff7a1a26 0,transparent 42%),radial-gradient(ellipse at 0% 100%,#7b3fe438 0,transparent 46%),var(--bg)}
+</style>
+<style id="halloween-extras-style">
+/* --- Mạng nhện Halloween --- */
+.hw-webs{position:fixed;inset:0;z-index:4;pointer-events:none}
+.hw-web{position:absolute;top:0;width:104px;height:104px;opacity:.5;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'><g fill='none' stroke='%23cdb8ff' stroke-width='1' stroke-linecap='round'><path d='M60 0L0 3M60 0L8 30M60 0L28 52M60 0L54 60'/><path d='M60 16Q44 16 44 2M60 32Q34 30 30 5M60 48Q22 44 14 10'/></g></svg>") no-repeat top right/100% 100%}
+.hw-web-r{right:0}.hw-web-l{left:0;transform:scaleX(-1)}
+.hw-thread{position:absolute;top:0;right:46px;width:1px;height:92px;background:linear-gradient(#cdb8ff88,#cdb8ff22);transform-origin:top center;animation:hwSwing 5s ease-in-out infinite}
+.hw-spider{position:absolute;left:-8px;bottom:-12px;font-size:17px;font-style:normal}
+@keyframes hwSwing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+html[data-skin="halloween"] .card{position:relative}
+html[data-skin="halloween"] .card::after{content:"";position:absolute;top:0;right:0;width:54px;height:54px;border-radius:0 inherit 0 0;opacity:.4;pointer-events:none;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'><g fill='none' stroke='%23cdb8ff' stroke-width='1' stroke-linecap='round'><path d='M60 0L0 3M60 0L8 30M60 0L28 52M60 0L54 60'/><path d='M60 16Q44 16 44 2M60 32Q34 30 30 5M60 48Q22 44 14 10'/></g></svg>") no-repeat top right/100% 100%}
+@media(prefers-reduced-motion:reduce){.hw-thread{animation:none}}
+</style>
+<style id="halloween-v2-style">
+html[data-skin="halloween"] .ledger-cal-day.today.sel .n{width:46px;height:42px;border-radius:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 44'><path d='M24 9c0-4 2-6 5-7' fill='none' stroke='%235a8f3a' stroke-width='3' stroke-linecap='round'/><ellipse cx='13' cy='26' rx='11' ry='16' fill='%23ee7a1d'/><ellipse cx='35' cy='26' rx='11' ry='16' fill='%23ee7a1d'/><ellipse cx='24' cy='26' rx='11' ry='17' fill='%23ff9a2f'/><path d='M24 11v30M16 13c-4 8-4 20 0 28M32 13c4 8 4 20 0 28' fill='none' stroke='%23c9580f' stroke-width='1.3' opacity='.5'/></svg>") center/contain no-repeat;box-shadow:none;transform:scale(1.06);filter:drop-shadow(0 3px 7px rgba(255,138,31,.55))}
+html[data-skin="halloween"] .ledger-cal-day.today.sel .n b{color:#2b1233!important}
+html[data-skin="halloween"] .ledger-cal-day.today.sel .n i{color:#5a2a0a!important}
+html[data-skin="halloween"] .ledger-cal-day.today:not(.sel) .n b,html[data-skin="halloween"] .ledger-cal-day.today:not(.sel) .n i{color:#ff9a3d}
+</style>
+<style id="halloween-v3-style">
+/* ================= Khung tên Bí Ngô Cười (v4) =================
+   Chu kỳ 16s: tối đèn → bật đèn dần (chập chờn) → dải sáng quét, tên khắc phát sáng → giật mình, nến chập chờn tắt → lắc lư cười hả hê → ngủ lại */
+@property --pk-ang{syntax:'<angle>';inherits:false;initial-value:0deg}
+.pk2{position:absolute;inset:0;z-index:0;pointer-events:none;display:none}
+.pk-host.wallet-name-frame-pumpkin>.pk2,.pk-host.wallet-pumpkin-swatch>.pk2{display:block}
+.pk2>svg{position:absolute;display:block;overflow:visible}
+.pk2>i.pk2-body{width:auto;height:auto;border-radius:999px;position:absolute;display:block;inset:-2px -1px;border-radius:999px;background:radial-gradient(ellipse 62% 50% at 50% 14%,rgba(255,241,201,.35),transparent 72%),repeating-linear-gradient(90deg,transparent 0,transparent 19%,rgba(140,55,0,.24) 19%,rgba(140,55,0,.24) 20%),radial-gradient(ellipse 85% 130% at 50% 30%,#ffcf70 0,#f58a1f 52%,#c25508 100%);box-shadow:inset 0 0 0 1px rgba(130,48,0,.5),inset 0 2px 3px rgba(255,240,200,.6),inset 0 -3px 6px rgba(150,55,0,.35);filter:drop-shadow(0 3px 4px rgba(120,45,0,.5));animation:pkBodyGlow 16s ease-in-out infinite}
+.pk2-stem{left:50%;top:-9px;width:13px;height:10px;margin-left:-6px;transform:rotate(6deg);animation:pkStemDim 16s infinite}
+.pk2-face{left:14px;right:8px;top:0;width:calc(100% - 22px);height:100%}
+.pk2-f{opacity:0}
+.pk2-f-sleep{display:none;fill:none;stroke:#7a2c00;stroke-width:2.4;stroke-linecap:round;filter:drop-shadow(0 1px 0 rgba(255,225,160,.55));opacity:1;animation:pkFSleep 16s infinite}
+.pk2-f-awake{opacity:1;animation:pkFAwake 16s infinite,pkFaceLight 16s infinite}
+.pk2-f-dizzy{animation:pkFDizzy 16s infinite}
+.pk2-f-laugh{animation:pkFLaugh 16s infinite}
+.pk2-glow{fill:#ffe27a;stroke:#ffe27a;stroke-width:0;filter:drop-shadow(0 0 2px #ffd34d) drop-shadow(0 0 6px #ff8a00)}
+.pk2-f-dizzy path,.pk2-f-laugh .pk2-lsq{fill:none;stroke:#ffe27a}
+.pk2-eye,.pk2-haha,.pk2-lsq,.pk2-wob,.pk2-spin{transform-box:fill-box}
+.pk2-eye{transform-origin:50% 100%}
+.pk2-f-awake .pk2-eye{animation:pkBlink 3.2s ease-in-out infinite}
+.pk2-spin{transform-origin:50% 50%;animation:pkSpiral .7s linear infinite}
+.pk2-wob{animation:pkWob .5s ease-in-out infinite alternate}
+.pk2-lsq{transform-origin:50% 100%;animation:pkSquint .2s ease-in-out infinite alternate}
+.pk2-haha{transform-origin:50% 0;animation:pkHaha .2s ease-in-out infinite alternate}
+.pk2-flash{position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px;border-radius:50%;background:radial-gradient(#fff,#ffd34d 45%,transparent 72%);opacity:0;animation:pkFlash 16s infinite}
+.pk2-sp{position:absolute;left:50%;top:50%;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:#ffe27a;box-shadow:0 0 6px #ff9a2f;opacity:0;animation:pkSpark 16s infinite}
+.pk2>i.pk2-body{overflow:hidden}
+.pk2-sweep{position:absolute;top:0;bottom:0;left:-30%;width:30%;opacity:0;background:linear-gradient(90deg,transparent,rgba(255,244,190,.95) 50%,transparent);filter:blur(2px);animation:pkSweep 16s infinite}
+@keyframes pkSweep{0%,32.6%{left:-30%;opacity:0}33.2%{left:-30%;opacity:1}38%{left:100%;opacity:1}38.6%,100%{left:100%;opacity:0}}
+.pk2-face{animation:pkCandle 1.6s ease-in-out infinite}
+.pk2-f-awake{transform-box:fill-box;transform-origin:50% 50%}
+@keyframes pkFaceLight{0%,6%{fill:#2b1000;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}7.5%{fill:#ffb347;filter:drop-shadow(0 0 3px #ff8a00) drop-shadow(0 0 3px #ff8a00)}8.5%{fill:#2b1000;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}9.5%{fill:#ffd34d;filter:drop-shadow(0 0 4px #ff9a00) drop-shadow(0 0 4px #ff9a00)}10.5%{fill:#5a2200;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}12%,96%{fill:#ffe27a;filter:drop-shadow(0 0 2px #ffd34d) drop-shadow(0 0 6px #ff8a00)}98.5%,100%{fill:#2b1000;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}}
+@keyframes pkStemDim{0%,6%{filter:brightness(.4)}11.5%,95%{filter:brightness(1)}98.5%,100%{filter:brightness(.4)}}
+@keyframes pkFlicker{from{opacity:.86}to{opacity:1}}
+@keyframes pkBlink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.15)}}
+@keyframes pkSquint{from{transform:scaleY(1)}to{transform:scaleY(.7)}}
+@keyframes pkHaha{from{transform:scale(1,1)}to{transform:scale(1.06,1.35)}}
+@keyframes pkSpiral{to{transform:rotate(360deg)}}
+@keyframes pkWob{from{transform:translateY(-.8px) scaleX(.92)}to{transform:translateY(.8px) scaleX(1.06)}}
+@keyframes pkFSleep{0%,100%{opacity:0}}
+@keyframes pkFAwake{0%,31%{opacity:1;transform:scale(1)}33.5%{opacity:0;transform:scale(1)}66.4%{opacity:0;transform:scale(1.2)}67.4%{opacity:1;transform:scale(1.22)}70.5%{opacity:1;transform:scale(1.1)}75%{opacity:1;transform:scale(1)}76.2%,97.6%{opacity:0;transform:scale(1)}98.6%,100%{opacity:1;transform:scale(1)}}
+@keyframes pkFDizzy{0%,75.4%{opacity:0}76.4%,83.2%{opacity:1}84%,100%{opacity:0}}
+@keyframes pkFLaugh{0%,75.8%{opacity:0}77%,95.6%{opacity:1}97%,100%{opacity:0}}
+@keyframes pkRingVis{0%,14%{opacity:0}16%,36%{opacity:1}38%,68%{opacity:0}69.5%,75%{opacity:1}76.5%,100%{opacity:0}}
+@keyframes pkRingSpin{from{--pk-ang:0deg}to{--pk-ang:7200deg}}
+@keyframes pkFlash{0%,36.6%{opacity:0;transform:scale(.3)}38%{opacity:.9;transform:scale(2.2)}42%{opacity:0;transform:scale(4)}100%{opacity:0}}
+@keyframes pkSpark{0%,36.6%{opacity:0;transform:rotate(var(--a)) translateX(0) scale(1)}38%{opacity:1}44%{opacity:0;transform:rotate(var(--a)) translateX(40px) scale(.3)}100%{opacity:0}}
+@keyframes pkBodyGlow{0%,6%{filter:drop-shadow(0 2px 3px rgba(60,20,0,.55)) brightness(.38)}7.5%{filter:drop-shadow(0 0 8px rgba(255,160,40,.8)) brightness(.95)}8.5%{filter:drop-shadow(0 2px 3px rgba(60,20,0,.55)) brightness(.38)}9.5%{filter:drop-shadow(0 0 9px rgba(255,165,45,.85)) brightness(1.05)}10.5%{filter:drop-shadow(0 2px 3px rgba(60,20,0,.55)) brightness(.55)}11.5%{filter:drop-shadow(0 0 13px rgba(255,170,50,.95)) brightness(1.16)}14%,31%{filter:drop-shadow(0 0 6px rgba(255,158,40,.6)) brightness(1.05)}36%,64%{filter:drop-shadow(0 0 10px rgba(255,158,40,.88)) brightness(1.09)}68%{filter:drop-shadow(0 0 14px rgba(255,180,60,.95)) brightness(1.15)}76%,94%{filter:drop-shadow(0 3px 4px rgba(120,45,0,.5)) brightness(1)}98.5%,100%{filter:drop-shadow(0 2px 3px rgba(60,20,0,.55)) brightness(.38)}}
+@keyframes pkNameVis{0%,32.6%{opacity:0;clip-path:inset(-14px 100% -14px -14px)}33.2%{opacity:1;clip-path:inset(-14px 100% -14px -14px)}38%,65.6%{opacity:1;clip-path:inset(-14px -14px -14px -14px)}67%{opacity:.25}67.8%{opacity:.95}68.8%{opacity:.12}70%{opacity:.6}72%,100%{opacity:0;clip-path:inset(-14px -14px -14px -14px)}}
+@keyframes pkCandle{0%,100%{filter:brightness(1)}30%{filter:brightness(1.18)}60%{filter:brightness(.92)}80%{filter:brightness(1.1)}}
+@keyframes pkCycle{0%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}0.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}1%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}1.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}2%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}2.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}3%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}3.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}4%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}4.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}5.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}6%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}6.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}7%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}7.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}8%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.013)}8.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.019)}9%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.023)}9.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.027)}10%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.029)}10.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.030)}11%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.029)}11.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.027)}12%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.023)}12.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.019)}13%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.013)}13.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}14%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}14.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.003)}15%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.006)}15.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.008)}16%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}16.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}17%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}17.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}18%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}18.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.004)}19%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.001)}19.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.998)}20%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.995)}20.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.993)}21%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}21.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}22%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}22.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}23%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.993)}23.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.995)}24%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.998)}24.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.001)}25%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.004)}25.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.006)}26%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.008)}26.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}27%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}27.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}28%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.008)}28.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.006)}29%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.004)}29.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.001)}30%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.998)}30.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.995)}31%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.993)}31.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}32%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}32.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}33%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}33.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.993)}34%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.995)}34.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.998)}35%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.001)}35.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.004)}36%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}36.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}37%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}37.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}38%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}38.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.008)}39%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.006)}39.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.003)}40%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}40.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.997)}41%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.994)}41.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.992)}42%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}42.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}43%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}43.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}44%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.993)}44.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.996)}45%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.999)}45.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.002)}46%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.005)}46.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}47%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}47.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}48%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}48.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}49%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}49.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.005)}50%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.002)}50.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.999)}51%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.996)}51.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.994)}52%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.992)}52.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}53%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}53.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}54%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.992)}54.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.994)}55%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.996)}55.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.999)}56%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.002)}56.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.005)}57%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}57.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}58%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}58.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.010)}59%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.009)}59.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.007)}60%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.005)}60.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.002)}61%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.999)}61.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.996)}62%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.993)}62.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}63%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}63.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.990)}64%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.991)}64.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.992)}65%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.994)}65.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(0.997)}66%{transform:translateY(-0.00px) rotate(-2.00deg) scale(1.000)}66.5%{transform:translateY(-0.49px) rotate(1.90deg) scale(1.016)}67%{transform:translateY(-0.95px) rotate(-0.26deg) scale(1.030)}67.5%{transform:translateY(-1.37px) rotate(-5.13deg) scale(1.044)}68%{transform:translateY(-1.72px) rotate(-5.13deg) scale(1.055)}68.5%{transform:translateY(-1.98px) rotate(-0.26deg) scale(1.063)}69%{transform:translateY(-2.14px) rotate(1.90deg) scale(1.068)}69.5%{transform:translateY(-2.20px) rotate(-2.00deg) scale(1.070)}70%{transform:translateY(-1.87px) rotate(0.28deg) scale(1.060)}70.5%{transform:translateY(-1.58px) rotate(0.37deg) scale(1.050)}71%{transform:translateY(-1.30px) rotate(-1.45deg) scale(1.041)}71.5%{transform:translateY(-1.05px) rotate(-3.38deg) scale(1.034)}72%{transform:translateY(-0.83px) rotate(-3.83deg) scale(1.027)}72.5%{transform:translateY(-0.64px) rotate(-2.75deg) scale(1.020)}73%{transform:translateY(-0.47px) rotate(-1.36deg) scale(1.015)}73.5%{transform:translateY(-0.33px) rotate(-0.85deg) scale(1.010)}74%{transform:translateY(-0.21px) rotate(-1.39deg) scale(1.007)}74.5%{transform:translateY(-0.12px) rotate(-2.17deg) scale(1.004)}75%{transform:translateY(-0.05px) rotate(-2.43deg) scale(1.002)}75.5%{transform:translateY(-0.01px) rotate(-2.19deg) scale(1.000)}76%{transform:translateY(-0.00px) rotate(-2.00deg) scale(1.030)}76.5%{transform:translateY(-1.05px) rotate(1.60deg) scale(1.030)}77%{transform:translateY(-1.58px) rotate(3.44deg) scale(1.030)}77.5%{transform:translateY(-1.35px) rotate(2.63deg) scale(1.030)}78%{transform:translateY(-0.45px) rotate(-0.45deg) scale(1.030)}78.5%{transform:translateY(-0.66px) rotate(-4.28deg) scale(1.030)}79%{transform:translateY(-1.46px) rotate(-7.00deg) scale(1.030)}79.5%{transform:translateY(-1.54px) rotate(-7.28deg) scale(1.030)}80%{transform:translateY(-0.87px) rotate(-4.97deg) scale(1.030)}80.5%{transform:translateY(-0.23px) rotate(-1.22deg) scale(1.030)}81%{transform:translateY(-1.21px) rotate(2.16deg) scale(1.030)}81.5%{transform:translateY(-1.60px) rotate(3.50deg) scale(1.030)}82%{transform:translateY(-1.21px) rotate(2.16deg) scale(1.030)}82.5%{transform:translateY(-0.23px) rotate(-1.22deg) scale(1.030)}83%{transform:translateY(-0.87px) rotate(-4.97deg) scale(1.030)}83.5%{transform:translateY(-1.54px) rotate(-7.28deg) scale(1.030)}84%{transform:translateY(-1.46px) rotate(-7.00deg) scale(1.030)}84.5%{transform:translateY(-0.66px) rotate(-4.28deg) scale(1.030)}85%{transform:translateY(-0.45px) rotate(-0.45deg) scale(1.030)}85.5%{transform:translateY(-1.35px) rotate(2.63deg) scale(1.030)}86%{transform:translateY(-1.58px) rotate(3.44deg) scale(1.030)}86.5%{transform:translateY(-1.05px) rotate(1.60deg) scale(1.030)}87%{transform:translateY(-0.00px) rotate(-2.00deg) scale(1.030)}87.5%{transform:translateY(-1.05px) rotate(-5.60deg) scale(1.030)}88%{transform:translateY(-1.58px) rotate(-7.44deg) scale(1.030)}88.5%{transform:translateY(-1.35px) rotate(-6.63deg) scale(1.030)}89%{transform:translateY(-0.45px) rotate(-3.55deg) scale(1.030)}89.5%{transform:translateY(-0.66px) rotate(0.28deg) scale(1.030)}90%{transform:translateY(-1.46px) rotate(3.00deg) scale(1.030)}90.5%{transform:translateY(-1.54px) rotate(3.28deg) scale(1.030)}91%{transform:translateY(-0.87px) rotate(0.97deg) scale(1.030)}91.5%{transform:translateY(-0.23px) rotate(-2.78deg) scale(1.030)}92%{transform:translateY(-1.21px) rotate(-6.16deg) scale(1.030)}92.5%{transform:translateY(-1.60px) rotate(-7.50deg) scale(1.030)}93%{transform:translateY(-1.21px) rotate(-6.16deg) scale(1.030)}93.5%{transform:translateY(-0.23px) rotate(-2.78deg) scale(1.030)}94%{transform:translateY(-0.87px) rotate(0.97deg) scale(1.030)}94.5%{transform:translateY(-1.54px) rotate(3.28deg) scale(1.030)}95%{transform:translateY(-1.46px) rotate(3.00deg) scale(1.030)}95.5%{transform:translateY(-0.66px) rotate(0.28deg) scale(1.030)}96%{transform:translateY(-0.45px) rotate(-3.55deg) scale(1.030)}96.5%{transform:translateY(-1.31px) rotate(-6.51deg) scale(1.029)}97%{transform:translateY(-1.03px) rotate(-5.54deg) scale(1.019)}97.5%{transform:translateY(-0.34px) rotate(-3.17deg) scale(1.010)}98%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}98.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}99%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}99.5%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}100%{transform:translateY(0.00px) rotate(-2.00deg) scale(1.000)}}
+#page-wallet .wallet-name-frame.wallet-name-frame-pumpkin{overflow:visible;min-width:118px;justify-content:center;background:none;box-shadow:none;animation:pkCycle 16s linear infinite;transform-origin:50% 90%}
+#page-wallet .wallet-name-frame.wallet-name-frame-pumpkin::after{display:none}
+#page-wallet .wallet-name-frame.wallet-name-frame-pumpkin strong,#walletCustomizePanel .wallet-pumpkin-swatch b{position:relative;z-index:2;color:#fff2b0!important;font-weight:900;letter-spacing:.02em;text-align:center;
+  text-shadow:0 0 1px rgba(60,20,0,.95),-1px -1px 0 rgba(75,26,0,.85),1px 1px 0 rgba(255,224,150,.55),0 0 7px rgba(255,208,80,.95),0 0 15px rgba(255,140,20,.85),0 0 28px rgba(255,100,0,.6);
+  animation:pkNameVis 16s infinite both,pkCandle 1.6s ease-in-out infinite}
+#walletCustomizePanel .wallet-frame-swatch i.wallet-pumpkin-swatch{position:relative;display:grid!important;place-items:center;height:42px!important;overflow:visible;border:0!important;border-radius:999px!important;background:none!important;box-shadow:none!important;animation:pkCycle 16s linear infinite;transform-origin:50% 90%}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2-face{left:12px;right:12px;width:calc(100% - 24px)}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2-flash,#walletCustomizePanel .wallet-pumpkin-swatch .pk2-sp{display:none!important}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2>i.pk2-body{width:auto!important;height:auto!important;border-radius:999px!important}
+@media(prefers-reduced-motion:reduce){
+  .pk2-f-dizzy,.pk2-f-laugh,.pk2-flash,.pk2-sp{display:none!important}
+  .pk2-f-awake{animation:none;opacity:1}.pk2-stem,.pk2-sweep{animation:none}
+  .pk2-f-sleep{animation:none;opacity:1}
+  .pk2-body{animation:none}
+  #page-wallet .wallet-name-frame.wallet-name-frame-pumpkin,#walletCustomizePanel .wallet-frame-swatch i.wallet-pumpkin-swatch{animation:none;transform:rotate(-2deg)}
+  #page-wallet .wallet-name-frame.wallet-name-frame-pumpkin strong,#walletCustomizePanel .wallet-pumpkin-swatch b{animation:none;opacity:0}
+}
+
+/* ================= Sinh vật & trang trí Halloween bằng SVG ================= */
+.hw-crit{position:absolute;display:block;pointer-events:none;will-change:transform}
+.hw-crit svg,.hw-spider svg,.hw-art-ghost svg,.hw-art-bat svg{display:block;width:100%;height:auto;overflow:visible}
+.hw-wing{transform-box:fill-box}
+.hw-wing-l{transform-origin:100% 60%;animation:hwFlapL .28s ease-in-out infinite alternate}
+.hw-wing-r{transform-origin:0 60%;animation:hwFlapR .28s ease-in-out infinite alternate}
+@keyframes hwFlapL{from{transform:rotate(0) scaleY(1)}to{transform:rotate(16deg) scaleY(.6)}}
+@keyframes hwFlapR{from{transform:rotate(0) scaleY(1)}to{transform:rotate(-16deg) scaleY(.6)}}
+/* 1 con dơi lượn trong góc trái, 1 con thỉnh thoảng bay ngang dải trên cùng, 1 con ma nhỏ ở góc phải dưới */
+.hw-bat-hover{top:64px;left:30px;width:30px;opacity:.9;animation:hwHover 9s ease-in-out infinite}
+@keyframes hwHover{0%,100%{transform:translate(0,0) rotate(-6deg)}25%{transform:translate(26px,10px) rotate(7deg)}50%{transform:translate(48px,-2px) rotate(-4deg)}75%{transform:translate(20px,14px) rotate(6deg)}}
+.hw-bat-fly{top:70px;left:-48px;width:26px;opacity:0;animation:hwFlyBy 34s linear infinite}
+@keyframes hwFlyBy{0%{opacity:0;transform:translate(0,0)}1.5%{opacity:.9}6%{transform:translate(28vw,-14px)}12%{transform:translate(58vw,10px)}18%{transform:translate(88vw,-10px)}21%{opacity:.9}22%{opacity:0;transform:translate(calc(100vw + 90px),4px)}100%{opacity:0;transform:translate(calc(100vw + 90px),4px)}}
+.hw-ghost-float{right:12px;bottom:96px;width:38px;opacity:.8;filter:drop-shadow(0 0 7px #b9a0ff99);animation:hwGhostFloat 7s ease-in-out infinite}
+@keyframes hwGhostFloat{0%,100%{transform:translate(0,0) rotate(-4deg);opacity:.55}30%{transform:translate(-9px,-12px) rotate(4deg);opacity:.9}60%{transform:translate(3px,-5px) rotate(-3deg);opacity:.85}}
+.hw-spider{position:absolute;left:-10px;bottom:-18px;width:21px;font-style:normal;animation:hwDangle 3.2s ease-in-out infinite}
+@keyframes hwDangle{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.hw-banner-art{position:absolute;right:14px;bottom:12px;width:74px;height:62px;pointer-events:none}
+.hw-art-ghost{position:absolute;right:0;bottom:0;width:36px;filter:drop-shadow(0 0 6px #b9a0ff88);animation:hwGhostFloat 6s ease-in-out infinite}
+.hw-art-bat{position:absolute;left:0;top:0;width:30px;animation:hwHover 7s ease-in-out infinite}
+#page-wallet .wallet-banner.halloween p{padding-right:64px}
+#page-wallet .wallet-banner.halloween .wallet-brandmark{display:grid;place-items:center}
+#page-wallet .wallet-banner.halloween .wallet-brandmark svg{width:22px;height:20px}
+.ts-emo svg{display:block;width:36px;height:34px}
+@media(prefers-reduced-motion:reduce){.hw-crit,.hw-spider,.hw-art-ghost,.hw-art-bat,.hw-wing{animation:none}.hw-bat-fly{display:none}}
+
+/* ================= Lịch: bí ngô hôm nay · ma đi theo ngày chọn · mạng nhện ngày không chi tiêu ================= */
+html[data-skin="halloween"] .ledger-cal-day{position:relative}
+html[data-skin="halloween"] .ledger-cal-day.notx:not(.out)::before{content:"";position:absolute;inset:0;z-index:0;opacity:.24;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath fill='none' stroke='%23cfc0f5' stroke-width='.9' stroke-linecap='round' vector-effect='non-scaling-stroke' d='M100 0L100 100M100 0L62 100M100 0L22 86M100 0L0 50M100 0L0 0M100.0 30.0Q95.4 24.0 88.6 30.0M88.6 30.0Q86.1 22.3 76.6 25.8M76.6 25.8Q78.6 16.3 70.0 15.0M70.0 15.0Q76.0 6.0 70.0 0.0M100.0 55.0Q91.6 44.0 79.1 55.0M79.1 55.0Q74.5 40.9 57.1 47.3M57.1 47.3Q60.8 29.9 45.0 27.5M45.0 27.5Q56.0 11.0 45.0 0.0M100.0 80.0Q87.8 64.0 69.6 80.0M69.6 80.0Q62.9 59.5 37.6 68.8M37.6 68.8Q43.0 43.5 20.0 40.0M20.0 40.0Q36.0 16.0 20.0 0.0'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+html[data-skin="halloween"] .ledger-cal-day.notx:not(.out) .n,html[data-skin="halloween"] .ledger-cal-day.notx:not(.out) small{position:relative;z-index:1}
+/* bấm vào hôm nay → bí ngô; bấm ngày khác → con ma */
+/* ngày khác đang chọn: con ma hiện ra, nhảy vào ô rồi nhún nhẹ */
+html[data-skin="halloween"] .ledger-cal-day.sel:not(.today) .n{width:40px;height:46px;padding-top:12px;border-radius:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 46'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23cdbdff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M4 44V19C4 9 11 2 20 2s16 7 16 17v25l-5-4-5 4-6-4-6 4-5-4z' fill='url%28%23g%29' stroke='%23a98bff' stroke-width='1' stroke-linejoin='round'/%3E%3Cellipse cx='14' cy='12.5' rx='2.2' ry='3' fill='%232b1233'/%3E%3Cellipse cx='26' cy='12.5' rx='2.2' ry='3' fill='%232b1233'/%3E%3Ccircle cx='8.5' cy='17.5' r='2.1' fill='%23ff9ec4' opacity='.6'/%3E%3Ccircle cx='31.5' cy='17.5' r='2.1' fill='%23ff9ec4' opacity='.6'/%3E%3C/svg%3E") center/contain no-repeat;box-shadow:none;transform:none;filter:drop-shadow(0 0 7px rgba(185,160,255,.6));animation:hwGhostHop .55s cubic-bezier(.3,1.6,.5,1),hwGhostBob 3s ease-in-out .55s infinite}
+html[data-skin="halloween"] .ledger-cal-day.sel:not(.today) .n b{color:#2b1233!important;font-size:13px;font-weight:800}
+html[data-skin="halloween"] .ledger-cal-day.sel:not(.today) .n i{color:#6a4a8a!important;font-size:8px;margin-top:1px}
+@keyframes hwGhostHop{0%{transform:translateY(-16px) scale(.6);opacity:0}60%{opacity:1}100%{transform:translateY(0) scale(1)}}
+@keyframes hwGhostBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-2.5px) rotate(2deg)}}
+@media(prefers-reduced-motion:reduce){html[data-skin="halloween"] .ledger-cal-day.sel:not(.today) .n{animation:none}}
+</style>
+
+<style id="hw-spider-descend">
+/* Nhện ở góc phải: tơ dài ra, nhện đu thả xuống thấp rồi leo ngược lên */
+.hw-thread{background:linear-gradient(#cdb8ffaa,#d9c9ffcc);animation:hwSwing 5s ease-in-out infinite,hwDescend 14s ease-in-out infinite}
+@keyframes hwDescend{0%,8%{height:64px}38%,62%{height:210px}92%,100%{height:64px}}
+.hw-spider{animation:hwDangle 1.8s ease-in-out infinite;transform-origin:50% 0}
+@keyframes hwDangle{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(7px) rotate(4deg)}}
+@media(prefers-reduced-motion:reduce){.hw-thread{animation:none;height:92px}.hw-spider{animation:none}}
+</style>
+<style id="pumpkin-pro-style">
+/* ===== Bí Ngô Cười PRO VIP: thân bí 5 múi bóng, cuống + tua cuốn + lá, sao lấp lánh, quầng sáng ===== */
+.pk2>i.pk2-body{position:absolute;display:block;inset:-5px -5px -4px;width:auto;height:auto;border-radius:0;background:none;box-shadow:none;overflow:visible;
+  animation:pkBodyGlow 16s ease-in-out infinite}
+.pk2-bsvg{position:absolute;left:0;top:0;width:100%;height:100%;display:block;overflow:visible}
+.pk2-aura{position:absolute;inset:-6px -10px -6px;border-radius:50%;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 55%,rgba(255,150,30,.55),rgba(255,120,0,.18) 55%,transparent 72%);
+  filter:blur(7px);opacity:.9;animation:pkAura 16s ease-in-out infinite}
+@keyframes pkAura{0%,6%{opacity:.08}11.5%{opacity:.75}14%,31%{opacity:.6}36%,64%{opacity:1}68%{opacity:1}76%,94%{opacity:.7}98.5%,100%{opacity:.08}}
+.pk2-clip{position:absolute;inset:4px 9px 3px;border-radius:999px;overflow:hidden;pointer-events:none}
+.pk2-stem{left:50%;top:-12px;width:34px;height:17px;margin-left:-12px;transform-origin:30% 100%;
+  filter:drop-shadow(0 1px 1.5px rgba(30,60,10,.55));animation:pkStemDim 16s infinite,pkStemSway 4.2s ease-in-out infinite}
+@keyframes pkStemSway{0%,100%{transform:rotate(-1.5deg)}50%{transform:rotate(2deg)}}
+.pk2>svg.pk2-lf{position:absolute;width:34px;height:26px;bottom:-5px;overflow:visible;filter:drop-shadow(0 1px 1.5px rgba(20,60,10,.5))}
+.pk2-lf-l{left:-17px;transform-origin:90% 90%;animation:pkLfL 3.8s ease-in-out infinite}
+.pk2-lf-r{right:-17px;transform:scaleX(-1);transform-origin:90% 90%;animation:pkLfR 3.8s ease-in-out infinite .6s}
+@keyframes pkLfL{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes pkLfR{0%,100%{transform:scaleX(-1) rotate(-3deg)}50%{transform:scaleX(-1) rotate(3deg)}}
+.pk2-lf-r{transform-origin:50% 90%!important}
+.pk2-haha{animation-name:pkHaha2!important}
+@keyframes pkHaha2{from{transform:scale(1,1)}to{transform:scale(1.03,1.12)}}
+.pk2-lq{transform-box:fill-box;transform-origin:50% 100%;animation:pkSquint .2s ease-in-out infinite alternate}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2-stem{top:-10px;width:28px;height:14px;margin-left:-10px}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2>svg.pk2-lf{width:22px;height:17px;bottom:-4px}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2-lf-l{left:-5px}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2-lf-r{right:-5px}
+.pk2>svg.pk2-star{position:absolute;overflow:visible;filter:drop-shadow(0 0 3px #ffb52e) drop-shadow(0 0 6px #ff8a00);opacity:0;animation:pkTw 2.6s ease-in-out infinite}
+.pk2-star-a{left:-6px;top:-7px;width:9px;height:9px}
+.pk2-star-b{right:-5px;top:-1px;width:7px;height:7px;animation-delay:.9s!important}
+.pk2-star-c{right:22%;bottom:-8px;width:6px;height:6px;animation-delay:1.6s!important}
+.pk2-star-d{left:20%;top:-9px;width:5px;height:5px;animation-delay:.4s!important}
+@keyframes pkTw{0%,100%{opacity:0;transform:scale(.3) rotate(0)}45%{opacity:1;transform:scale(1.15) rotate(45deg)}70%{opacity:.5;transform:scale(.8) rotate(80deg)}}
+.pk2-face{left:15px;right:9px;width:calc(100% - 24px)}
+.pk2-glow{stroke-width:1.5;stroke-linejoin:round}
+@keyframes pkFaceLight{0%,6%{fill:#2b1000;stroke:#2b1000;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}7.5%{fill:#ffb347;stroke:#ffb347;filter:drop-shadow(0 0 3px #ff8a00) drop-shadow(0 0 3px #ff8a00)}8.5%{fill:#2b1000;stroke:#2b1000;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}9.5%{fill:#ffd34d;stroke:#ffd34d;filter:drop-shadow(0 0 4px #ff9a00) drop-shadow(0 0 4px #ff9a00)}10.5%{fill:#5a2200;stroke:#5a2200;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}12%,96%{fill:#ffee9a;stroke:#ffee9a;filter:drop-shadow(0 0 2px #ffd34d) drop-shadow(0 0 7px #ff8a00)}98.5%,100%{fill:#2b1000;stroke:#2b1000;filter:drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)}}
+/* chữ tên: kem sáng viền nâu đậm, khắc phát sáng như trong ảnh mẫu */
+#page-wallet .wallet-name-frame.wallet-name-frame-pumpkin{min-width:132px;padding:5px 14px 5px 20px}
+#page-wallet .wallet-name-frame.wallet-name-frame-pumpkin strong,#walletCustomizePanel .wallet-pumpkin-swatch b{color:#fff6c8!important;
+  text-shadow:0 0 1px #5a1f00,-1px -1px 0 #7a2c00,1px -1px 0 #7a2c00,-1px 1px 0 #7a2c00,1px 1px 0 #7a2c00,0 0 8px rgba(255,214,90,.95),0 0 18px rgba(255,140,20,.85),0 0 30px rgba(255,100,0,.55)}
+#walletCustomizePanel .wallet-pumpkin-swatch .pk2-star,#walletCustomizePanel .wallet-pumpkin-swatch .pk2-aura{display:none}
+@media(prefers-reduced-motion:reduce){.pk2-stem,.pk2-lf,.pk2-aura{animation:none}.pk2-star{animation:none;opacity:.9}}
+</style>
+
+<style id="hw-extras-style">
+/* ===== Halloween extras: vạc phù thủy · mưa kẹo · mèo đen · trăng+mây+dơi · cảnh báo ngân sách · đèn lồng · sương mù · mắt trong bóng tối ===== */
+html:not([data-skin="halloween"]) .hw-x{display:none!important}
+.hw-x{pointer-events:none}
+
+/* --- 1. Vạc phù thủy (nút Thêm khoản chi) --- */
+html[data-skin="halloween"] .quick[data-hw-cauldron] .qicon{position:relative;overflow:visible}
+html[data-skin="halloween"] .quick[data-hw-cauldron] .qicon>svg{display:none}
+.hw-cauldron{position:absolute;inset:0;display:grid;place-items:center;filter:drop-shadow(0 0 6px rgba(120,255,110,.55))}
+.hw-cauldron>svg{width:36px;height:36px;display:block;overflow:visible}
+.hw-flame{transform-box:fill-box;transform-origin:50% 100%;animation:hwFlame .5s ease-in-out infinite alternate}
+.hw-flame.f2{animation-duration:.38s;animation-delay:.1s}
+@keyframes hwFlame{from{transform:scale(1,.82)}to{transform:scale(.9,1.12)}}
+.hw-liquid{animation:hwLiquid 2.4s ease-in-out infinite}
+@keyframes hwLiquid{0%,100%{fill:#7dff6a}50%{fill:#b36bff}}
+.hw-bub{position:absolute;left:calc(50% + var(--x,0px));top:34%;width:6px;height:6px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff,#a8ff8f 45%,#58d94a);opacity:0;animation:hwBub 2.6s ease-in infinite;animation-delay:var(--d,0s)}
+@keyframes hwBub{0%{opacity:0;transform:translateY(4px) scale(.4)}20%{opacity:.95}85%{opacity:.8}100%{opacity:0;transform:translateY(-17px) scale(1.15)}}
+.hw-cauldron.pop .hw-bub{animation:hwBubPop .9s ease-out 1;animation-delay:var(--d,0s);width:8px;height:8px}
+@keyframes hwBubPop{0%{opacity:0;transform:translate(0,4px) scale(.3)}25%{opacity:1}100%{opacity:0;transform:translate(var(--px,0px),-34px) scale(1.5)}}
+.hw-cauldron.pop>svg{animation:hwShake .45s ease-in-out}
+@keyframes hwShake{0%,100%{transform:rotate(0)}25%{transform:rotate(-8deg) scale(1.08)}60%{transform:rotate(7deg) scale(1.08)}}
+
+/* --- 2. Mưa kẹo & bí ngô nhỏ --- */
+.hw-rain{position:fixed;inset:0;z-index:70;overflow:hidden;pointer-events:none}
+.hw-rain span{position:absolute;top:-34px;left:var(--l);font-size:var(--s);line-height:1;opacity:0;animation:hwFall var(--t) cubic-bezier(.3,.1,.6,1) forwards;animation-delay:var(--d);filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+@keyframes hwFall{0%{opacity:0;transform:translate(0,0) rotate(0)}8%{opacity:1}100%{opacity:1;transform:translate(var(--dx),calc(100vh + 50px)) rotate(var(--r))}}
+
+/* --- 3. Mèo đen --- */
+.hw-cat-wrap{position:relative;height:0;z-index:6}
+.hw-cat{position:absolute;right:30px;bottom:-3px;width:56px;height:52px;overflow:visible;filter:drop-shadow(0 0 5px rgba(150,110,255,.5))}
+.hw-cat-tail{transform-box:fill-box;transform-origin:0 100%;animation:hwTail 2.4s ease-in-out infinite}
+@keyframes hwTail{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(16deg)}}
+.hw-cat-head{transform-box:fill-box;transform-origin:50% 100%;animation:hwHead 9s ease-in-out infinite}
+@keyframes hwHead{0%,40%,100%{transform:rotate(0)}48%,62%{transform:rotate(-7deg)}70%{transform:rotate(5deg)}}
+.hw-cat-eyes{transform-box:fill-box;transform-origin:50% 50%;animation:hwBlink2 5.5s infinite}
+@keyframes hwBlink2{0%,90%,100%{transform:scaleY(1)}93%{transform:scaleY(.08)}96%{transform:scaleY(1)}}
+
+/* --- 4. Trăng + mây + dơi --- */
+.hw-moonwrap{position:absolute;top:74px;right:92px;width:128px;height:70px;z-index:3;overflow:hidden;border-radius:36px;
+  -webkit-mask-image:radial-gradient(ellipse at 50% 50%,#000 56%,transparent 100%);mask-image:radial-gradient(ellipse at 50% 50%,#000 56%,transparent 100%)}
+.hw-moon{position:absolute;left:36px;top:7px;width:56px;height:56px;border-radius:50%;
+  background:radial-gradient(circle at 36% 32%,#fffbe0,#f7e8a6 55%,#e0c978);
+  box-shadow:0 0 18px 4px rgba(255,236,160,.5),0 0 46px 12px rgba(255,200,90,.22);animation:hwMoonPulse 6s ease-in-out infinite}
+.hw-moon i{position:absolute;border-radius:50%;background:rgba(170,140,70,.28);box-shadow:inset 1px 1px 2px rgba(120,90,30,.25)}
+@keyframes hwMoonPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.1)}}
+.hw-cloud{position:absolute;top:var(--y,20px);left:-90px;width:70px;height:20px;border-radius:50%;
+  background:radial-gradient(ellipse at 30% 60%,rgba(42,28,74,.92) 0 38%,transparent 62%),radial-gradient(ellipse at 62% 45%,rgba(54,36,92,.9) 0 42%,transparent 66%),radial-gradient(ellipse at 82% 65%,rgba(42,28,74,.85) 0 34%,transparent 60%);
+  filter:blur(1.2px);animation:hwCloud var(--t,26s) linear infinite;animation-delay:var(--d,0s)}
+@keyframes hwCloud{from{transform:translateX(0)}to{transform:translateX(260px)}}
+.hw-moonbat{position:absolute;top:10px;left:-34px;width:26px;opacity:.95;animation:hwMoonBat 19s linear infinite 4s}
+.hw-moonbat svg{display:block;width:100%;height:auto}
+@keyframes hwMoonBat{0%{transform:translate(0,12px) rotate(-6deg)}5%{transform:translate(30px,4px) rotate(4deg)}10%{transform:translate(62px,14px) rotate(-5deg)}15%{transform:translate(96px,2px) rotate(4deg)}20%,100%{transform:translate(190px,10px)}}
+@media(max-width:700px){.hw-moonwrap{top:66px;right:78px;width:106px;height:60px}.hw-moon{left:28px;top:6px;width:48px;height:48px}.hw-cloud{width:58px}}
+
+/* --- 5. Cảnh báo ngân sách --- */
+.hw-budget-alert{display:none;align-items:center;gap:10px;margin-top:11px;padding:8px 10px;border-radius:14px;font-size:12px;font-weight:750;line-height:1.35}
+.hw-budget-alert svg{flex:0 0 auto;width:34px;height:34px;display:block;overflow:visible}
+.hw-budget-alert .hw-ba-over,.hw-budget-alert .hw-ba-warn{display:none}
+.hw-budget-alert[data-s="over"],.hw-budget-alert[data-s="warn"]{display:flex}
+.hw-budget-alert[data-s="over"]{background:rgba(255,70,90,.12);border:1px dashed rgba(255,110,120,.6);color:#ffb3bb}
+.hw-budget-alert[data-s="over"] .hw-ba-over{display:block}
+.hw-budget-alert[data-s="warn"]{background:rgba(255,150,40,.12);border:1px dashed rgba(255,170,60,.6);color:#ffd09a}
+.hw-budget-alert[data-s="warn"] .hw-ba-warn{display:block}
+.hw-ba-ghost{transform-box:fill-box;animation:hwGhostUp 3.2s ease-in-out infinite}
+@keyframes hwGhostUp{0%,100%{transform:translateY(2px);opacity:.55}50%{transform:translateY(-3px);opacity:1}}
+.hw-ba-lantern{animation:hwRedFlicker .9s steps(2,end) infinite}
+@keyframes hwRedFlicker{0%{filter:drop-shadow(0 0 4px #ff3a2a) brightness(1)}50%{filter:drop-shadow(0 0 10px #ff2a1a) brightness(1.25)}}
+html[data-skin="halloween"] .wallet-budget-card[data-hw="over"]{box-shadow:0 0 0 1px rgba(255,80,95,.55),0 0 24px rgba(255,50,70,.3)!important;animation:hwOverPulse 1.8s ease-in-out infinite}
+@keyframes hwOverPulse{0%,100%{box-shadow:0 0 0 1px rgba(255,80,95,.45),0 0 14px rgba(255,50,70,.2)}50%{box-shadow:0 0 0 1px rgba(255,80,95,.8),0 0 30px rgba(255,50,70,.45)}}
+html[data-skin="halloween"] .wallet-budget-card[data-hw="warn"] .wallet-progress>div{animation:hwBarWarn 1.1s ease-in-out infinite}
+@keyframes hwBarWarn{0%,100%{filter:brightness(1) saturate(1)}50%{filter:brightness(1.35) saturate(1.5) hue-rotate(-18deg)}}
+
+/* --- 6. Dây đèn lồng trên header --- */
+.hw-lanterns{position:absolute;top:0;left:50%;transform:translateX(-50%);width:clamp(100px,calc(100% - 300px),380px);height:100%;display:flex;justify-content:space-around;align-items:flex-start;z-index:1}
+.hw-lanterns::before{content:"";position:absolute;left:0;right:0;top:-3px;height:9px;border-bottom:1.5px solid rgba(190,165,255,.55);border-radius:0 0 50% 50%/0 0 100% 100%}
+.hw-ln{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:var(--sag,6px);transform-origin:50% 0;animation:hwLnSway 4s ease-in-out infinite;animation-delay:var(--dl,0s)}
+.hw-ln b{display:block;width:1px;height:7px;background:rgba(190,165,255,.6)}
+.hw-ln svg{display:block;width:21px;height:19px;overflow:visible;animation:hwCandle 1.4s ease-in-out infinite;animation-delay:var(--dl,0s)}
+@keyframes hwLnSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes hwCandle{0%,100%{filter:drop-shadow(0 0 3px #ff9a1f) brightness(1)}35%{filter:drop-shadow(0 0 8px #ffb347) brightness(1.18)}65%{filter:drop-shadow(0 0 4px #ff8a00) brightness(.94)}}
+@media(max-width:700px){.hw-ln:nth-child(n+5){display:none}}
+
+/* --- 7. Sương mù --- */
+.hw-fogwrap{position:fixed;left:0;right:0;bottom:0;height:120px;z-index:2;overflow:hidden;-webkit-mask-image:linear-gradient(to top,#000 10%,transparent);mask-image:linear-gradient(to top,#000 10%,transparent)}
+.hw-fog{position:absolute;left:0;bottom:-10px;width:200%;height:110px;opacity:.5;will-change:transform;
+  background:radial-gradient(ellipse 160px 52px at 8% 70%,rgba(190,170,240,.4),transparent 70%),radial-gradient(ellipse 220px 60px at 27% 80%,rgba(160,140,220,.35),transparent 70%),radial-gradient(ellipse 180px 50px at 46% 68%,rgba(200,180,250,.38),transparent 70%),radial-gradient(ellipse 240px 62px at 64% 82%,rgba(160,140,220,.34),transparent 70%),radial-gradient(ellipse 170px 52px at 83% 70%,rgba(190,170,240,.4),transparent 70%);
+  animation:hwFogMove 60s linear infinite}
+.hw-fog.b{opacity:.32;bottom:-26px;animation-duration:90s;animation-direction:reverse}
+@keyframes hwFogMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* --- 8. Mắt trong bóng tối --- */
+.hw-eyes{position:fixed;z-index:3;display:flex;gap:6px;opacity:0;animation:hwEyes var(--t,23s) ease-in-out infinite;animation-delay:var(--d,3s)}
+.hw-eyes i{display:block;width:6px;height:9px;border-radius:50%;background:radial-gradient(ellipse at 50% 45%,#fffbb8 0 22%,#ffc83a 55%,#ff8a00);box-shadow:0 0 7px #ffb52e,0 0 14px rgba(255,150,0,.55)}
+.hw-eyes i::after{content:"";display:block;width:2px;height:100%;margin:0 auto;background:#2b1000;border-radius:2px}
+@keyframes hwEyes{0%,68%{opacity:0;transform:scaleY(1)}72%{opacity:1}78%{transform:scaleY(1)}80%{transform:scaleY(.1)}82%{transform:scaleY(1)}90%{opacity:1}94%,100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.hw-flame,.hw-liquid,.hw-bub,.hw-cat-tail,.hw-cat-head,.hw-cat-eyes,.hw-moon,.hw-cloud,.hw-moonbat,.hw-ba-ghost,.hw-ba-lantern,.hw-ln,.hw-ln svg,.hw-fog,.hw-eyes{animation:none!important}.hw-eyes{opacity:0}.hw-rain{display:none}}
+</style>
+<script id="hw-extras-script">
+(function(){
+  const root=document.documentElement,$$=(s,r)=>Array.from((r||document).querySelectorAll(s));
+  const isHw=()=>root.dataset.skin==='halloween';
+  const safe=(fn)=>{try{fn()}catch(e){console.warn('hw-extras',e)}};
+  const HWok=()=>typeof HW!=='undefined';
+
+  /* 1. Vạc phù thủy */
+  safe(()=>{
+    $$('.quick').forEach(btn=>{
+      if(!/openWalletTransaction\('expense'\)/.test(btn.getAttribute('onclick')||''))return;
+      const icon=btn.querySelector('.qicon');if(!icon||icon.querySelector('.hw-cauldron'))return;
+      btn.setAttribute('data-hw-cauldron','');
+      const c=document.createElement('span');c.className='hw-x hw-cauldron';c.setAttribute('aria-hidden','true');
+      c.innerHTML='<svg viewBox="0 0 48 48"><defs><linearGradient id="hwcg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a4268"/><stop offset="1" stop-color="#17121f"/></linearGradient></defs>'+
+        '<path class="hw-flame" d="M16 46c-3-4-1-7 1-9 0 3 2 3 3 1 1 3 3 5 1 8z" fill="#ff8a1f"/><path class="hw-flame f2" d="M26 46c-3-4-1-8 2-10 0 3 2 3 3 1 1 3 2 6 0 9z" fill="#ffc23a"/>'+
+        '<rect x="12" y="38" width="5" height="6" rx="2" fill="#2a2440"/><rect x="31" y="38" width="5" height="6" rx="2" fill="#2a2440"/>'+
+        '<path d="M6 22q-4 0-3 5 1 4 5 3M42 22q4 0 3 5-1 4-5 3" fill="none" stroke="#4a4268" stroke-width="2.4" stroke-linecap="round"/>'+
+        '<path d="M7 21Q6 42 24 42T41 21Z" fill="url(#hwcg)" stroke="#6d5f99" stroke-width="1"/>'+
+        '<path d="M12 27Q13 36 18 39" fill="none" stroke="#ffffff" stroke-opacity=".18" stroke-width="2" stroke-linecap="round"/>'+
+        '<ellipse cx="24" cy="21" rx="17.5" ry="5.4" fill="#2a2440" stroke="#8a7bc2" stroke-width="1.2"/>'+
+        '<ellipse class="hw-liquid" cx="24" cy="21" rx="14.5" ry="3.8" fill="#7dff6a"/></svg>'+
+        [['-8px','0s','-6px'],['-1px','.8s','2px'],['6px','1.5s','8px'],['-4px','2s','-2px']].map(b=>'<b class="hw-bub" style="--x:'+b[0]+';--d:'+b[1]+';--px:'+b[2]+'"></b>').join('');
+      icon.appendChild(c);
+      btn.addEventListener('click',()=>{c.classList.remove('pop');void c.offsetWidth;c.classList.add('pop');setTimeout(()=>c.classList.remove('pop'),1000)});
+    });
+  });
+
+  /* 2. Mưa kẹo + bí ngô nhỏ khi lưu giao dịch */
+  function candyRain(){
+    if(!isHw()||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    const box=document.createElement('div');box.className='hw-x hw-rain';box.setAttribute('aria-hidden','true');
+    const set=['🍬','🍭','🎃','🍫','🍬','🎃','🍪'];
+    for(let i=0;i<30;i++){
+      const s=document.createElement('span');s.textContent=set[i%set.length];
+      s.style.cssText='--l:'+(Math.random()*96).toFixed(1)+'%;--s:'+(16+Math.random()*14).toFixed(0)+'px;--t:'+(1.8+Math.random()*1.6).toFixed(2)+'s;--d:'+(Math.random()*.9).toFixed(2)+'s;--dx:'+((Math.random()-.5)*80).toFixed(0)+'px;--r:'+((Math.random()-.5)*720).toFixed(0)+'deg';
+      box.appendChild(s);
+    }
+    document.body.appendChild(box);setTimeout(()=>box.remove(),4600);
+  }
+  window.hwCandyRain=candyRain;
+  safe(()=>{
+    if(typeof submitTransaction==='function'&&typeof state!=='undefined'){
+      const orig=submitTransaction;
+      submitTransaction=function(){
+        const before=(state.transactions||[]).length;const r=orig.apply(this,arguments);
+        safe(()=>{if((state.transactions||[]).length>before)candyRain()});return r;
+      };
+    }
+  });
+
+  /* 3. Mèo đen ngồi trên mép thẻ ví */
+  safe(()=>{
+    const card=document.querySelector('#page-wallet .wallet-account');if(!card||document.querySelector('.hw-cat-wrap'))return;
+    const w=document.createElement('div');w.className='hw-x hw-cat-wrap';w.setAttribute('aria-hidden','true');
+    w.innerHTML='<svg class="hw-cat" viewBox="0 0 60 56"><path class="hw-cat-tail" d="M45 51C59 54 62 37 53 31" fill="none" stroke="#120b1c" stroke-width="5.5" stroke-linecap="round"/>'+
+      '<ellipse cx="30" cy="42" rx="16" ry="13" fill="#120b1c" stroke="#3b2a66" stroke-width="1"/><ellipse cx="22" cy="53" rx="5.5" ry="3" fill="#120b1c"/><ellipse cx="38" cy="53" rx="5.5" ry="3" fill="#120b1c"/>'+
+      '<g class="hw-cat-head"><path d="M17 14L19 1l10 8zM43 14L41 1 31 9z" fill="#120b1c" stroke="#3b2a66" stroke-width="1" stroke-linejoin="round"/><path d="M20 10l1-5 5 4zM40 10l-1-5-5 4z" fill="#7a3d6b" opacity=".8"/>'+
+      '<ellipse cx="30" cy="22" rx="14" ry="12.5" fill="#120b1c" stroke="#3b2a66" stroke-width="1"/>'+
+      '<g class="hw-cat-eyes"><ellipse cx="24" cy="21" rx="3.6" ry="4.4" fill="#ffd23a"/><ellipse cx="36" cy="21" rx="3.6" ry="4.4" fill="#ffd23a"/><ellipse cx="24" cy="21" rx=".9" ry="3.6" fill="#120b1c"/><ellipse cx="36" cy="21" rx=".9" ry="3.6" fill="#120b1c"/></g>'+
+      '<path d="M28.3 26.5h3.4L30 28.6z" fill="#d86a98"/><path d="M30 28.6v2M30 30.6q-2 1.6-4 .6M30 30.6q2 1.6 4 .6" fill="none" stroke="#6b5a99" stroke-width=".8" stroke-linecap="round"/>'+
+      '<path d="M15 25l-9-1.5M15 28l-8 2M45 25l9-1.5M45 28l8 2" stroke="#8d7bc9" stroke-width=".7" stroke-linecap="round"/></g></svg>';
+    card.parentNode.insertBefore(w,card);
+  });
+
+  /* 4,7,8. Trăng + mây + dơi · sương mù · mắt trong bóng tối */
+  safe(()=>{
+    if(document.querySelector('.hw-moonwrap'))return;
+    const g=document.createElement('div');g.setAttribute('aria-hidden','true');
+    g.innerHTML='<div class="hw-x hw-moonwrap"><div class="hw-moon"><i style="left:11px;top:14px;width:11px;height:11px"></i><i style="left:30px;top:9px;width:7px;height:7px"></i><i style="left:32px;top:30px;width:13px;height:13px"></i><i style="left:14px;top:35px;width:6px;height:6px"></i></div>'+
+      '<i class="hw-cloud" style="--y:10px;--t:24s;--d:-4s"></i><i class="hw-cloud" style="--y:34px;--t:32s;--d:-18s;width:84px"></i>'+(HWok()?'<span class="hw-moonbat">'+HW.bat()+'</span>':'')+'</div>'+
+      '<div class="hw-x hw-fogwrap"><div class="hw-fog"></div><div class="hw-fog b"></div></div>'+
+      [['left:3px;top:36%','23s','3s'],['right:4px;top:57%','31s','11s'],['left:3px;top:74%','27s','19s']].map(e=>'<div class="hw-x hw-eyes" style="'+e[0]+';--t:'+e[1]+';--d:'+e[2]+'"><i></i><i></i></div>').join('');
+    while(g.firstChild)document.body.appendChild(g.firstChild);
+  });
+
+  /* 6. Dây đèn lồng trên header */
+  safe(()=>{
+    const bar=document.querySelector('header.topbar');if(!bar||bar.querySelector('.hw-lanterns')||!HWok())return;
+    const N=6,h=9,w=document.createElement('div');w.className='hw-x hw-lanterns';w.setAttribute('aria-hidden','true');
+    for(let i=0;i<N;i++){const t=(i+.5)/N,sag=Math.round(h*Math.sqrt(Math.max(0,1-Math.pow(2*t-1,2)))*10)/10;
+      const l=document.createElement('div');l.className='hw-ln';l.style.cssText='--sag:'+(sag+1)+'px;--dl:'+(-(i*.7)).toFixed(1)+'s';l.innerHTML='<b></b>'+HW.pumpkin();w.appendChild(l)}
+    bar.appendChild(w);
+  });
+
+  /* 5. Cảnh báo ngân sách: bia mộ "RIP ví" / đèn bí ngô đỏ */
+  safe(()=>{
+    const bar=document.getElementById('walletBudgetBar');if(!bar)return;
+    const card=bar.closest('.wallet-budget-card'),pr=bar.parentElement,hint=document.getElementById('walletBudgetHint');if(!card||!hint)return;
+    let al=card.querySelector('.hw-budget-alert');
+    if(!al){al=document.createElement('div');al.className='hw-x hw-budget-alert';al.setAttribute('role','status');
+      al.innerHTML='<span class="hw-ba-over"><svg viewBox="0 0 40 40"><g class="hw-ba-ghost"><path d="M24 15V8c0-3 2-5 5-5s5 2 5 5v7l-2-1.5-2 1.5-2-1.5z" fill="#e9e1ff" opacity=".9"/><circle cx="27.5" cy="8.5" r=".9" fill="#2b1233"/><circle cx="31.5" cy="8.5" r=".9" fill="#2b1233"/></g><ellipse cx="14" cy="36" rx="12" ry="2.5" fill="#000" opacity=".35"/><path d="M5 36V19a9 9 0 0 1 18 0v17z" fill="#8f87a8" stroke="#cfc8e8" stroke-width="1"/><text x="14" y="22" text-anchor="middle" font-size="6.4" font-weight="900" fill="#2b2540" font-family="Arial,sans-serif">RIP</text><path d="M10 27h8M12 30h4" stroke="#2b2540" stroke-width="1" stroke-linecap="round"/></svg></span>'+
+        '<span class="hw-ba-warn"><span class="hw-ba-lantern" style="display:block">'+(HWok()?HW.pumpkin():'🎃')+'</span></span><span class="hw-ba-text"></span>';
+      hint.after(al);}
+    const txt=al.querySelector('.hw-ba-text');
+    const sync=()=>{
+      const w=parseFloat(bar.style.width)||0,over=pr.classList.contains('over-budget');
+      const st=over?'over':(w>=80?'warn':'ok');
+      al.dataset.s=st;card.dataset.hw=st;
+      txt.textContent=st==='over'?'RIP ví! Bạn đã vượt ngân sách, ma tiền đang đến đòi nợ…':st==='warn'?'Đèn bí ngô chuyển đỏ: ngân sách sắp cạn, tiêu cẩn thận nhé!':'';
+    };
+    new MutationObserver(sync).observe(bar,{attributes:true,attributeFilter:['style']});
+    new MutationObserver(sync).observe(pr,{attributes:true,attributeFilter:['class']});
+    sync();
+  });
+})();
+</script>
+
 </body></html>
