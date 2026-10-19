@@ -2094,6 +2094,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
   </button>
 </div>
 <div class="wallet-big-balance" id="walletBalanceDisplay" aria-label="Số dư đang được ẩn">••••••••</div>
+<div class="wallet-balance-split" id="walletBalanceSplit" hidden></div>
 <div class="wallet-account-bottom">
   <div>
     <span>MÃ VÍ</span>
@@ -2369,8 +2370,6 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
     <span id="walletAnalysisPeriod">Theo tháng đang chọn</span>
   </div>
   <p class="wallet-analysis-intro">Theo dõi biến động, nhóm chi nổi bật và gợi ý dựa trên giao dịch đã ghi.</p>
-  <div id="walletAnalysisMetrics" class="wallet-analysis-metrics"></div>
-
   <div class="wallet-panel wallet-analysis-grid wallet-flow-wrap">
     <div class="card wallet-flow-card">
       <div class="sectiontitle"><h2>Dòng tiền &amp; cơ cấu</h2></div>
@@ -2381,8 +2380,7 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
       <details class="wallet-flow-more">
         <summary>Xem dòng tiền thu và chi</summary>
         <div class="wallet-chart-switch" role="group" aria-label="Chọn kiểu biểu đồ thu chi">
-          <button type="button" class="active" aria-pressed="true" onclick="setWalletMonthlyChartType('bar')">So sánh</button>
-          <button type="button" aria-pressed="false" onclick="setWalletMonthlyChartType('pie')">Tỷ trọng</button>
+          <button type="button" class="active" aria-pressed="true" onclick="setWalletMonthlyChartType('pie')">Tỷ trọng</button>
           <button type="button" aria-pressed="false" onclick="setWalletMonthlyChartType('trend')">Xu hướng</button>
         </div>
         <div id="walletMonthlyChart" class="wallet-chart"><p class="sub">Đang tải thống kê...</p></div>
@@ -2390,7 +2388,11 @@ body.wallet-customize-open::before{content:"";position:fixed;inset:0;z-index:100
       <div id="walletCategoryChart" hidden></div>
     </div>
   </div>
-  <div id="walletAnalysisRecommendations" class="wallet-analysis-recommendations"></div>
+  <div class="card wa-panel" id="waPanel">
+    <div id="waHero" class="wa-hero" hidden></div>
+    <div id="walletAnalysisMetrics" class="wallet-analysis-metrics"></div>
+    <div id="walletAnalysisRecommendations" class="wallet-analysis-recommendations"></div>
+  </div>
 
 </section>
 <section class="page" id="page-history">
@@ -4156,32 +4158,99 @@ function openWalletTransaction(type) {
   openTransactionEditor(type);
 }
 
-function openWalletSavings() {
-  const month = walletMonth();
-  const oldGoal = Number(
-    (state.walletSavingsGoals || {})[month] || 0
-  );
-
-  const value = prompt(
-    'Đặt mục tiêu tiết kiệm tháng (₫):',
-    String(oldGoal || '')
-  );
-
-  if (value === null) return;
-
-  const goal = Number(value);
-
-  if (!Number.isFinite(goal) || goal < 0) {
-    alert('Mục tiêu tiết kiệm không hợp lệ.');
-    return;
-  }
-
-  if (!state.walletSavingsGoals) state.walletSavingsGoals = {};
-  state.walletSavingsGoals[month] = goal;
-
-  save();
-  toast('Đã lưu mục tiêu tiết kiệm');
+function openWalletSavingsGoal(){
+  const month=walletMonth(),goals=state.walletSavingsGoals||{},old=Number(goals[month]||0);
+  const t=monthTotals(month),inc=Number(t.inc)||0,prev=Number(goals[walletMonthOffset(month,-1)]||0);
+  const chip=(v,l)=>`<button type="button" class="wa-sv-chip" data-sv="${v}" onclick="setSavingsChip(this)">${l}<small>${esc(ledgerShort(v))}</small></button>`;
+  const chips=(inc>0?[10,20,30].map(pc=>chip(Math.round(inc*pc/100),pc+'% thu nhập')):[]).concat(prev>0?[chip(prev,'Như tháng trước')]:[]);
+  const fneed=fundsList().reduce((a,f)=>{const n=fundNeed(f);return a+(n>0?n:0)},0);if(fneed>0)chips.push(chip(fneed,'Theo các quỹ'));
+  $('modalTitle').textContent='Mục tiêu tiết kiệm';
+  $('modalContent').innerHTML=`<form class="formgrid" onsubmit="saveWalletSavings(event)"><p class="sub">Số tiền bạn muốn giữ lại trong tháng ${esc(month.slice(5))}/${esc(month.slice(0,4))}.${inc>0?' Thu nhập đã ghi: '+esc(money(inc))+'.':''}</p>${chips.length?`<div class="wa-sv-chips">${chips.join('')}</div>`:''}<label>Mục tiêu (₫)<input class="field" id="walletSavingsGoal" type="number" min="0" step="1000" inputmode="numeric" placeholder="Ví dụ: 1000000" value="${old||''}" oninput="updateSavingsPreview()"></label><div class="wa-sv-preview" id="walletSavingsPreview"></div><button class="btn" type="submit">Lưu mục tiêu</button>${old>0?'<button class="btn secondary" type="button" onclick="clearWalletSavings()">Xóa mục tiêu</button>':''}<button class="btn secondary" type="button" onclick="openWalletSavings()">Quay lại</button></form>`;
+  updateSavingsPreview();$('modalback').classList.add('show');
 }
+/* ===== Quỹ tiết kiệm: tổng số dư giữ nguyên, tách "để chi" và "tiết kiệm" ===== */
+const FUND_ICONS=['🎯','💻','📱','✈️','🏠','🎓','🚗','🎁','🐷'];
+function fundsList(){if(!Array.isArray(state.savingsFunds))state.savingsFunds=[];return state.savingsFunds}
+function fundsTotal(){return fundsList().reduce((a,f)=>a+(Number(f.saved)||0),0)}
+function fundFind(id){return fundsList().find(f=>String(f.id)===String(id))}
+function fundNeed(f){
+  const rest=(Number(f.target)||0)-(Number(f.saved)||0);if(rest<=0||!f.deadline)return null;
+  const d=new Date(f.deadline+'T00:00:00'),n=new Date(todayISO()+'T00:00:00');
+  if(d<n)return -1;
+  return Math.round(rest/Math.max(1,Math.ceil((d-n)/(86400000*30.4))));
+}
+function openWalletSavings(){
+  const fs=fundsList(),bal=closingBalance(currentMonth()),saved=fundsTotal(),goal=Number((state.walletSavingsGoals||{})[walletMonth()]||0);
+  const card=f=>{
+    const t=Number(f.target)||0,sv=Number(f.saved)||0,pc=t>0?Math.min(100,Math.round(sv/t*100)):0,need=fundNeed(f);
+    const sub=(t>0&&sv>=t)?'Đã đủ mục tiêu 🎉':(f.deadline?'Hạn '+esc(fmtDMY(f.deadline))+(need===-1?' · đã quá hạn':need?' · cần ~'+esc(ledgerShort(need))+'/tháng':''):'Chưa đặt hạn');
+    return `<div class="fund-card"><div class="fund-head"><span class="fund-ico">${esc(f.icon||'🎯')}</span><div><strong>${esc(f.name)}</strong><small>${esc(money(sv))} / ${esc(money(t))} · ${pc}%</small></div></div><div class="fund-bar"><i style="width:${pc}%"></i></div><small class="fund-sub">${sub}</small><div class="fund-actions"><button class="btn small" type="button" onclick="openFundMove('${esc(f.id)}','in')">Gửi vào</button><button class="btn secondary small" type="button" onclick="openFundMove('${esc(f.id)}','out')">Rút ra</button><button class="btn ghost small" type="button" onclick="openFundEditor('${esc(f.id)}')">Sửa</button></div></div>`;
+  };
+  $('modalTitle').textContent='Tiết kiệm';
+  $('modalContent').innerHTML=`<div class="fund-sum"><div><span>Để chi</span><strong>${esc(money(bal-saved))}</strong></div><div><span>Đã để dành</span><strong>${esc(money(saved))}</strong></div></div><p class="sub fund-note">Tổng số dư vẫn là ${esc(money(bal))}. Tiền để dành chỉ được tách riêng, không bị trừ như một khoản chi.</p>${fs.length?fs.map(card).join(''):'<p class="sub">Chưa có quỹ nào. Tạo quỹ cho thứ bạn muốn mua hoặc một khoản cần dự phòng.</p>'}<button class="btn" type="button" onclick="openFundEditor()">＋ Tạo quỹ mới</button><button class="btn secondary" type="button" onclick="openWalletSavingsGoal()">Mục tiêu tháng này: ${goal>0?esc(money(goal)):'chưa đặt'} ›</button>`;
+  $('modalback').classList.add('show');
+}
+function openFundEditor(id){
+  const f=id?fundFind(id):null,icon=(f&&f.icon)||FUND_ICONS[0];
+  $('modalTitle').textContent=f?'Sửa quỹ':'Tạo quỹ mới';
+  $('modalContent').innerHTML=`<form class="formgrid" data-id="${f?esc(f.id):''}" onsubmit="saveFund(event)"><label>Tên quỹ<input class="field" id="fundName" maxlength="40" placeholder="Ví dụ: Mua laptop" value="${f?esc(f.name):''}" required></label><div class="fund-icons" id="fundIcons">${FUND_ICONS.map(i=>`<button type="button" class="${i===icon?'on':''}" onclick="pickFundIcon(this)">${i}</button>`).join('')}</div><label>Số tiền cần (₫)<input class="field" id="fundTarget" type="number" min="1000" step="1000" inputmode="numeric" placeholder="15000000" value="${f?(Number(f.target)||''):''}" required></label><label>Hạn (không bắt buộc)<input class="field" id="fundDeadline" type="date" value="${f?esc(f.deadline||''):''}"></label><button class="btn" type="submit">Lưu quỹ</button>${f?'<button class="btn danger" type="button" data-id="'+esc(f.id)+'" onclick="deleteFund(this.dataset.id)">Xóa quỹ</button>':''}<button class="btn secondary" type="button" onclick="openWalletSavings()">Quay lại</button></form>`;
+  $('modalback').classList.add('show');
+}
+function pickFundIcon(b){document.querySelectorAll('#fundIcons button').forEach(x=>x.classList.toggle('on',x===b))}
+function saveFund(ev){
+  ev.preventDefault();const id=ev.target.dataset.id,name=$('fundName').value.trim(),target=Number($('fundTarget').value),deadline=$('fundDeadline').value||'';
+  const icon=(document.querySelector('#fundIcons button.on')||{}).textContent||FUND_ICONS[0];
+  if(!name||!Number.isFinite(target)||target<=0){alert('Nhập tên và số tiền cần lớn hơn 0 nhé.');return}
+  const f=id?fundFind(id):null;
+  if(f){f.name=name;f.target=Math.round(target);f.deadline=deadline;f.icon=icon}
+  else fundsList().push({id:String(Date.now()),name:name,icon:icon,target:Math.round(target),deadline:deadline,saved:0,log:[]});
+  save();openWalletSavings();
+}
+function deleteFund(id){
+  const f=fundFind(id);if(!f)return;
+  if(!confirm('Xóa quỹ "'+f.name+'"? Tiền trong quỹ ('+money(f.saved)+') sẽ trở lại phần để chi.'))return;
+  state.savingsFunds=fundsList().filter(x=>String(x.id)!==String(id));save();openWalletSavings();
+}
+function openFundMove(id,dir){
+  const f=fundFind(id);if(!f)return;
+  const inn=dir==='in',max=inn?Math.max(0,closingBalance(currentMonth())-fundsTotal()):(Number(f.saved)||0),rest=Math.max(0,(Number(f.target)||0)-(Number(f.saved)||0)),half=Math.round(max/2);
+  const chips=(inn?[['Phần còn thiếu',rest],['Một nửa số để chi',half],['Tất cả số để chi',max]]:[['Một nửa',half],['Tất cả',max]]).filter(c=>c[1]>0&&c[1]<=max);
+  $('modalTitle').textContent=(inn?'Gửi vào ':'Rút khỏi ')+f.name;
+  $('modalContent').innerHTML=`<form class="formgrid" data-id="${esc(f.id)}" data-dir="${inn?'in':'out'}" onsubmit="saveFundMove(event)"><p class="sub">${inn?'Để chi hiện có '+esc(money(max))+'. Tiền gửi vào chỉ được tách riêng, tổng số dư không đổi.':'Quỹ đang có '+esc(money(max))+'. Rút ra sẽ trở lại phần để chi.'}</p>${chips.length?`<div class="wa-sv-chips">${chips.map(c=>`<button type="button" class="wa-sv-chip" data-sv="${c[1]}" onclick="setFundChip(this)">${c[0]}<small>${esc(ledgerShort(c[1]))}</small></button>`).join('')}</div>`:''}<label>Số tiền (₫)<input class="field" id="fundAmount" type="number" min="1" max="${max}" step="1000" inputmode="numeric" required></label><button class="btn" type="submit">${inn?'Gửi vào quỹ':'Rút ra'}</button><button class="btn secondary" type="button" onclick="openWalletSavings()">Quay lại</button></form>`;
+  $('modalback').classList.add('show');
+}
+function setFundChip(b){const i=$('fundAmount');if(i)i.value=b.getAttribute('data-sv')}
+function saveFundMove(ev){
+  ev.preventDefault();const fm=ev.target,f=fundFind(fm.dataset.id);if(!f)return;
+  const inn=fm.dataset.dir==='in',amt=Math.round(Number($('fundAmount').value)),max=inn?Math.max(0,closingBalance(currentMonth())-fundsTotal()):(Number(f.saved)||0);
+  if(!Number.isFinite(amt)||amt<=0){alert('Nhập số tiền lớn hơn 0 nhé.');return}
+  if(amt>max){alert(inn?'Số tiền để chi không đủ.':'Quỹ không đủ tiền để rút.');return}
+  f.saved=(Number(f.saved)||0)+(inn?amt:-amt);if(!Array.isArray(f.log))f.log=[];
+  f.log.push({d:todayISO(),a:inn?amt:-amt});if(f.log.length>60)f.log=f.log.slice(-60);
+  save();openWalletSavings();toast(inn?'Đã gửi vào quỹ':'Đã rút khỏi quỹ');
+}
+function renderBalanceSplit(balance){
+  const el=$('walletBalanceSplit');if(!el)return;
+  if(!fundsList().length){el.hidden=true;el.innerHTML='';return}
+  const sv=fundsTotal(),sp=balance-sv,m=v=>walletBalanceHidden?'••••':(v<0?'−':'')+ledgerShort(v);
+  el.hidden=false;
+  el.innerHTML='<button type="button" onclick="openWalletSavings()">💳 Để chi <b>'+m(sp)+'</b></button><button type="button" onclick="openWalletSavings()">🐷 Tiết kiệm <b>'+m(sv)+'</b></button>';
+}
+
+function updateSavingsPreview(){
+  const el=$('walletSavingsPreview'),inp=$('walletSavingsGoal');if(!el||!inp)return;
+  const g=Number(inp.value)||0;if(!(g>0)){el.innerHTML='';return}
+  const t=monthTotals(walletMonth()),inc=Number(t.inc)||0,saved=Math.max(0,Number(t.net)||0),left=Math.max(0,g-saved);
+  el.innerHTML=`<b>${esc(money(g))}</b>${inc>0?' · '+Math.round(g/inc*100)+'% thu nhập':''}<small>${left>0?'Hiện đã giữ lại '+esc(money(saved))+', còn thiếu '+esc(money(left)):'Bạn đã đạt mục tiêu này rồi 🎉'}</small>`;
+}
+function setSavingsChip(btn){const i=$('walletSavingsGoal');if(i){i.value=btn.getAttribute('data-sv');updateSavingsPreview()}}
+function saveWalletSavings(ev){
+  ev.preventDefault();const g=Number($('walletSavingsGoal').value);
+  if(!Number.isFinite(g)||g<=0){alert('Nhập mục tiêu lớn hơn 0 nhé.');return}
+  if(!state.walletSavingsGoals)state.walletSavingsGoals={};
+  state.walletSavingsGoals[walletMonth()]=Math.round(g);save();closeModal();toast('Đã lưu mục tiêu tiết kiệm');
+}
+function clearWalletSavings(){if(state.walletSavingsGoals)delete state.walletSavingsGoals[walletMonth()];save();closeModal();toast('Đã xóa mục tiêu tiết kiệm')}
 
 function loanLentMiniIcon(){return '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M7 17.5h13m10 0h1a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-14a4 4 0 0 1 2-3.5Z" fill="#e4f2ff" stroke="none"/><path d="M8 17.5v-3a3.5 3.5 0 0 1 3.5-3.5H27" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><path d="M10 25h8m-8 3h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".45"/><path d="M8 26h7a4 4 0 0 1 0 8H8a4 4 0 0 1 0-8Z" fill="#f5faff" stroke="currentColor" stroke-width="2.5"/><circle cx="12" cy="30" r="1.2" fill="currentColor"/><g class="loan-moving-coin loan-coin-out loan-coin-first"><circle cx="25" cy="22" r="4.6" fill="#f7c843" stroke="#a66b08" stroke-width="1.8"/><path d="M25 19.5v5m-1.4-3h2.8m-2.8 2h2.8" fill="none" stroke="#8c5a08" stroke-width=".9" stroke-linecap="round"/></g><g class="loan-moving-coin loan-coin-out loan-coin-second"><circle cx="25" cy="22" r="4.6" fill="#f7c843" stroke="#a66b08" stroke-width="1.8"/><path d="M25 19.5v5m-1.4-3h2.8m-2.8 2h2.8" fill="none" stroke="#8c5a08" stroke-width=".9" stroke-linecap="round"/></g><g class="loan-moving-coin loan-coin-out loan-coin-third"><circle cx="25" cy="22" r="4.6" fill="#f7c843" stroke="#a66b08" stroke-width="1.8"/><path d="M25 19.5v5m-1.4-3h2.8m-2.8 2h2.8" fill="none" stroke="#8c5a08" stroke-width=".9" stroke-linecap="round"/></g><path d="M7 17.5h13m10 0h1a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4v-14a4 4 0 0 1 2-3.5Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/></svg>';}
 function loanBorrowedMiniIcon(){return '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path d="M17 17.5h3m10 0h11a4 4 0 0 1 2 3.5v14a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4V21.5a4 4 0 0 1 4-4Z" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linejoin="round"/><path d="M40 17.5v-3a3.5 3.5 0 0 0-3.5-3.5H21" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><path d="M32 26h7a4 4 0 0 1 0 8h-7a4 4 0 0 1 0-8Z" fill="#fff4c7" stroke="currentColor" stroke-width="2.5"/><circle cx="36" cy="30" r="1.2" fill="currentColor"/><g class="loan-moving-coin loan-coin-in loan-coin-first"><circle cx="2" cy="3" r="4.6" fill="#f7c843" stroke="#a66b08" stroke-width="1.8"/><path d="M2 .5v5m-1.4-3h2.8m-2.8 2h2.8" fill="none" stroke="#8c5a08" stroke-width=".9" stroke-linecap="round"/></g><g class="loan-moving-coin loan-coin-in loan-coin-second"><circle cx="52" cy="3" r="4.6" fill="#f7c843" stroke="#a66b08" stroke-width="1.8"/><path d="M52 .5v5m-1.4-3h2.8m-2.8 2h2.8" fill="none" stroke="#8c5a08" stroke-width=".9" stroke-linecap="round"/></g><g class="loan-moving-coin loan-coin-in loan-coin-third"><circle cx="25" cy="-7" r="4.6" fill="#f7c843" stroke="#a66b08" stroke-width="1.8"/><path d="M25 -9.5v5m-1.4-3h2.8m-2.8 2h2.8" fill="none" stroke="#8c5a08" stroke-width=".9" stroke-linecap="round"/></g></svg>';}
@@ -4542,7 +4611,7 @@ function confirmRemoveWalletBudget(){
 }
 function removeWalletBudgetPlan(){state.walletBudgetPlan=null;state.walletBudgets={};save();closeModal();toast('Đã xóa ngân sách');}
 
-let walletMonthlyChartType = 'bar';
+let walletMonthlyChartType = 'pie';
 /* ===== Phân tích theo tháng / năm ===== */
 function walletAnalysisYearValue(){return window.walletPeriod==='year'?walletYearValue():null}
 function yearTotals(y){
@@ -4552,7 +4621,7 @@ function yearTotals(y){
 }
 function walletPeriodTotals(){const y=walletAnalysisYearValue();return y?yearTotals(y):monthTotals(walletMonth())}
 function setWalletMonthlyChartType(type){
-  if(!['bar','pie','trend'].includes(type))return;
+  if(!['pie','trend'].includes(type))return;
   walletMonthlyChartType=type;
   document.querySelectorAll('#page-wallet .wallet-chart-switch button').forEach(button=>{
     const active=button.getAttribute('onclick').includes("'"+type+"'");
@@ -4572,7 +4641,7 @@ function renderWalletFlow(month,yr,pt,expenseItems){
   if(yr){const p=yearTotals(yr-1);cur=isExp?pt.totalExpense:pt.inc;old=isExp?p.totalExpense:p.inc;cmp='năm trước'}
   else{const dim=(mo)=>new Date(+mo.slice(0,4),+mo.slice(5,7),0).getDate(),pm=walletMonthOffset(month,-1),dl=isCur?Number(todayISO().slice(-2)):dim(month),a=walletAnalysisMonthTotals(month,dl),b=walletAnalysisMonthTotals(pm,isCur?dl:dim(pm));cur=isExp?a.totalExpense:a.income;old=isExp?b.totalExpense:b.income;cmp=isCur?'cùng kỳ tháng trước':'tháng trước'}
   const vals={expense:pt.totalExpense,income:pt.inc};
-  tabsEl.innerHTML=[['expense','Chi tiêu','↗'],['income','Thu nhập','↙']].map(([k,l,ic])=>`<button type="button" class="wallet-flow-tab ${k}${tab===k?' on':''}" aria-pressed="${tab===k}" onclick="setWalletFlowTab('${k}')"><span class="wf-label"><i class="wf-ico">${ic}</i>${l}</span><strong>${esc(money(vals[k]))}</strong></button>`).join('');
+  tabsEl.innerHTML=[['expense','Chi tiêu','↗'],['income','Thu nhập','↙']].map(([k,l,ic])=>`<button type="button" class="wallet-flow-tab ${k}${tab===k?' on':''}" aria-pressed="${tab===k}" onclick="setWalletFlowTab('${k}')"><span class="wf-label"><i class="wf-ico">${ic}</i>${l}</span></button>`).join('');
   const banner=(tone,icon,html)=>`<button type="button" class="wf-banner ${tone}" onclick="document.getElementById('walletAnalysisRecommendations')?.scrollIntoView({behavior:'smooth',block:'start'})"><i>${icon}</i><span>${html}</span><em>›</em></button>`;
   const diff=cur-old,good=isExp?diff<0:diff>0;let bh='';
   if(cur||old){
@@ -4597,7 +4666,7 @@ function renderWalletFlow(month,yr,pt,expenseItems){
 }
 function renderWalletExpert(month,yr,pt,expenseItems,isCur){
   const oldBox=$('walletFlowExpert');if(oldBox)oldBox.innerHTML='';
-  const box=$('walletAnalysisRecommendations');if(!box)return;
+  const box=$('walletAnalysisRecommendations');if(!box)return;box.dataset.tip='';box.dataset.pr='';
   const inc=pt.inc,exp=pt.totalExpense;if(!inc&&!exp)return;
   const tn={good:'positive',warn:'warning',caution:'caution',neutral:'neutral'},ic={good:'✓',warn:'!',caution:'↗',neutral:'◎'},items=[];
   const add=(tone,score,title,body,act='',extra='',ratio=false)=>items.push({tone:tn[tone],icon:ic[tone],score,title,body,act,extra,ratio});
@@ -4611,8 +4680,16 @@ function renderWalletExpert(month,yr,pt,expenseItems,isCur){
   let wkd=0,wke=0,elapsed=0;for(let d=new Date(start);d<=last;d.setDate(d.getDate()+1)){elapsed++;const g=d.getDay();if(g===0||g===6)wke++;else wkd++}
   const days=Math.max(1,elapsed),rem=isCur?dim-Number(today.slice(-2)):0;
   let big=0;tx.forEach(t=>{big=Math.max(big,Number(t.amount)||0)});
-  const left=inc-exp,rate=inc>0?left/inc*100:null,burn=exp/days,bal=closingBalance(currentMonth());
-  const hasRun=burn>0&&bal>0,run=hasRun?bal/burn:0,pr=isCur&&exp>0?burn*dim:null;
+  const left=inc-exp,rate=inc>0?left/inc*100:null,bal=Math.max(0,closingBalance(currentMonth())-fundsTotal());
+  const useFix=isCur&&!yr&&exp>0,fixedRx=/tiền phòng|tiền nhà|thuê (nhà|phòng)|ở trọ/i,isFixed=t=>t.repeat==='monthly'||t.repeat==='yearly'||fixedRx.test((t.title||'')+' '+(t.category||''));
+  let fixedRec=0,upcoming=0;
+  if(useFix){
+    fixedRec=Math.min(exp,ex.filter(isFixed).reduce((a,t)=>a+(Number(t.amount)||0),0)+rentTotal(month));
+    all.forEach(t=>{if(t.type!=='expense'||!t.repeat||t.repeat==='daily'||!t.repeatNext)return;let d=t.repeatNext,n=0;while(d&&d.startsWith(month)&&(!t.repeatEnd||d<=t.repeatEnd)&&n<6){upcoming+=Number(t.amount)||0;n++;if(t.repeat!=='weekly')break;d=nextRepDate(d,t.repeat)}});
+  }
+  const flexBurn=useFix?Math.max(0,exp-fixedRec)/days:exp/days,burn=useFix?flexBurn+(fixedRec+upcoming)/dim:exp/days;
+  const hasRun=burn>0&&bal>0,run=hasRun?bal/burn:0,pr=isCur&&exp>0?(useFix?fixedRec+upcoming+flexBurn*dim:burn*dim):null;
+  box.dataset.pr=pr===null?'':String(Math.round(pr));
   const already=box.textContent.includes('giữ lại được một phần thu nhập');
   if(big>=1e11)add('warn',95,'Có khoản tiền lớn bất thường',`Trong kỳ này có giao dịch ${M(big)}. Nếu đây là nhập nhầm số 0, các chỉ số phân tích sẽ bị lệch.`,'Mở lịch sử, tìm giao dịch này và sửa lại số tiền nếu nhập nhầm.');
   if(rate!==null){
@@ -4627,7 +4704,7 @@ function renderWalletExpert(month,yr,pt,expenseItems,isCur){
   }
   if(burn>0){
     if(bal>0){const rd=bal/burn;if(rd<30)add('warn',80,`Số dư chỉ đủ khoảng ${span(rd)}`,`Với nhịp chi ${M(burn)}/ngày, số dư hiện tại tương đương ${spanM(bal/(burn*30))} chi tiêu. Quỹ dự phòng khuyến nghị là 3–6 tháng.`,'Hạn chế khoản không thiết yếu và bổ sung nguồn thu trước khi chi lớn.');else if(rd<90)add('neutral',42,`Quỹ dự phòng mới đủ ${spanM(bal/(burn*30))}`,`Số dư hiện tại đủ cho khoảng ${span(rd)} chi tiêu theo nhịp ${M(burn)}/ngày.`,'Dành 10% thu nhập mỗi tháng để nâng quỹ dự phòng lên 3 tháng chi tiêu.');else add('good',15,`Số dư đủ ${span(rd)}`,`Số dư hiện tại tương đương ${spanM(bal/(burn*30))} chi tiêu, đang ở mức an toàn.`,'Giữ quỹ dự phòng 3–6 tháng, phần vượt có thể cân nhắc cho mục tiêu dài hạn.')}
-    else add('warn',90,'Số dư không đủ trang trải','Số dư hiện tại không dương trong khi vẫn đang phát sinh chi.','Ưu tiên khoản thiết yếu và bổ sung nguồn thu trước khi chi thêm.');
+    else add('warn',90,(fundsTotal()>0&&closingBalance(currentMonth())>0)?'Tiền để chi đã hết':'Số dư không đủ trang trải',(fundsTotal()>0&&closingBalance(currentMonth())>0)?'Phần còn lại đang nằm trong quỹ tiết kiệm trong khi vẫn đang phát sinh chi.':'Số dư hiện tại không dương trong khi vẫn đang phát sinh chi.','Ưu tiên khoản thiết yếu và bổ sung nguồn thu trước khi chi thêm.');
   }
   if(pr!==null){
     if(inc>0&&pr>inc)add('warn',86,`Dự báo chi cuối tháng ≈ ${M(pr)}`,`Giữ nhịp này, bạn sẽ vượt thu nhập đã ghi khoảng ${M(pr-inc)}.`,rem>0&&inc>exp?`Giảm chi còn khoảng ${M((inc-exp)/rem)}/ngày cho ${rem} ngày còn lại để không vượt thu.`:'Giảm chi bình quân mỗi ngày và hoãn các khoản chưa cần thiết.');
@@ -4650,8 +4727,10 @@ function renderWalletExpert(month,yr,pt,expenseItems,isCur){
   const acts=[[/vượt mức/,'Tạm dừng khoản chi linh hoạt đến hết kỳ và xem lại 3 khoản chi lớn nhất.'],[/sắp chạm/,'Chia phần ngân sách còn lại thành hạn mức theo ngày.'],[/Nhịp chi phù hợp/,'Đối chiếu mức chi mỗi ngày với hạn mức này.'],[/cao hơn thu/,'Cắt giảm 1–2 nhóm chi linh hoạt lớn nhất để cân bằng lại.'],[/tăng đáng kể/,'So sánh các khoản phát sinh bất thường với kỳ trước.'],[/chiếm phần lớn/,'Tách khoản cố định và linh hoạt để biết phần nào có thể giảm.'],[/nổi bật/,'Xác định đây là khoản một lần hay cần đưa vào kế hoạch định kỳ.'],[/dồn vào một ngày/,'Mở lịch sử ngày đó và kiểm tra từng khoản.'],[/Thu nhập chủ yếu/,'Lập quỹ dự phòng bằng 3 tháng chi tiêu để đỡ rủi ro khi nguồn thu biến động.'],[/giữ lại được/,'Chuyển phần dư vào quỹ dự phòng ngay đầu tháng sau.']];
   const base={warning:85,caution:65,neutral:40,positive:25};
   const olds=[...box.querySelectorAll('article.wallet-analysis-advice')].map(x=>{const tone=['warning','caution','neutral','positive'].find(c=>x.classList.contains(c))||'neutral',title=x.querySelector('strong')?.textContent||'';return{tone,icon:esc(x.querySelector('.wallet-analysis-advice-icon')?.textContent||'◎'),score:base[tone],title:esc(title),body:esc(x.querySelector('p')?.textContent||''),act:(acts.find(r=>r[0].test(title))||[0,''])[1]}});
-  const ratio=items.find(i=>i.ratio),rest=[...olds,...items.filter(i=>!i.ratio)].sort((x,y)=>y.score-x.score);
-  if(!ratio&&!rest.length)return;
+  const dupRe=/^(Dự báo chi cuối tháng|Số dư chỉ đủ|Số dư đủ|Quỹ dự phòng mới đủ|Có một khoản chi nổi bật|Tiết kiệm \d+% thu nhập$)|chiếm phần lớn$/;
+  const fi=items.find(i=>/^Dự báo chi cuối tháng/.test(i.title));box.dataset.tip=fi&&fi.act?fi.act:'';
+  const ratio=items.find(i=>i.ratio),rest0=[...olds,...items.filter(i=>!i.ratio)],rest=rest0.filter(i=>!dupRe.test(String(i.title).replace(/&amp;/g,'&'))).sort((x,y)=>y.score-x.score);
+  if(!ratio&&!rest0.length)return;
   const top=rest.slice(0,6),more=rest.slice(6);
   const col={warning:'#ef6b6b',caution:'#ef8c45',neutral:'#6d7ee8',positive:'#1d9e65'};
   const first=t=>(String(t).match(/^.*?[.!?](?=\s|$)/)||[t])[0];
@@ -4741,24 +4820,15 @@ function renderWalletMonthlyChart(month,totals){
     {label:'Thu',value:totals.inc,color:'#1d9e65'},
     {label:'Chi',value:totals.totalExpense,color:'#ff7182'}
   ];
-  if(walletMonthlyChartType==='bar'){
-    const maxValue=Math.max(...items.map(item=>item.value),1);
-    chart.className='wallet-chart wallet-chart-bars';
-    const signedNet=(totals.net>0?'+':totals.net<0?'−':'')+money(Math.abs(totals.net));
-    chart.innerHTML=`<div class="wallet-chart-total ${totals.net<0?'negative':'positive'}"><div class="wallet-chart-total-copy"><span>Chênh lệch thu − chi</span><strong>${esc(signedNet)}</strong><small>${totals.net>0?'Thu đang cao hơn chi':totals.net<0?'Chi đang cao hơn thu':'Thu và chi đang cân bằng'}</small></div><span class="wallet-chart-direction" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17 17 5M7 5h10v10"/></svg></span></div>`+items.map(item=>`
-      <div class="wallet-chart-row">
-        <div class="wallet-chart-row-head"><span class="wallet-chart-label" style="--chart-color:${item.color}"><i></i>${item.label}</span><span class="wallet-chart-value">${esc(money(item.value))}<small>${totals.inc+totals.totalExpense?Math.round(item.value/(totals.inc+totals.totalExpense)*100):0}%</small></span></div>
-        <div class="wallet-chart-track"><div class="wallet-chart-fill ${item.label==='Thu'?'':'expense-fill'}" style="width:${Math.min(100,item.value/maxValue*100)}%"></div></div>
-      </div>
-    `).join('');
-    return;
-  }
+  if(walletMonthlyChartType!=='pie'&&walletMonthlyChartType!=='trend')walletMonthlyChartType='pie';
+  const signedNet=(totals.net>0?'+':totals.net<0?'\u2212':'')+money(Math.abs(totals.net));
+  const netCard=`<div class="wallet-chart-total ${totals.net<0?'negative':'positive'}"><div class="wallet-chart-total-copy"><span>Ch\u00eanh l\u1ec7ch thu \u2212 chi</span><strong>${esc(signedNet)}</strong><small>${totals.net>0?'Thu \u0111ang cao h\u01a1n chi':totals.net<0?'Chi \u0111ang cao h\u01a1n thu':'Thu v\u00e0 chi \u0111ang c\u00e2n b\u1eb1ng'}</small></div><span class="wallet-chart-direction" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 17 17 5M7 5h10v10"/></svg></span></div>`;
   chart.className='';
   if(walletMonthlyChartType==='pie'){
-    chart.innerHTML=walletDonutHTML(items,yr?'Chưa có khoản thu chi trong năm này.':'Chưa có khoản thu chi trong tháng này.');
+    chart.innerHTML=netCard+walletDonutHTML(items,yr?'Chưa có khoản thu chi trong năm này.':'Chưa có khoản thu chi trong tháng này.');
     return;
   }
-  chart.innerHTML=walletTrendBarsHTML(month);
+  chart.innerHTML=netCard+walletTrendBarsHTML(month);
 }
 function walletMonthOffset(month,offset){const [year,monthNumber]=month.split('-').map(Number),date=new Date(year,monthNumber-1+offset,1);return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;}
 function walletAnalysisMonthTotals(month,endDay){
@@ -4791,7 +4861,7 @@ function renderWalletAnalysis(month,totals,categoryItems){
   const changeValue=hasCurrentData&&previous.totalExpense?`${change>0?'+':change<0?'−':''}${money(Math.abs(change))}`:hasCurrentData?'Chưa có dữ liệu':'Chưa phát sinh';
   const changePercent=previous.totalExpense?`${change>0?'+':''}${Math.round(change/previous.totalExpense*100)}%`:'—';
   $('walletAnalysisPeriod').textContent=`${new Date(month+'-01T12:00:00').toLocaleDateString('vi-VN',{month:'long',year:'numeric'})} · ${isCurrent?'tính đến hôm nay':isFuture?'chưa bắt đầu':'cả tháng'}`;
-  $('walletAnalysisMetrics').innerHTML=`<article class="wallet-analysis-metric ${hasCurrentData&&previous.totalExpense?(change>0?'warning':'positive'):''}"><span>Chi so với kỳ trước</span><strong>${esc(changeValue)}</strong><small>${!hasCurrentData?'Chưa có giao dịch trong kỳ này':previous.totalExpense?`${esc(changePercent)} · ${isCurrent?'đến ngày tương ứng tháng trước':'so với tháng trước'}`:'Chưa có kỳ trước để đối chiếu'}</small></article><article class="wallet-analysis-metric"><span>Chi trung bình mỗi ngày</span><strong>${isFuture?'—':esc(money(current.totalExpense/Math.max(1,current.days)))}</strong><small>${isFuture?'Tháng chưa bắt đầu':`${expenseTransactions.length} giao dịch chi · ${current.days} ngày`}</small></article><article class="wallet-analysis-metric ${rate===null?'':rate<0?'warning':'positive'}"><span>Tỷ lệ giữ lại từ thu</span><strong>${rate===null?'—':`${Math.round(rate)}%`}</strong><small>${rate===null?'Chưa có khoản thu để tính':rate<0?'Chi đang vượt tổng thu':'Phần thu còn lại sau chi'}</small></article><article class="wallet-analysis-metric ${forecast!==null&&monthlyPlan&&forecast>Number(plan.amount)?'warning':''}"><span>${isCurrent?'Dự kiến chi cuối tháng':'Tổng chi kỳ này'}</span><strong>${forecast===null?'—':esc(money(forecast))}</strong><small>${isCurrent?'Ước tính nếu giữ nhịp chi hiện tại':'Số đã ghi nhận'}</small></article><article class="wallet-analysis-metric"><span>Nhóm chi lớn nhất</span><strong>${top?esc(top[0]):'Chưa có'}</strong><small>${top?`${esc(money(top[1]))} · ${topShare}% tổng chi`:'Chưa ghi nhận chi tiêu'}</small></article><article class="wallet-analysis-metric"><span>Giao dịch chi lớn nhất</span><strong>${largestExpense?esc(money(largestExpense.amount)):'Chưa có'}</strong><small>${largestExpense?`${esc(largestExpense.title||largestExpense.category||'Khoản chi')} · ${esc(largestExpense.date||'')}`:'Chưa ghi nhận giao dịch chi'}</small></article>`;
+  $('walletAnalysisMetrics').innerHTML=`<article class="wallet-analysis-metric ${hasCurrentData&&previous.totalExpense?(change>0?'warning':'positive'):''}"><span>Chi tiêu thay đổi</span><strong>${esc(changeValue)}</strong><small>${!hasCurrentData?'Chưa có giao dịch trong kỳ này':previous.totalExpense?`${esc(changePercent)} · ${isCurrent?'đến ngày tương ứng tháng trước':'so với tháng trước'}`:'Chưa có kỳ trước để đối chiếu'}</small></article><article class="wallet-analysis-metric"><span>Chi TB mỗi ngày</span><strong>${isFuture?'—':esc(money(current.totalExpense/Math.max(1,current.days)))}</strong><small>${isFuture?'Tháng chưa bắt đầu':`${expenseTransactions.length} giao dịch chi · ${current.days} ngày`}</small></article><article class="wallet-analysis-metric ${rate===null?'':rate<0?'warning':'positive'}"><span>Tỷ lệ giữ lại từ thu</span><strong>${rate===null?'—':`${Math.round(rate)}%`}</strong><small>${rate===null?'Chưa có khoản thu để tính':rate<0?'Chi đang vượt tổng thu':'Phần thu còn lại sau chi'}</small></article><article class="wallet-analysis-metric ${forecast!==null&&monthlyPlan&&forecast>Number(plan.amount)?'warning':''}"><span>${isCurrent?'Dự kiến chi cuối tháng':'Tổng chi kỳ này'}</span><strong>${forecast===null?'—':esc(money(forecast))}</strong><small>${isCurrent?'Ước tính nếu giữ nhịp chi hiện tại':'Số đã ghi nhận'}</small></article><article class="wallet-analysis-metric"><span>Nhóm chi lớn nhất</span><strong>${top?esc(top[0]):'Chưa có'}</strong><small>${top?`${esc(money(top[1]))} · ${topShare}% tổng chi`:'Chưa ghi nhận chi tiêu'}</small></article><article class="wallet-analysis-metric"><span>Giao dịch chi lớn nhất</span><strong>${largestExpense?esc(money(largestExpense.amount)):'Chưa có'}</strong><small>${largestExpense?`${esc(largestExpense.title||largestExpense.category||'Khoản chi')} · ${esc(largestExpense.date||'')}`:'Chưa ghi nhận giao dịch chi'}</small></article>`;
 
   const recommendations=[];
   if(plan){
@@ -4832,7 +4902,7 @@ function renderWalletAnalysisYear(y,totals,categoryItems){
   const changeValue=hasData&&previous.totalExpense?`${change>0?'+':change<0?'−':''}${money(Math.abs(change))}`:hasData?'Chưa có dữ liệu':'Chưa phát sinh';
   const changePercent=previous.totalExpense?`${change>0?'+':''}${Math.round(change/previous.totalExpense*100)}%`:'—';
   $('walletAnalysisPeriod').textContent=`Năm ${y} · ${isCurrent?'tính đến hôm nay':isFuture?'chưa bắt đầu':'cả năm'}`;
-  $('walletAnalysisMetrics').innerHTML=`<article class="wallet-analysis-metric ${hasData&&previous.totalExpense?(change>0?'warning':'positive'):''}"><span>Chi so với kỳ trước</span><strong>${esc(changeValue)}</strong><small>${!hasData?'Chưa có giao dịch trong năm này':previous.totalExpense?`${esc(changePercent)} · ${isCurrent?'đến tháng tương ứng năm trước':'so với năm trước'}`:'Chưa có năm trước để đối chiếu'}</small></article><article class="wallet-analysis-metric"><span>Chi trung bình mỗi tháng</span><strong>${isFuture?'—':esc(money(avgMonthly))}</strong><small>${isFuture?'Năm chưa bắt đầu':`${expenseTx.length} giao dịch chi · ${upto} tháng`}</small></article><article class="wallet-analysis-metric ${rate===null?'':rate<0?'warning':'positive'}"><span>Tỷ lệ giữ lại từ thu</span><strong>${rate===null?'—':`${Math.round(rate)}%`}</strong><small>${rate===null?'Chưa có khoản thu để tính':rate<0?'Chi đang vượt tổng thu':'Phần thu còn lại sau chi'}</small></article><article class="wallet-analysis-metric"><span>${isCurrent?'Dự kiến chi cuối năm':'Tổng chi kỳ này'}</span><strong>${forecast===null?'—':esc(money(forecast))}</strong><small>${isCurrent?'Ước tính nếu giữ nhịp chi hiện tại':'Số đã ghi nhận'}</small></article><article class="wallet-analysis-metric"><span>Nhóm chi lớn nhất</span><strong>${top?esc(top[0]):'Chưa có'}</strong><small>${top?`${esc(money(top[1]))} · ${topShare}% tổng chi`:'Chưa ghi nhận chi tiêu'}</small></article><article class="wallet-analysis-metric"><span>Giao dịch chi lớn nhất</span><strong>${largest?esc(money(largest.amount)):'Chưa có'}</strong><small>${largest?`${esc(largest.title||largest.category||'Khoản chi')} · ${esc(largest.date||'')}`:'Chưa ghi nhận giao dịch chi'}</small></article>`;
+  $('walletAnalysisMetrics').innerHTML=`<article class="wallet-analysis-metric ${hasData&&previous.totalExpense?(change>0?'warning':'positive'):''}"><span>Chi tiêu thay đổi</span><strong>${esc(changeValue)}</strong><small>${!hasData?'Chưa có giao dịch trong năm này':previous.totalExpense?`${esc(changePercent)} · ${isCurrent?'đến tháng tương ứng năm trước':'so với năm trước'}`:'Chưa có năm trước để đối chiếu'}</small></article><article class="wallet-analysis-metric"><span>Chi trung bình mỗi tháng</span><strong>${isFuture?'—':esc(money(avgMonthly))}</strong><small>${isFuture?'Năm chưa bắt đầu':`${expenseTx.length} giao dịch chi · ${upto} tháng`}</small></article><article class="wallet-analysis-metric ${rate===null?'':rate<0?'warning':'positive'}"><span>Tỷ lệ giữ lại từ thu</span><strong>${rate===null?'—':`${Math.round(rate)}%`}</strong><small>${rate===null?'Chưa có khoản thu để tính':rate<0?'Chi đang vượt tổng thu':'Phần thu còn lại sau chi'}</small></article><article class="wallet-analysis-metric"><span>${isCurrent?'Dự kiến chi cuối năm':'Tổng chi kỳ này'}</span><strong>${forecast===null?'—':esc(money(forecast))}</strong><small>${isCurrent?'Ước tính nếu giữ nhịp chi hiện tại':'Số đã ghi nhận'}</small></article><article class="wallet-analysis-metric"><span>Nhóm chi lớn nhất</span><strong>${top?esc(top[0]):'Chưa có'}</strong><small>${top?`${esc(money(top[1]))} · ${topShare}% tổng chi`:'Chưa ghi nhận chi tiêu'}</small></article><article class="wallet-analysis-metric"><span>Giao dịch chi lớn nhất</span><strong>${largest?esc(money(largest.amount)):'Chưa có'}</strong><small>${largest?`${esc(largest.title||largest.category||'Khoản chi')} · ${esc(largest.date||'')}`:'Chưa ghi nhận giao dịch chi'}</small></article>`;
   const rec=[];
   if(current.net<0)rec.push({tone:'warning',icon:'!',title:'Chi đang cao hơn thu',body:`Cả năm đang âm ${money(Math.abs(current.net))}${top?`. Nhóm ${top[0]} chiếm nhiều nhất (${money(top[1])}); xem từng giao dịch để phân biệt khoản cố định và khoản có thể điều chỉnh.`:'. Xem lại các khoản chi gần đây và ưu tiên khoản thiết yếu.'}`});
   if(previous.totalExpense>0&&change>0&&change/previous.totalExpense>=.2)rec.push({tone:'caution',icon:'↗',title:'Mức chi tăng đáng kể',body:`Chi tiêu tăng ${Math.round(change/previous.totalExpense*100)}% so với ${isCurrent?'cùng giai đoạn năm trước':'năm trước'}${top?`, nhóm ${top[0]} đang dẫn đầu.`:'.'} Kiểm tra các khoản phát sinh bất thường trước khi đặt lại kế hoạch.`});
@@ -4863,6 +4933,7 @@ function renderWalletInsights() {
   $('walletBalanceDisplay').innerHTML = walletBalanceHidden
     ? '••••••••'
     : `${balanceNumber}<sup>VND</sup>`;
+  renderBalanceSplit(balance);
   const historyBalance = $('historyBalance');
   if (historyBalance) historyBalance.innerHTML = `${balanceNumber}<sup>VND</sup>`;
   const historyMonth = $('historyMonth'); if (historyMonth) historyMonth.textContent = 'Tháng ' + monthLabel;
@@ -5198,7 +5269,7 @@ function resetDemo(){
   $('modalback').classList.add('show');
 }
 function confirmResetPersonalData(){
-  state.transactions=[];state.rents={};state.classes=[];state.walletLoans=[];state.walletInitialBalance=0;state.walletBaseMonth=currentMonth();state.walletBudgets={};state.walletBudgetPlan=null;state.walletSavingsGoals={};state.personalTrash=[];state.notices=defaultNotices.map(n=>({...n}));
+  state.transactions=[];state.rents={};state.classes=[];state.walletLoans=[];state.walletInitialBalance=0;state.walletBaseMonth=currentMonth();state.walletBudgets={};state.walletBudgetPlan=null;state.walletSavingsGoals={};state.savingsFunds=[];state.personalTrash=[];state.notices=defaultNotices.map(n=>({...n}));
   closeModal();save();toast('Đã xóa toàn bộ dữ liệu tài chính cá nhân');
 }
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -6627,6 +6698,62 @@ body.wallet-customize-open::before{
 .wallet-flow-more{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}.wallet-flow-more summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--accent);list-style:none}.wallet-flow-more summary::-webkit-details-marker{display:none}.wallet-flow-more summary::after{content:" ›"}.wallet-flow-more[open] summary::after{content:" ˅"}
 .wallet-flow-more .wallet-chart-switch{margin:10px 0}
 </style>
+<style id="wa-dashboard-style">
+#waPanel{position:relative;margin-bottom:12px;padding:16px;border-radius:24px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--accent) 14%,transparent),transparent 60%),var(--surface);box-shadow:var(--shadow)}
+.wa-hero{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:10px;margin-bottom:12px}.wa-hero[hidden]{display:none}
+.wa-main{position:relative;overflow:hidden;display:grid;align-content:center;gap:5px;padding:18px;border-radius:20px;color:#fff;background:linear-gradient(135deg,#6d7ee8,#8b5cf6)}
+.wa-main.good{background:linear-gradient(135deg,#12a36b,#1d7f9e)}.wa-main.warn{background:linear-gradient(135deg,#ef6b6b,#f08c45)}
+.wa-main::after{content:"";position:absolute;right:-34px;top:-34px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.15)}
+.wa-main span{font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;opacity:.88}
+.wa-main strong{font-size:clamp(28px,5vw,38px);font-weight:850;letter-spacing:-.8px;line-height:1.05}
+.wa-main small{font-size:12.5px;opacity:.92}
+.wa-ring,.wa-run{display:grid;align-content:center;justify-items:center;gap:8px;padding:14px;border:1px solid var(--line);border-radius:20px;background:var(--surface2);text-align:center}
+.wa-ring{--rc:#6d7ee8}.wa-ring.good{--rc:#1d9e65}.wa-ring.warn{--rc:#ef6b6b}
+.wa-ring-dial{position:relative;display:grid;place-items:center;width:84px;height:84px;border-radius:50%;background:conic-gradient(var(--rc) calc(var(--p)*1%),color-mix(in srgb,var(--muted) 24%,transparent) 0)}
+.wa-ring-dial::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--surface2)}
+.wa-ring-dial b{position:relative;font-size:19px;font-weight:850;color:var(--rc)}
+.wa-ring-txt,.wa-run{gap:3px}.wa-ring-txt{display:grid}
+.wa-ring span,.wa-run span{color:var(--muted);font-size:12px;font-weight:700}
+.wa-ring small,.wa-run small{color:var(--muted);font-size:11px;line-height:1.35}
+.wa-run strong{font-size:24px;font-weight:850;color:#6d7ee8}.wa-run.good strong{color:#1d9e65}.wa-run.warn strong{color:#ef6b6b}
+#waPanel .wallet-analysis-metrics{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:14px}
+#waPanel .wallet-analysis-metric{position:relative;padding:13px;border-radius:16px;background:var(--surface2);box-shadow:none;transition:transform .16s,border-color .16s}
+#waPanel .wallet-analysis-metric:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 40%,var(--line))}
+#waPanel .wallet-analysis-metric>span{padding-right:30px}
+.wa-ico{position:absolute;top:10px;right:10px;display:grid;place-items:center;width:26px;height:26px;border-radius:9px;background:var(--surface);font-size:14px}
+.wa-dup,#waPanel .adv-sum{display:none!important}
+#waPanel .wallet-analysis-recommendations{margin:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}
+#waPanel .adv-ratio{border-radius:18px;background:linear-gradient(135deg,color-mix(in srgb,#6d7ee8 10%,var(--surface)),var(--surface))}
+#waPanel .wf-bar{height:12px}
+#waPanel .adv-list{border-radius:18px;background:var(--surface2)}
+#waPanel .adv-item{border-left:3px solid var(--c)}
+#waPanel .adv-ico{border-radius:12px;color:var(--c);background:color-mix(in srgb,var(--c) 16%,transparent)}
+.wallet-flow-tab{padding:11px 14px;align-content:center}
+#walletMonthlyChart>.wallet-chart-total{margin-bottom:12px}
+.wa-tip{display:block;margin-top:8px;padding-top:9px;border-top:1px solid rgba(255,255,255,.3);font-style:normal;font-size:12px;line-height:1.45;opacity:.96}
+#waPanel .wallet-analysis-metric{min-height:98px}
+#waPanel .wa-note{margin-top:4px;padding-top:6px;border-top:1px dashed var(--line);color:var(--muted);font-size:10px;line-height:1.4}
+#waPanel .adv-ratio{padding:4px 0 14px;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent}
+#waPanel .adv-list{border:0;border-radius:0;background:transparent}
+#waPanel .adv-item{border-radius:0 12px 12px 0}
+.wa-click{cursor:pointer;transition:transform .16s,border-color .16s}.wa-click:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+.wa-ring .wa-link{color:var(--accent);font-weight:700;font-size:11px}
+.wa-sv-chips{display:flex;flex-wrap:wrap;gap:8px}
+.wa-sv-chip{display:grid;gap:2px;padding:9px 12px;border:1.5px solid var(--line);border-radius:14px;background:var(--surface2);color:var(--text);font:inherit;font-size:13px;font-weight:700;text-align:left;cursor:pointer}
+.wa-sv-chip small{color:var(--muted);font-size:11.5px;font-weight:600}.wa-sv-chip:hover{border-color:var(--accent)}
+.wa-sv-preview{display:grid;gap:3px;min-height:20px;font-size:14px}.wa-sv-preview b{font-size:18px;color:var(--accent)}.wa-sv-preview small{color:var(--muted);font-size:12px}
+.wallet-balance-split{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 2px}.wallet-balance-split[hidden]{display:none}
+.wallet-balance-split button{display:inline-flex;align-items:center;gap:6px;padding:5px 11px;border:0;border-radius:99px;background:rgba(255,255,255,.18);color:inherit;font:inherit;font-size:12px;cursor:pointer;backdrop-filter:blur(4px)}.wallet-balance-split b{font-weight:800}
+.fund-sum{display:grid;grid-template-columns:1fr 1fr;gap:8px}.fund-sum>div{display:grid;gap:3px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--surface2)}
+.fund-sum span{color:var(--muted);font-size:12px;font-weight:700}.fund-sum strong{font-size:18px;font-weight:850}.fund-note{margin:2px 0 6px;font-size:12px}
+.fund-card{display:grid;gap:8px;margin-bottom:10px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--surface2)}
+.fund-head{display:flex;align-items:center;gap:10px}.fund-head>div{display:grid;gap:2px;min-width:0}.fund-head small{color:var(--muted);font-size:12px}
+.fund-ico{display:grid;place-items:center;flex:0 0 38px;height:38px;border-radius:12px;background:var(--surface);font-size:20px}
+.fund-bar{height:8px;overflow:hidden;border-radius:99px;background:color-mix(in srgb,var(--muted) 22%,transparent)}.fund-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#6d7ee8,#1d9e65)}
+.fund-sub{color:var(--muted);font-size:12px}.fund-actions{display:flex;gap:8px}.fund-actions .btn{flex:1}
+.fund-icons{display:flex;flex-wrap:wrap;gap:8px}.fund-icons button{width:42px;height:42px;border:1.5px solid var(--line);border-radius:12px;background:var(--surface2);font-size:20px;cursor:pointer}.fund-icons button.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent2)}
+@media(max-width:700px){.wa-hero{grid-template-columns:1fr 1fr}.wa-main{grid-column:1/-1}#waPanel{padding:13px;border-radius:20px}#waPanel .wallet-analysis-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 <style id="wallet-expert-merge-style">.wallet-analysis-advice.wf-wide{grid-column:1/-1}.wallet-analysis-advice .wf-bar{margin:10px 0 6px}</style>
 <style id="advice-redesign-style">
 .adv-sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0}
@@ -7380,4 +7507,55 @@ html[data-skin=halloween] .hw-eyes{width:34px;height:auto;display:block;gap:0;op
 html[data-skin="halloween"] #page-wallet .wallet-quick .quick[data-hw-q="income"] .qicon{background:#ffe6c8}
 @media(prefers-reduced-motion:reduce){.hw-q-coin{animation:none}}
 </style>
+<script id="wa-dashboard-script">
+(function(){
+  var T=null;
+  function esc(v){return String(v).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function txt(el,sel){var n=el.querySelector(sel);return n?n.textContent.trim():''}
+  function tone(el){var m=/\b(good|warn|neutral)\b/.exec(el.className);return m?m[1]:'neutral'}
+  var ICONS=[[/so với/i,'⇅'],[/trung bình/i,'📅'],[/nhóm chi/i,'🏷️'],[/giao dịch/i,'💳']];
+  function build(){
+    try{
+      var hero=document.getElementById('waHero'),box=document.getElementById('walletAnalysisRecommendations'),mx=document.getElementById('walletAnalysisMetrics');
+      if(!hero||!box||!mx)return;
+      var hasFc=/dự báo/i.test((box.querySelector('.adv-sum')||{}).textContent||'');
+      [].forEach.call(mx.querySelectorAll('.wallet-analysis-metric'),function(a){
+        var l=txt(a,':scope>span');
+        if(/dự kiến|dự báo|giữ lại/i.test(l)){a.classList.add('wa-dup');return}
+        if(hasFc&&/TB mỗi ngày/i.test(l)&&!a.querySelector('.wa-note'))a.insertAdjacentHTML('beforeend','<small class="wa-note">Gồm cả khoản cố định. Dự báo và số dư đủ dùng nhịp đã tách khoản này.</small>');
+        if(a.querySelector('.wa-ico'))return;
+        var ic='•';ICONS.forEach(function(x){if(x[0].test(l))ic=x[1]});
+        a.insertAdjacentHTML('afterbegin','<i class="wa-ico" aria-hidden="true">'+ic+'</i>');
+      });
+      var tiles=[].map.call(box.querySelectorAll('.adv-sum .adv-tile'),function(t){return{l:txt(t,'span'),v:txt(t,'strong'),s:txt(t,'small'),t:tone(t)}});
+      function pick(re){for(var i=0;i<tiles.length;i++){if(re.test(tiles[i].l))return tiles.splice(i,1)[0]}return null}
+      var f=pick(/dự báo|dự kiến/i),sv=pick(/tiết kiệm/i),rn=pick(/số dư/i);
+      if(!f&&tiles.length)f=tiles.shift();
+      var tip=box.getAttribute('data-tip')||'',h='';
+      if(f)h+='<div class="wa-main '+f.t+'"><span>'+esc(f.l)+'</span><strong>'+esc(f.v)+'</strong><small>'+esc(f.s)+'</small>'+(tip&&/dự báo|dự kiến/i.test(f.l)?'<em class="wa-tip">💡 '+esc(tip)+'</em>':'')+'</div>';
+      if(sv){
+        var p=parseFloat(sv.v);p=isNaN(p)?0:Math.max(0,Math.min(100,p));
+        var rv=sv.v,rl=sv.l,rs=sv.s,rt=sv.t,hasGoal=false;
+        try{if(window.walletPeriod!=='year'){
+          var mo=walletMonth(),tt=monthTotals(mo),goal=Number((state.walletSavingsGoals||{})[mo]||0);
+          if(goal>0){
+            hasGoal=true;var saved=Math.max(0,Number(tt.net)||0),prs=box.getAttribute('data-pr'),proj=(prs&&isFinite(Number(prs)))?(Number(tt.inc)||0)-Number(prs):null;
+            p=Math.min(100,saved/goal*100);rv=Math.round(saved/goal*100)+'%';rl='Mục tiêu tiết kiệm';
+            rs='Đã giữ '+ledgerShort(saved)+' / '+ledgerShort(goal)+(proj===null?'':(proj>=goal?' · dự báo đạt':' · dự báo thiếu '+ledgerShort(goal-proj)));
+            rt=saved>=goal?'good':(proj===null?'neutral':(proj>=goal?'good':'warn'));
+          }
+        }}catch(e){}
+        h+='<div class="wa-ring wa-click '+rt+'" role="button" tabindex="0" onclick="openWalletSavingsGoal()" style="--p:'+p+'"><div class="wa-ring-dial"><b>'+esc(rv)+'</b></div><div class="wa-ring-txt"><span>'+esc(rl)+'</span><small>'+esc(rs)+'</small><small class="wa-link">'+(hasGoal?'Chỉnh mục tiêu':'Đặt mục tiêu')+' ›</small></div></div>';
+      }
+      [rn].concat(tiles).forEach(function(x){if(x)h+='<div class="wa-run '+x.t+'"><span>'+esc(x.l)+'</span><strong>'+esc(x.v)+'</strong><small>'+esc(x.s)+'</small></div>'});
+      if(hero.getAttribute('data-k')===h)return;
+      hero.setAttribute('data-k',h);hero.innerHTML=h;hero.hidden=!h;
+    }catch(e){console.warn('wa-dashboard',e)}
+  }
+  function schedule(){clearTimeout(T);T=setTimeout(build,30)}
+  var mo=new MutationObserver(schedule);
+  ['walletAnalysisMetrics','walletAnalysisRecommendations'].forEach(function(id){var n=document.getElementById(id);if(n)mo.observe(n,{childList:true})});
+  schedule();
+})();
+</script>
 </body></html>
